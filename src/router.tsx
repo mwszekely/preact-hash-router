@@ -22,6 +22,13 @@ export interface RouterProps<T extends <E extends HTMLElement>(...args: any[]) =
     localPath?: null | RouterPathType;
 
     /**
+     * If true, the router will always show its contents,
+     * and this Router is just used for inspecting its 
+     * directory (if any)
+     */
+    optional?: boolean;
+
+    /**
      * If provided, the component used to show/hide children.
      * 
      * It needs at least a boolean prop named `show`, with
@@ -47,7 +54,7 @@ function RouterProviderImpl({ children }: { children: ComponentChildren }) {
 }
 
 export const RouterConsumer = forwardRef(RouterConsumerImpl) as typeof RouterConsumerImpl;
-function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>({ Transition, children, localPath, ...rest }: RenderableProps<RouterProps<T>>, ref?: Ref<RouterRefType>): JSX.Element {
+function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>({ Transition, children, optional, localPath, ...rest }: RenderableProps<RouterProps<T>>, ref?: Ref<RouterRefType>): JSX.Element {
     const { useManagedChildProps, getElement, matches } = useRouterConsumer({ localPath });
 
     const backupRef = useRef<any>(null);
@@ -64,7 +71,7 @@ function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) =>
 
 
     return (
-        <TransitionImpl show={matches} {...rest as any}>
+        <TransitionImpl show={matches || optional} {...rest as any}>
             <div {...useManagedChildProps({ className: "router", "data-level": `${level}`, 'data-path': typeof localPath == "string" ? localPath : undefined, children })} />
         </TransitionImpl>
     )

@@ -4972,6 +4972,34 @@
 	const inlineElements = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
 
 	/**
+	 * Relatively low-level hook that allows you to inspect
+	 * when the entire URL changes, either because the hash changed,
+	 * or because the Back/Forward browser buttons were pressed.
+	 *
+	 * (Changing query parameters reloads the page and so isn't
+	 * tracked, unless of course it's because of the browser
+	 * navigating back/forwards).
+	 *
+	 * In general, you'll want to inspect a specific directory of
+	 * a path, or a specific query parameter value, not the
+	 * entire URL.
+	 */
+
+	function useUrl(onUrlChange) {
+	  const [getUrl, setUrl] = usePassiveState(useStableCallback(onUrlChange), useStableCallback(() => window.location.toString()));
+	  useGlobalHandler(window, "hashchange", e => {
+	    setUrl(window.location.toString());
+	  });
+	  useGlobalHandler(window, "popstate", e => {
+	    // https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event#the_history_stack
+	    // TODO: If this assert never fires, it's *probably* fine??
+	    console.assert(window.location.toString() === document.location.toString());
+	    setUrl(window.location.toString());
+	  });
+	  return [getUrl, setUrl];
+	}
+
+	/**
 	 * Internal helper to trim the crusts off of a hash path.
 	 * @param hash
 	 * @returns
@@ -5064,6 +5092,18 @@
 	  return value !== null && value !== void 0 ? value : null;
 	}
 
+	function useLocalPath(level, callback) {
+	  //const level = useContext(RouterLevelContext);
+	  const [getLocalPath, setLocalPath] = usePassiveState(callback);
+	  useUrl(url => {
+	    var _newHashPath$level;
+
+	    const newHashPath = normalizeHashToPath(trimHash(new URL(url).hash));
+	    setLocalPath((_newHashPath$level = newHashPath[level]) !== null && _newHashPath$level !== void 0 ? _newHashPath$level : null);
+	  });
+	  return [getLocalPath, setLocalPath];
+	}
+
 	/**
 	 * Removes the directory at the current level, effectively returning
 	 * to the previous level.  You can also switch to a different
@@ -5102,70 +5142,6 @@
 	    newHashPath.splice(level + 1, 1, dir);
 	    setEntireHash(newHashPath.join("/"), action);
 	  }, [level]);
-	}
-
-	/**
-	 * Replaces the directory at the current level with a new one. You can
-	 * choose whether or not any trailing paths are kept -- by default this is false.
-	 * @returns
-	 */
-
-	function useSetLocalPath(level) {
-	  const setEntireHash = useSetEntireHash();
-	  return A$1(function setLocalHash(dir) {
-	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
-	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
-	    dir = trimHash(dir);
-	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
-	    let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => s !== null && s !== void 0 ? s : "");
-	    newHashPath.splice(level, 1, dir);
-	    setEntireHash(newHashPath.join("/"), action);
-	  }, [level]);
-	}
-
-	/**
-	 * Relatively low-level hook that allows you to inspect
-	 * when the entire URL changes, either because the hash changed,
-	 * or because the Back/Forward browser buttons were pressed.
-	 *
-	 * (Changing query parameters reloads the page and so isn't
-	 * tracked, unless of course it's because of the browser
-	 * navigating back/forwards).
-	 *
-	 * In general, you'll want to inspect a specific directory of
-	 * a path, or a specific query parameter value, not the
-	 * entire URL.
-	 */
-
-	function useUrl(onUrlChange) {
-	  const [getUrl, setUrl] = usePassiveState(useStableCallback(onUrlChange), useStableCallback(() => window.location.toString()));
-	  useGlobalHandler(window, "hashchange", e => {
-	    setUrl(window.location.toString());
-	  });
-	  useGlobalHandler(window, "popstate", e => {
-	    // https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event#the_history_stack
-	    // TODO: If this assert never fires, it's *probably* fine??
-	    console.assert(window.location.toString() === document.location.toString());
-	    setUrl(window.location.toString());
-	  });
-	  return [getUrl, setUrl];
-	}
-
-	/**
-	 * `useEffect`, but the effect runs whenever the local directory changes.
-	 * @param callback Same as `useEffect`'s callback
-	 */
-
-	function useLocalPath(level, callback) {
-	  //const level = useContext(RouterLevelContext);
-	  const [getLocalPath, setLocalPath] = usePassiveState(callback);
-	  useUrl(url => {
-	    var _newHashPath$level;
-
-	    const newHashPath = normalizeHashToPath(trimHash(new URL(url).hash));
-	    setLocalPath((_newHashPath$level = newHashPath[level]) !== null && _newHashPath$level !== void 0 ? _newHashPath$level : null);
-	  });
-	  return [getLocalPath, setLocalPath];
 	}
 
 	const RouterContext = D(null);
@@ -5217,6 +5193,25 @@
 	    useRouterChild,
 	    level: (level !== null && level !== void 0 ? level : -2) + 1
 	  }), [matchChangeHandler, level, useRouterChild]);
+	}
+
+	/**
+	 * Replaces the directory at the current level with a new one. You can
+	 * choose whether or not any trailing paths are kept -- by default this is false.
+	 * @returns
+	 */
+
+	function useSetLocalPath(level) {
+	  const setEntireHash = useSetEntireHash();
+	  return A$1(function setLocalHash(dir) {
+	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
+	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
+	    dir = trimHash(dir);
+	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
+	    let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => s !== null && s !== void 0 ? s : "");
+	    newHashPath.splice(level, 1, dir);
+	    setEntireHash(newHashPath.join("/"), action);
+	  }, [level]);
 	}
 
 	/**
@@ -5408,13 +5403,14 @@
 	  }));
 	}
 
+	const Router = x(RouterImpl);
+
 	function RouterImpl(props, ref) {
 	  return v$1(RouterProvider, null, v$1(RouterConsumer, { ...props,
 	    ref: ref
 	  }));
-	}
+	} // Extremely simple "transition" that just swaps children in and out without animating them.
 
-	const Router = x(RouterImpl); // Extremely simple "transition" that just swaps children in and out without animating them.
 
 	const DefaultTransition = x(function DefaultTransition(_ref5, ref) {
 	  let {
@@ -5447,17 +5443,21 @@
 	  // because changing it is actually an asyncronous operation
 	  // and we can't know when it ends aside from just "did the URL change or not"
 	  // so we might as well keep this state around locally to compensate.
-	  const [savedParamValue, setSavedParamValue] = m(null);
-	  const onParamValueChangedStable = useStableCallback(onParamValueChanged !== null && onParamValueChanged !== void 0 ? onParamValueChanged : () => {});
-	  y(() => {
-	    return onParamValueChangedStable(savedParamValue);
-	  }, [savedParamValue]);
+	  // const [getSavedParamValue, setSavedParamValue] = usePassiveState<TypeMap[T] | null>(onParamValueChanged);
+	  const [getPromise, setPromise] = usePassiveState(null);
+	  const [getResolve, setResolve] = usePassiveState(null);
+	  const [getReject, setReject] = usePassiveState(null);
+	  const [getNextParamValue, setNextParamValue] = usePassiveState(null);
+	  const [getPreviousParamValue, setPreviousParamValue] = usePassiveState(null); //const savedParamValue = getSavedParamValue();
+
 	  const setParamWithHistory = useStableCallback((newParamValue, reason) => {
 	    let newParams = new URLSearchParams(new URL(window.location.toString()).searchParams);
 	    unparseParam(newParams, paramKey, newParamValue, type);
 	    let nextUrl = new URL(window.location.toString());
 	    nextUrl.search = prettyPrintParams(newParams);
-	    history[`${reason !== null && reason !== void 0 ? reason : "replace"}State`]({}, document.title, nextUrl); // Changing the Search Params won't fire a hashchange event (I mean, obviously I guess, but)
+	    history[`${reason !== null && reason !== void 0 ? reason : "replace"}State`]({}, document.title, nextUrl);
+	    setPreviousParamValue(getNextParamValue());
+	    setNextParamValue(newParamValue); // Changing the Search Params won't fire a hashchange event (I mean, obviously I guess, but)
 	    // so instead we need to forcibly have a popstate event fire, as the only one we can use here.
 	    //
 	    // We do that by just pushing another copy of our destination to the history stack
@@ -5465,14 +5465,36 @@
 
 	    history.pushState({}, document.title, nextUrl);
 	    history.back();
+	    let promise = new Promise((resolve, reject) => {
+	      setResolve(() => resolve);
+	      setReject(() => reject);
+	    });
+	    setPromise(promise);
+	    return promise.then(() => {
+	      return newParamValue;
+	    });
 	  }); // Any time the URL changes, it means the Search Param we care about might have changed.
 	  // Parse it out and save it.
 
 	  useUrl(useStableCallback(url => {
 	    const newParam = parseParam(new URL(url), paramKey, type);
-	    setSavedParamValue(newParam);
+	    const resolve = getResolve();
+	    const reject = getReject();
+
+	    if (newParam === getNextParamValue()) {
+	      resolve(newParam);
+	      setPreviousParamValue(null);
+	      setResolve(null);
+	      setReject(null);
+	      onParamValueChanged === null || onParamValueChanged === void 0 ? void 0 : onParamValueChanged(newParam);
+	    } else if (newParam !== getPreviousParamValue()) {
+	      reject(newParam);
+	      setPreviousParamValue(null);
+	      setResolve(null);
+	      setReject(null);
+	    }
 	  }));
-	  return [savedParamValue, setParamWithHistory];
+	  return [getPromise(), setParamWithHistory];
 	}
 
 	function prettyPrintParams(params) {
