@@ -77,7 +77,7 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
         }
     }));
 
-    return [getPromise(), setParamWithHistory] as const;
+    return [getNextParamValue(), setParamWithHistory] as const;
 }
 
 function prettyPrintParams(params: URLSearchParams) {

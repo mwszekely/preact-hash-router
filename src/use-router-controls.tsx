@@ -14,16 +14,15 @@ import { RouterControls } from "./util";
  * You can also get this information from a child <Router />
  * by passing in a ref (e.g. <Router ref={setControls} />).
  */
-export function useRouterControls(): RouterControls {
+export function useRouterControls({ onPathChange }: { onPathChange: null | ((path: string | null) => void) }): RouterControls {
     const { level, matchChangeHandler, useRouterChild } = useContext(RouterContext)!;
 
     // This is the hash at this level specifically, 
     // so it contains no directory separators.
     const popLocalPath = usePopLocalPath(level);
-    const setLocalPath = useSetLocalPath(level);
     const pushLocalPath = usePushLocalPath(level);
 
-    const [getLocalPath] = useLocalPath(level);
+    const [getLocalPath, setLocalPath] = useLocalPath(level, onPathChange);
 
     return useMemo(() => ({
         getLocalPath,

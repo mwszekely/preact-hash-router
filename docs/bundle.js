@@ -5196,32 +5196,16 @@
 	}
 
 	/**
-	 * Replaces the directory at the current level with a new one. You can
-	 * choose whether or not any trailing paths are kept -- by default this is false.
-	 * @returns
-	 */
-
-	function useSetLocalPath(level) {
-	  const setEntireHash = useSetEntireHash();
-	  return A$1(function setLocalHash(dir) {
-	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
-	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
-	    dir = trimHash(dir);
-	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
-	    let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => s !== null && s !== void 0 ? s : "");
-	    newHashPath.splice(level, 1, dir);
-	    setEntireHash(newHashPath.join("/"), action);
-	  }, [level]);
-	}
-
-	/**
 	 * Allows easy access to the controls at the current level.
 	 *
 	 * You can also get this information from a child <Router />
 	 * by passing in a ref (e.g. <Router ref={setControls} />).
 	 */
 
-	function useRouterControls() {
+	function useRouterControls(_ref) {
+	  let {
+	    onPathChange
+	  } = _ref;
 	  const {
 	    level,
 	    matchChangeHandler,
@@ -5230,9 +5214,8 @@
 	  // so it contains no directory separators.
 
 	  const popLocalPath = usePopLocalPath(level);
-	  const setLocalPath = useSetLocalPath(level);
 	  const pushLocalPath = usePushLocalPath(level);
-	  const [getLocalPath] = useLocalPath(level);
+	  const [getLocalPath, setLocalPath] = useLocalPath(level, onPathChange);
 	  return _(() => ({
 	    getLocalPath,
 	    popLocalPath,
@@ -5356,14 +5339,18 @@
 
 	  let {
 	    Transition,
+	    onPathChange,
+	    onMatchChange,
 	    children,
+	    optional,
 	    localPath,
 	    ...rest
 	  } = _ref3;
 	  const {
 	    useManagedChildProps,
 	    getElement,
-	    matches
+	    matches,
+	    siblingsHaveNoMatches
 	  } = useRouterConsumer({
 	    localPath
 	  });
@@ -5375,7 +5362,12 @@
 	    pushLocalPath,
 	    setLocalPath: setLocalPath,
 	    level
-	  } = useRouterControls();
+	  } = useRouterControls({
+	    onPathChange: A$1(newPath => {
+	      if (matches) onMatchChange === null || onMatchChange === void 0 ? void 0 : onMatchChange(newPath);
+	      onPathChange === null || onPathChange === void 0 ? void 0 : onPathChange(newPath, matches);
+	    }, [onPathChange, matches])
+	  });
 	  s(ref, () => ({
 	    level,
 	    getElement,
@@ -5392,15 +5384,14 @@
 	  }
 
 	  return v$1(TransitionImpl, {
-	    show: matches,
-	    ...rest
-	  }, v$1("div", { ...useManagedChildProps({
+	    show: matches || optional,
+	    ...useManagedChildProps(useMergedProps()(rest, {
 	      className: "router",
 	      "data-level": `${level}`,
 	      'data-path': typeof localPath == "string" ? localPath : undefined,
 	      children
-	    })
-	  }));
+	    }))
+	  });
 	}
 
 	const Router = x(RouterImpl);
@@ -5494,7 +5485,7 @@
 	      setReject(null);
 	    }
 	  }));
-	  return [getPromise(), setParamWithHistory];
+	  return [getNextParamValue(), setParamWithHistory];
 	}
 
 	function prettyPrintParams(params) {

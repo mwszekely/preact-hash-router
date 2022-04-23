@@ -1,7 +1,7 @@
 import { cloneElement, ComponentChildren, createContext, Fragment, h, JSX, Ref, RenderableProps, VNode } from "preact";
 import { useMergedProps } from "preact-prop-helpers";
 import { forwardRef } from "preact/compat";
-import { useContext, useImperativeHandle, useMemo, useRef } from "preact/hooks";
+import { useCallback, useContext, useImperativeHandle, useMemo, useRef } from "preact/hooks";
 import { RouterControls, RouterPathType } from "./util";
 import { useRouterControls } from "./use-router-controls";
 import { useRouterConsumer } from "./use-router-consumer";
@@ -20,6 +20,19 @@ export interface RouterProps<T extends <E extends HTMLElement>(...args: any[]) =
      * didn't have a match. A local 404, sort of.
      */
     localPath?: null | RouterPathType;
+
+    /**
+     * Fired whenever the local path changes, and the value it changes to.
+     * 
+     * This will fire regardless of if the path is a match, so the isMatch
+     * parameter determines if this Router is showing its contents as a result
+     */
+    onPathChange?: null | ((path: string | null, isMatch: boolean) => void);
+
+    /**
+     * Like onPathChange, but only fires when the current path is a match.
+     */
+    onMatchChange?: null | ((path: string | null) => void);
 
     /**
      * If true, the router will always show its contents,
@@ -54,13 +67,13 @@ function RouterProviderImpl({ children }: { children: ComponentChildren }) {
 }
 
 export const RouterConsumer = forwardRef(RouterConsumerImpl) as typeof RouterConsumerImpl;
-function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>({ Transition, children, optional, localPath, ...rest }: RenderableProps<RouterProps<T>>, ref?: Ref<RouterRefType>): JSX.Element {
-    const { useManagedChildProps, getElement, matches } = useRouterConsumer({ localPath });
+function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>({ Transition, onPathChange, onMatchChange, children, optional, localPath, ...rest }: RenderableProps<RouterProps<T>>, ref?: Ref<RouterRefType>): JSX.Element {
+    const { useManagedChildProps, getElement, matches, siblingsHaveNoMatches } = useRouterConsumer({ localPath });
 
     const backupRef = useRef<any>(null);
     ref ??= backupRef;
 
-    const { getLocalPath, popLocalPath, pushLocalPath, setLocalPath: setLocalPath, level } = useRouterControls();
+    const { getLocalPath, popLocalPath, pushLocalPath, setLocalPath: setLocalPath, level } = useRouterControls({ onPathChange: useCallback((newPath: string | null) => { if (matches) onMatchChange?.(newPath); onPathChange?.(newPath, matches); }, [onPathChange, matches]) });
     useImperativeHandle(ref, () => ({ level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath }), [level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
 
     let TransitionImpl = Transition;
@@ -70,11 +83,7 @@ function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) =>
     }
 
 
-    return (
-        <TransitionImpl show={matches || optional} {...rest as any}>
-            <div {...useManagedChildProps({ className: "router", "data-level": `${level}`, 'data-path': typeof localPath == "string" ? localPath : undefined, children })} />
-        </TransitionImpl>
-    )
+    return (<TransitionImpl show={matches || optional} {...useManagedChildProps(useMergedProps()(rest, { className: "router", "data-level": `${level}`, 'data-path': typeof localPath == "string" ? localPath : undefined, children })) as any} />)
 }
 
 export const Router: typeof RouterImpl = forwardRef(RouterImpl) as any;
@@ -112,6 +121,6 @@ export function ProvideRouterTransition({ Transition, children }: { Transition: 
     )
 }
 
-export interface RouterRefType extends RouterControls { 
-    getElement(): (EventTarget | null); 
+export interface RouterRefType extends RouterControls {
+    getElement(): (EventTarget | null);
 };
