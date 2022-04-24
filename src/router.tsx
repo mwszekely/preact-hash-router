@@ -82,8 +82,14 @@ function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) =>
         TransitionImpl = DefaultTransition as T;
     }
 
+    let levelString = `${level}`;
+    if ((rest as any)["data-level"]) {
+        levelString = `${(rest as any)["data-level"]},${levelString}`;
+        (rest as any)["data-level"] = undefined;
+    }
 
-    return (<TransitionImpl show={matches || optional} {...useManagedChildProps(useMergedProps()(rest, { className: "router", "data-level": `${level}`, 'data-path': typeof localPath == "string" ? localPath : undefined, children })) as any} />)
+
+    return (<TransitionImpl show={matches || optional} {...useManagedChildProps(useMergedProps()(rest, { className: "router", "data-level": `${levelString}`, 'data-path': typeof localPath == "string" ? localPath : undefined, children })) as any} />)
 }
 
 export const Router: typeof RouterImpl = forwardRef(RouterImpl) as any;

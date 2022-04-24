@@ -5383,6 +5383,13 @@
 	    TransitionImpl = DefaultTransition;
 	  }
 
+	  let levelString = `${level}`;
+
+	  if (rest["data-level"]) {
+	    levelString = `${rest["data-level"]},${levelString}`;
+	    rest["data-level"] = undefined;
+	  }
+
 	  return v$1(TransitionImpl, {
 	    show: matches || optional,
 	    ...useManagedChildProps(useMergedProps()(rest, {
