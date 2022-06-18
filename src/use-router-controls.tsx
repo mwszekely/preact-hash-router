@@ -1,3 +1,4 @@
+import { useEnsureStability } from "preact-prop-helpers/use-passive-state";
 import { useContext, useMemo } from "preact/hooks";
 import { useLocalPath } from "./use-local-path";
 import { usePopLocalPath } from "./use-pop-local-path";
@@ -22,6 +23,7 @@ export function useRouterControls({ onPathChange }: { onPathChange: null | ((pat
     const popLocalPath = usePopLocalPath(level);
     const pushLocalPath = usePushLocalPath(level);
 
+    useEnsureStability("useRouterControls", onPathChange);
     const [getLocalPath, setLocalPath] = useLocalPath(level, onPathChange);
 
     return useMemo(() => ({

@@ -1,3 +1,4 @@
+import { useStableCallback } from "preact-prop-helpers";
 import { useCallback, useState } from "preact/hooks";
 import { useLocalPath } from "./use-local-path";
 
@@ -9,7 +10,7 @@ import { useLocalPath } from "./use-local-path";
  */
 export function useLocalPathMatches(level: number, requestedLocalHash: string | RegExp | ((localHash: string) => boolean)) {
     const [matches, setMatches] = useState(false);
-    const [getLocalPath, setLocalPath] = useLocalPath(level, useCallback((localPath: string | null) => {
+    const [getLocalPath, setLocalPath] = useLocalPath(level, useStableCallback((localPath: string | null) => {
         let matches: boolean;
         localPath ??= "";
 
@@ -22,7 +23,7 @@ export function useLocalPathMatches(level: number, requestedLocalHash: string | 
             matches = (requestedLocalHash === localPath);
 
         setMatches(matches);
-    }, []));
+    }));
 
     return matches;
 }
