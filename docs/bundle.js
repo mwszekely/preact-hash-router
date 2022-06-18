@@ -32,7 +32,7 @@
 	    l && l.removeChild(n);
 	  }
 
-	  function v(l, u, t) {
+	  function h(l, u, t) {
 	    var i,
 	        o,
 	        r,
@@ -41,10 +41,10 @@
 	    for (r in u) "key" == r ? i = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
 
 	    if (arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : t), "function" == typeof l && null != l.defaultProps) for (r in l.defaultProps) void 0 === f[r] && (f[r] = l.defaultProps[r]);
-	    return h(l, f, i, o, null);
+	    return v(l, f, i, o, null);
 	  }
 
-	  function h(n, t, i, o, r) {
+	  function v(n, t, i, o, r) {
 	    var f = {
 	      type: n,
 	      props: t,
@@ -107,7 +107,7 @@
 
 	  function m(n, l, u, t, i, o, r, f, s, a) {
 	    var p,
-	        v,
+	        h,
 	        d,
 	        k,
 	        x,
@@ -116,18 +116,18 @@
 	        A = t && t.__k || c,
 	        P = A.length;
 
-	    for (u.__k = [], p = 0; p < l.length; p++) if (null != (k = u.__k[p] = null == (k = l[p]) || "boolean" == typeof k ? null : "string" == typeof k || "number" == typeof k || "bigint" == typeof k ? h(null, k, null, null, k) : Array.isArray(k) ? h(y, {
+	    for (u.__k = [], p = 0; p < l.length; p++) if (null != (k = u.__k[p] = null == (k = l[p]) || "boolean" == typeof k ? null : "string" == typeof k || "number" == typeof k || "bigint" == typeof k ? v(null, k, null, null, k) : Array.isArray(k) ? v(y, {
 	      children: k
-	    }, null, null, null) : k.__b > 0 ? h(k.type, k.props, k.key, null, k.__v) : k)) {
-	      if (k.__ = u, k.__b = u.__b + 1, null === (d = A[p]) || d && k.key == d.key && k.type === d.type) A[p] = void 0;else for (v = 0; v < P; v++) {
-	        if ((d = A[v]) && k.key == d.key && k.type === d.type) {
-	          A[v] = void 0;
+	    }, null, null, null) : k.__b > 0 ? v(k.type, k.props, k.key, null, k.__v) : k)) {
+	      if (k.__ = u, k.__b = u.__b + 1, null === (d = A[p]) || d && k.key == d.key && k.type === d.type) A[p] = void 0;else for (h = 0; h < P; h++) {
+	        if ((d = A[h]) && k.key == d.key && k.type === d.type) {
+	          A[h] = void 0;
 	          break;
 	        }
 
 	        d = null;
 	      }
-	      I(n, k, d = d || e, i, o, r, f, s, a), x = k.__e, (v = k.ref) && d.ref != v && (m || (m = []), d.ref && m.push(d.ref, null, k), m.push(v, k.__c || x, k)), null != x ? (null == b && (b = x), "function" == typeof k.type && k.__k === d.__k ? k.__d = s = g(k, s, n) : s = w(n, k, d, A, x, s), "function" == typeof u.type && (u.__d = s)) : s && d.__e == s && s.parentNode != n && (s = _(d));
+	      I(n, k, d = d || e, i, o, r, f, s, a), x = k.__e, (h = k.ref) && d.ref != h && (m || (m = []), d.ref && m.push(d.ref, null, k), m.push(h, k.__c || x, k)), null != x ? (null == b && (b = x), "function" == typeof k.type && k.__k === d.__k ? k.__d = s = g(k, s, n) : s = w(n, k, d, A, x, s), "function" == typeof u.type && (u.__d = s)) : s && d.__e == s && s.parentNode != n && (s = _(d));
 	    }
 
 	    for (u.__e = b, p = P; p--;) null != A[p] && ("function" == typeof u.type && null != A[p].__e && A[p].__e == u.__d && (u.__d = _(t, p + 1)), L(A[p], A[p]));
@@ -191,8 +191,8 @@
 	  function I(n, u, t, i, o, r, f, e, c) {
 	    var s,
 	        p,
-	        v,
 	        h,
+	        v,
 	        _,
 	        k,
 	        x,
@@ -200,15 +200,17 @@
 	        g,
 	        w,
 	        A,
-	        P = u.type;
+	        P,
+	        C,
+	        $ = u.type;
 
 	    if (void 0 !== u.constructor) return null;
 	    null != t.__h && (c = t.__h, e = u.__e = t.__e, u.__h = null, r = [e]), (s = l.__b) && s(u);
 
 	    try {
-	      n: if ("function" == typeof P) {
-	        if (b = u.props, g = (s = P.contextType) && i[s.__c], w = s ? g ? g.props.value : s.__ : i, t.__c ? x = (p = u.__c = t.__c).__ = p.__E : ("prototype" in P && P.prototype.render ? u.__c = p = new P(b, w) : (u.__c = p = new d(b, w), p.constructor = P, p.render = M), g && g.sub(p), p.props = b, p.state || (p.state = {}), p.context = w, p.__n = i, v = p.__d = !0, p.__h = []), null == p.__s && (p.__s = p.state), null != P.getDerivedStateFromProps && (p.__s == p.state && (p.__s = a({}, p.__s)), a(p.__s, P.getDerivedStateFromProps(b, p.__s))), h = p.props, _ = p.state, v) null == P.getDerivedStateFromProps && null != p.componentWillMount && p.componentWillMount(), null != p.componentDidMount && p.__h.push(p.componentDidMount);else {
-	          if (null == P.getDerivedStateFromProps && b !== h && null != p.componentWillReceiveProps && p.componentWillReceiveProps(b, w), !p.__e && null != p.shouldComponentUpdate && !1 === p.shouldComponentUpdate(b, p.__s, w) || u.__v === t.__v) {
+	      n: if ("function" == typeof $) {
+	        if (b = u.props, g = (s = $.contextType) && i[s.__c], w = s ? g ? g.props.value : s.__ : i, t.__c ? x = (p = u.__c = t.__c).__ = p.__E : ("prototype" in $ && $.prototype.render ? u.__c = p = new $(b, w) : (u.__c = p = new d(b, w), p.constructor = $, p.render = M), g && g.sub(p), p.props = b, p.state || (p.state = {}), p.context = w, p.__n = i, h = p.__d = !0, p.__h = []), null == p.__s && (p.__s = p.state), null != $.getDerivedStateFromProps && (p.__s == p.state && (p.__s = a({}, p.__s)), a(p.__s, $.getDerivedStateFromProps(b, p.__s))), v = p.props, _ = p.state, h) null == $.getDerivedStateFromProps && null != p.componentWillMount && p.componentWillMount(), null != p.componentDidMount && p.__h.push(p.componentDidMount);else {
+	          if (null == $.getDerivedStateFromProps && b !== v && null != p.componentWillReceiveProps && p.componentWillReceiveProps(b, w), !p.__e && null != p.shouldComponentUpdate && !1 === p.shouldComponentUpdate(b, p.__s, w) || u.__v === t.__v) {
 	            p.props = b, p.state = p.__s, u.__v !== t.__v && (p.__d = !1), p.__v = u, u.__e = t.__e, u.__k = t.__k, u.__k.forEach(function (n) {
 	              n && (n.__ = u);
 	            }), p.__h.length && f.push(p);
@@ -216,10 +218,13 @@
 	          }
 
 	          null != p.componentWillUpdate && p.componentWillUpdate(b, p.__s, w), null != p.componentDidUpdate && p.__h.push(function () {
-	            p.componentDidUpdate(h, _, k);
+	            p.componentDidUpdate(v, _, k);
 	          });
 	        }
-	        p.context = w, p.props = b, p.state = p.__s, (s = l.__r) && s(u), p.__d = !1, p.__v = u, p.__P = n, s = p.render(p.props, p.state, p.context), p.state = p.__s, null != p.getChildContext && (i = a(a({}, i), p.getChildContext())), v || null == p.getSnapshotBeforeUpdate || (k = p.getSnapshotBeforeUpdate(h, _)), A = null != s && s.type === y && null == s.key ? s.props.children : s, m(n, Array.isArray(A) ? A : [A], u, t, i, o, r, f, e, c), p.base = u.__e, u.__h = null, p.__h.length && f.push(p), x && (p.__E = p.__ = null), p.__e = !1;
+	        if (p.context = w, p.props = b, p.__v = u, p.__P = n, A = l.__r, P = 0, "prototype" in $ && $.prototype.render) p.state = p.__s, p.__d = !1, A && A(u), s = p.render(p.props, p.state, p.context);else do {
+	          p.__d = !1, A && A(u), s = p.render(p.props, p.state, p.context), p.state = p.__s;
+	        } while (p.__d && ++P < 25);
+	        p.state = p.__s, null != p.getChildContext && (i = a(a({}, i), p.getChildContext())), h || null == p.getSnapshotBeforeUpdate || (k = p.getSnapshotBeforeUpdate(v, _)), C = null != s && s.type === y && null == s.key ? s.props.children : s, m(n, Array.isArray(C) ? C : [C], u, t, i, o, r, f, e, c), p.base = u.__e, u.__h = null, p.__h.length && f.push(p), x && (p.__E = p.__ = null), p.__e = !1;
 	      } else null == r && u.__v === t.__v ? (u.__k = t.__k, u.__e = t.__e) : u.__e = j(t.__e, u, t, i, o, r, f, c);
 
 	      (s = l.diffed) && s(u);
@@ -243,8 +248,8 @@
 	  function j(l, u, t, i, o, r, f, c) {
 	    var s,
 	        a,
-	        v,
-	        h = t.props,
+	        h,
+	        v = t.props,
 	        y = u.props,
 	        d = u.type,
 	        k = 0;
@@ -258,14 +263,14 @@
 	      l = o ? document.createElementNS("http://www.w3.org/2000/svg", d) : document.createElement(d, y.is && y), r = null, c = !1;
 	    }
 
-	    if (null === d) h === y || c && l.data === y || (l.data = y);else {
-	      if (r = r && n.call(l.childNodes), a = (h = t.props || e).dangerouslySetInnerHTML, v = y.dangerouslySetInnerHTML, !c) {
-	        if (null != r) for (h = {}, k = 0; k < l.attributes.length; k++) h[l.attributes[k].name] = l.attributes[k].value;
-	        (v || a) && (v && (a && v.__html == a.__html || v.__html === l.innerHTML) || (l.innerHTML = v && v.__html || ""));
+	    if (null === d) v === y || c && l.data === y || (l.data = y);else {
+	      if (r = r && n.call(l.childNodes), a = (v = t.props || e).dangerouslySetInnerHTML, h = y.dangerouslySetInnerHTML, !c) {
+	        if (null != r) for (v = {}, k = 0; k < l.attributes.length; k++) v[l.attributes[k].name] = l.attributes[k].value;
+	        (h || a) && (h && (a && h.__html == a.__html || h.__html === l.innerHTML) || (l.innerHTML = h && h.__html || ""));
 	      }
 
-	      if (A(l, y, h, o, c), v) u.__k = [];else if (k = u.props.children, m(l, Array.isArray(k) ? k : [k], u, t, i, o && "foreignObject" !== d, r, f, r ? r[0] : t.__k && _(t, 0), c), null != r) for (k = r.length; k--;) null != r[k] && p(r[k]);
-	      c || ("value" in y && void 0 !== (k = y.value) && (k !== l.value || "progress" === d && !k || "option" === d && k !== h.value) && C(l, "value", k, h.value, !1), "checked" in y && void 0 !== (k = y.checked) && k !== l.checked && C(l, "checked", k, h.checked, !1));
+	      if (A(l, y, v, o, c), h) u.__k = [];else if (k = u.props.children, m(l, Array.isArray(k) ? k : [k], u, t, i, o && "foreignObject" !== d, r, f, r ? r[0] : t.__k && _(t, 0), c), null != r) for (k = r.length; k--;) null != r[k] && p(r[k]);
+	      c || ("value" in y && void 0 !== (k = y.value) && (k !== l.value || "progress" === d && !k || "option" === d && k !== v.value) && C(l, "value", k, v.value, !1), "checked" in y && void 0 !== (k = y.checked) && k !== l.checked && C(l, "checked", k, v.checked, !1));
 	    }
 	    return l;
 	  }
@@ -300,7 +305,7 @@
 
 	  function N(u, t, i) {
 	    var o, r, f;
-	    l.__ && l.__(u, t), r = (o = "function" == typeof i) ? null : i && i.__k || t.__k, f = [], I(t, u = (!o && i || t).__k = v(y, null, [u]), r || e, e, void 0 !== t.ownerSVGElement, !o && i ? [i] : r ? null : t.firstChild ? n.call(t.childNodes) : null, f, !o && i ? i : r ? r.__e : t.firstChild, o), T(f, u);
+	    l.__ && l.__(u, t), r = (o = "function" == typeof i) ? null : i && i.__k || t.__k, f = [], I(t, u = (!o && i || t).__k = h(y, null, [u]), r || e, e, void 0 !== t.ownerSVGElement, !o && i ? [i] : r ? null : t.firstChild ? n.call(t.childNodes) : null, f, !o && i ? i : r ? r.__e : t.firstChild, o), T(f, u);
 	  }
 
 	  n = c.slice, l = {
@@ -322,7 +327,7 @@
 	    this.__v && (this.__e = !0, n && this.__h.push(n), x(this));
 	  }, d.prototype.render = y, i = [], o = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, b.__r = 0, f = 0, exports.render = N, exports.hydrate = function n(l, u) {
 	    N(l, u, n);
-	  }, exports.createElement = v, exports.h = v, exports.Fragment = y, exports.createRef = function () {
+	  }, exports.createElement = h, exports.h = h, exports.Fragment = y, exports.createRef = function () {
 	    return {
 	      current: null
 	    };
@@ -334,7 +339,7 @@
 
 	    for (r in u) "key" == r ? i = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
 
-	    return arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : t), h(l.type, f, i || l.key, o || l.ref, null);
+	    return arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : t), v(l.type, f, i || l.key, o || l.ref, null);
 	  }, exports.createContext = function (n, l) {
 	    var u = {
 	      __c: l = "__cC" + f++,
@@ -367,7 +372,7 @@
 	});
 
 	createCommonjsModule(function (module, exports) {
-	  "undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.7.1", preact.options, {
+	  "undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.8.1", preact.options, {
 	    Fragment: preact.Fragment,
 	    Component: preact.Component
 	  }), exports.addHookName = function (e, o) {
@@ -710,7 +715,7 @@
 	    return n.__v.__b - l.__v.__b;
 	  }), t$1 = [], n.some(function (n) {
 	    var l, u, i, t, o, r;
-	    n.__d && (o = (t = (l = n).__v).__e, (r = l.__P) && (u = [], (i = a$1({}, t)).__v = t.__v + 1, j$2(r, t, i, l.__n, void 0 !== r.ownerSVGElement, null != t.__h ? [o] : null, u, null == o ? k$1(t) : o, t.__h), z$1(u, t), t.__e != o && b$1(t)));
+	    n.__d && (o = (t = (l = n).__v).__e, (r = l.__P) && (u = [], (i = a$1({}, t)).__v = t.__v + 1, j$2(r, t, i, l.__n, void 0 !== r.ownerSVGElement, null != t.__h ? [o] : null, u, null == o ? k$1(t) : o, t.__h), z$2(u, t), t.__e != o && b$1(t)));
 	  });
 	}
 
@@ -736,7 +741,7 @@
 
 	      p = null;
 	    }
-	    j$2(n, _, p = p || e$1, t, o, r, f, s, a), b = _.__e, (v = _.ref) && p.ref != v && (g || (g = []), p.ref && g.push(p.ref, null, _), g.push(v, _.__c || b, _)), null != b ? (null == m && (m = b), "function" == typeof _.type && _.__k === p.__k ? _.__d = s = x$2(_, s, n) : s = P$1(n, _, p, w, b, s), "function" == typeof u.type && (u.__d = s)) : s && p.__e == s && s.parentNode != n && (s = k$1(p));
+	    j$2(n, _, p = p || e$1, t, o, r, f, s, a), b = _.__e, (v = _.ref) && p.ref != v && (g || (g = []), p.ref && g.push(p.ref, null, _), g.push(v, _.__c || b, _)), null != b ? (null == m && (m = b), "function" == typeof _.type && _.__k === p.__k ? _.__d = s = x$1(_, s, n) : s = P$1(n, _, p, w, b, s), "function" == typeof u.type && (u.__d = s)) : s && p.__e == s && s.parentNode != n && (s = k$1(p));
 	  }
 
 	  for (u.__e = m, h = A; h--;) null != w[h] && ("function" == typeof u.type && null != w[h].__e && w[h].__e == u.__d && (u.__d = k$1(i, h + 1)), N(w[h], w[h]));
@@ -744,8 +749,8 @@
 	  if (g) for (h = 0; h < g.length; h++) M$2(g[h], g[++h], g[++h]);
 	}
 
-	function x$2(n, l, u) {
-	  for (var i, t = n.__k, o = 0; t && o < t.length; o++) (i = t[o]) && (i.__ = n, l = "function" == typeof i.type ? x$2(i, l, u) : P$1(u, i, i, t, i.__e, l));
+	function x$1(n, l, u) {
+	  for (var i, t = n.__k, o = 0; t && o < t.length; o++) (i = t[o]) && (i.__ = n, l = "function" == typeof i.type ? x$1(i, l, u) : P$1(u, i, i, t, i.__e, l));
 
 	  return l;
 	}
@@ -786,7 +791,7 @@
 	      if ("string" == typeof i && (n.style.cssText = i = ""), i) for (l in i) u && l in u || $(n.style, l, "");
 	      if (u) for (l in u) i && u[l] === i[l] || $(n.style, l, u[l]);
 	    }
-	  } else if ("o" === l[0] && "n" === l[1]) o = l !== (l = l.replace(/Capture$/, "")), l = l.toLowerCase() in n ? l.toLowerCase().slice(2) : l.slice(2), n.l || (n.l = {}), n.l[l + o] = u, u ? i || n.addEventListener(l, o ? T$1 : I, o) : n.removeEventListener(l, o ? T$1 : I, o);else if ("dangerouslySetInnerHTML" !== l) {
+	  } else if ("o" === l[0] && "n" === l[1]) o = l !== (l = l.replace(/Capture$/, "")), l = l.toLowerCase() in n ? l.toLowerCase().slice(2) : l.slice(2), n.l || (n.l = {}), n.l[l + o] = u, u ? i || n.addEventListener(l, o ? T$2 : I, o) : n.removeEventListener(l, o ? T$2 : I, o);else if ("dangerouslySetInnerHTML" !== l) {
 	    if (t) l = l.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");else if ("href" !== l && "list" !== l && "form" !== l && "tabIndex" !== l && "download" !== l && l in n) try {
 	      n[l] = null == u ? "" : u;
 	      break n;
@@ -799,7 +804,7 @@
 	  this.l[n.type + !1](l$1.event ? l$1.event(n) : n);
 	}
 
-	function T$1(n) {
+	function T$2(n) {
 	  this.l[n.type + !0](l$1.event ? l$1.event(n) : n);
 	}
 
@@ -815,14 +820,16 @@
 	      g,
 	      x,
 	      A,
-	      P = u.type;
+	      P,
+	      C,
+	      $ = u.type;
 	  if (void 0 !== u.constructor) return null;
 	  null != i.__h && (c = i.__h, e = u.__e = i.__e, u.__h = null, r = [e]), (s = l$1.__b) && s(u);
 
 	  try {
-	    n: if ("function" == typeof P) {
-	      if (m = u.props, g = (s = P.contextType) && t[s.__c], x = s ? g ? g.props.value : s.__ : t, i.__c ? b = (h = u.__c = i.__c).__ = h.__E : ("prototype" in P && P.prototype.render ? u.__c = h = new P(m, x) : (u.__c = h = new _$1(m, x), h.constructor = P, h.render = O$1), g && g.sub(h), h.props = m, h.state || (h.state = {}), h.context = x, h.__n = t, v = h.__d = !0, h.__h = []), null == h.__s && (h.__s = h.state), null != P.getDerivedStateFromProps && (h.__s == h.state && (h.__s = a$1({}, h.__s)), a$1(h.__s, P.getDerivedStateFromProps(m, h.__s))), y = h.props, p = h.state, v) null == P.getDerivedStateFromProps && null != h.componentWillMount && h.componentWillMount(), null != h.componentDidMount && h.__h.push(h.componentDidMount);else {
-	        if (null == P.getDerivedStateFromProps && m !== y && null != h.componentWillReceiveProps && h.componentWillReceiveProps(m, x), !h.__e && null != h.shouldComponentUpdate && !1 === h.shouldComponentUpdate(m, h.__s, x) || u.__v === i.__v) {
+	    n: if ("function" == typeof $) {
+	      if (m = u.props, g = (s = $.contextType) && t[s.__c], x = s ? g ? g.props.value : s.__ : t, i.__c ? b = (h = u.__c = i.__c).__ = h.__E : ("prototype" in $ && $.prototype.render ? u.__c = h = new $(m, x) : (u.__c = h = new _$1(m, x), h.constructor = $, h.render = O$1), g && g.sub(h), h.props = m, h.state || (h.state = {}), h.context = x, h.__n = t, v = h.__d = !0, h.__h = []), null == h.__s && (h.__s = h.state), null != $.getDerivedStateFromProps && (h.__s == h.state && (h.__s = a$1({}, h.__s)), a$1(h.__s, $.getDerivedStateFromProps(m, h.__s))), y = h.props, p = h.state, v) null == $.getDerivedStateFromProps && null != h.componentWillMount && h.componentWillMount(), null != h.componentDidMount && h.__h.push(h.componentDidMount);else {
+	        if (null == $.getDerivedStateFromProps && m !== y && null != h.componentWillReceiveProps && h.componentWillReceiveProps(m, x), !h.__e && null != h.shouldComponentUpdate && !1 === h.shouldComponentUpdate(m, h.__s, x) || u.__v === i.__v) {
 	          h.props = m, h.state = h.__s, u.__v !== i.__v && (h.__d = !1), h.__v = u, u.__e = i.__e, u.__k = i.__k, u.__k.forEach(function (n) {
 	            n && (n.__ = u);
 	          }), h.__h.length && f.push(h);
@@ -833,7 +840,10 @@
 	          h.componentDidUpdate(y, p, k);
 	        });
 	      }
-	      h.context = x, h.props = m, h.state = h.__s, (s = l$1.__r) && s(u), h.__d = !1, h.__v = u, h.__P = n, s = h.render(h.props, h.state, h.context), h.state = h.__s, null != h.getChildContext && (t = a$1(a$1({}, t), h.getChildContext())), v || null == h.getSnapshotBeforeUpdate || (k = h.getSnapshotBeforeUpdate(y, p)), A = null != s && s.type === d$1 && null == s.key ? s.props.children : s, w$2(n, Array.isArray(A) ? A : [A], u, i, t, o, r, f, e, c), h.base = u.__e, u.__h = null, h.__h.length && f.push(h), b && (h.__E = h.__ = null), h.__e = !1;
+	      if (h.context = x, h.props = m, h.__v = u, h.__P = n, A = l$1.__r, P = 0, "prototype" in $ && $.prototype.render) h.state = h.__s, h.__d = !1, A && A(u), s = h.render(h.props, h.state, h.context);else do {
+	        h.__d = !1, A && A(u), s = h.render(h.props, h.state, h.context), h.state = h.__s;
+	      } while (h.__d && ++P < 25);
+	      h.state = h.__s, null != h.getChildContext && (t = a$1(a$1({}, t), h.getChildContext())), v || null == h.getSnapshotBeforeUpdate || (k = h.getSnapshotBeforeUpdate(y, p)), C = null != s && s.type === d$1 && null == s.key ? s.props.children : s, w$2(n, Array.isArray(C) ? C : [C], u, i, t, o, r, f, e, c), h.base = u.__e, u.__h = null, h.__h.length && f.push(h), b && (h.__E = h.__ = null), h.__e = !1;
 	    } else null == r && u.__v === i.__v ? (u.__k = i.__k, u.__e = i.__e) : u.__e = L$1(i.__e, u, i, t, o, r, f, c);
 
 	    (s = l$1.diffed) && s(u);
@@ -842,7 +852,7 @@
 	  }
 	}
 
-	function z$1(n, u) {
+	function z$2(n, u) {
 	  l$1.__c && l$1.__c(u, n), n.some(function (u) {
 	    try {
 	      n = u.__h, u.__h = [], n.some(function (n) {
@@ -914,7 +924,7 @@
 
 	function S$1(u, i, t) {
 	  var o, r, f;
-	  l$1.__ && l$1.__(u, i), r = (o = "function" == typeof t) ? null : t && t.__k || i.__k, f = [], j$2(i, u = (!o && t || i).__k = v$1(d$1, null, [u]), r || e$1, e$1, void 0 !== i.ownerSVGElement, !o && t ? [t] : r ? null : i.firstChild ? n.call(i.childNodes) : null, f, !o && t ? t : r ? r.__e : i.firstChild, o), z$1(f, u);
+	  l$1.__ && l$1.__(u, i), r = (o = "function" == typeof t) ? null : t && t.__k || i.__k, f = [], j$2(i, u = (!o && t || i).__k = v$1(d$1, null, [u]), r || e$1, e$1, void 0 !== i.ownerSVGElement, !o && t ? [t] : r ? null : i.firstChild ? n.call(i.childNodes) : null, f, !o && t ? t : r ? r.__e : i.firstChild, o), z$2(f, u);
 	}
 
 	function B(l, u, i) {
@@ -971,7 +981,7 @@
 	  this.__v && (this.__e = !0, n && this.__h.push(n), m$1(this));
 	}, _$1.prototype.render = d$1, t$1 = [], o$1 = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, g$1.__r = 0, f$1 = 0;
 
-	"undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.7.1", l$1, {
+	"undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.8.1", l$1, {
 	  Fragment: d$1,
 	  Component: _$1
 	});
@@ -979,55 +989,56 @@
 	var t,
 	    u,
 	    r,
-	    o = 0,
-	    i = [],
-	    c = l$1.__b,
-	    f = l$1.__r,
-	    e = l$1.diffed,
-	    a = l$1.__c,
-	    v = l$1.unmount;
+	    o,
+	    i = 0,
+	    c = [],
+	    f = l$1.__b,
+	    e = l$1.__r,
+	    a = l$1.diffed,
+	    v = l$1.__c,
+	    l = l$1.unmount;
 
-	function l(t, r) {
-	  l$1.__h && l$1.__h(u, t, o || r), o = 0;
-	  var i = u.__H || (u.__H = {
+	function m(t, r) {
+	  l$1.__h && l$1.__h(u, t, i || r), i = 0;
+	  var o = u.__H || (u.__H = {
 	    __: [],
 	    __h: []
 	  });
-	  return t >= i.__.length && i.__.push({}), i.__[t];
+	  return t >= o.__.length && o.__.push({}), o.__[t];
 	}
 
-	function m(n) {
-	  return o = 1, p(w$1, n);
+	function d(n) {
+	  return i = 1, p(z$1, n);
 	}
 
 	function p(n, r, o) {
-	  var i = l(t++, 2);
-	  return i.t = n, i.__c || (i.__ = [o ? o(r) : w$1(void 0, r), function (n) {
+	  var i = m(t++, 2);
+	  return i.t = n, i.__c || (i.__ = [o ? o(r) : z$1(void 0, r), function (n) {
 	    var t = i.t(i.__[0], n);
 	    i.__[0] !== t && (i.__ = [t, i.__[1]], i.__c.setState({}));
 	  }], i.__c = u), i.__;
 	}
 
 	function y(r, o) {
-	  var i = l(t++, 3);
-	  !l$1.__s && k(i.__H, o) && (i.__ = r, i.__H = o, u.__H.__h.push(i));
+	  var i = m(t++, 3);
+	  !l$1.__s && w$1(i.__H, o) && (i.__ = r, i.u = o, u.__H.__h.push(i));
 	}
 
-	function d(r, o) {
-	  var i = l(t++, 4);
-	  !l$1.__s && k(i.__H, o) && (i.__ = r, i.__H = o, u.__h.push(i));
+	function h(r, o) {
+	  var i = m(t++, 4);
+	  !l$1.__s && w$1(i.__H, o) && (i.__ = r, i.u = o, u.__h.push(i));
 	}
 
-	function h(n) {
-	  return o = 5, _(function () {
+	function s(n) {
+	  return i = 5, A$1(function () {
 	    return {
 	      current: n
 	    };
 	  }, []);
 	}
 
-	function s(n, t, u) {
-	  o = 6, d(function () {
+	function _(n, t, u) {
+	  i = 6, h(function () {
 	    return "function" == typeof n ? (n(t()), function () {
 	      return n(null);
 	    }) : n ? (n.current = t(), function () {
@@ -1036,222 +1047,100 @@
 	  }, null == u ? u : u.concat(n));
 	}
 
-	function _(n, u) {
-	  var r = l(t++, 7);
-	  return k(r.__H, u) && (r.__ = n(), r.__H = u, r.__h = n), r.__;
+	function A$1(n, u) {
+	  var r = m(t++, 7);
+	  return w$1(r.__H, u) ? (r.o = n(), r.u = u, r.__h = n, r.o) : r.__;
 	}
 
-	function A$1(n, t) {
-	  return o = 8, _(function () {
+	function F(n, t) {
+	  return i = 8, A$1(function () {
 	    return n;
 	  }, t);
 	}
 
-	function F(n) {
+	function T$1(n) {
 	  var r = u.context[n.__c],
-	      o = l(t++, 9);
+	      o = m(t++, 9);
 	  return o.c = n, r ? (null == o.__ && (o.__ = !0, r.sub(u)), r.props.value) : n.__;
 	}
 
-	function x$1() {
-	  for (var t; t = i.shift();) if (t.__P) try {
-	    t.__H.__h.forEach(g), t.__H.__h.forEach(j$1), t.__H.__h = [];
+	function b() {
+	  for (var t; t = c.shift();) if (t.__P) try {
+	    t.__H.__h.forEach(j$1), t.__H.__h.forEach(k), t.__H.__h = [];
 	  } catch (u) {
 	    t.__H.__h = [], l$1.__e(u, t.__v);
 	  }
 	}
 
 	l$1.__b = function (n) {
-	  u = null, c && c(n);
+	  u = null, f && f(n);
 	}, l$1.__r = function (n) {
-	  f && f(n), t = 0;
-	  var r = (u = n.__c).__H;
-	  r && (r.__h.forEach(g), r.__h.forEach(j$1), r.__h = []);
+	  e && e(n), t = 0;
+	  var o = (u = n.__c).__H;
+	  o && (r === u ? (o.__h = [], u.__h = [], o.__.forEach(function (n) {
+	    n.o = n.u = void 0;
+	  })) : (o.__.forEach(function (n) {
+	    n.u && (n.__H = n.u), n.o && (n.__ = n.o), n.o = n.u = void 0;
+	  }), o.__h.forEach(j$1), o.__h.forEach(k), o.__h = [])), r = u;
 	}, l$1.diffed = function (t) {
-	  e && e(t);
-	  var o = t.__c;
-	  o && o.__H && o.__H.__h.length && (1 !== i.push(o) && r === l$1.requestAnimationFrame || ((r = l$1.requestAnimationFrame) || function (n) {
+	  a && a(t);
+	  var i = t.__c;
+	  i && i.__H && i.__H.__h.length && (1 !== c.push(i) && o === l$1.requestAnimationFrame || ((o = l$1.requestAnimationFrame) || function (n) {
 	    var t,
 	        u = function () {
-	      clearTimeout(r), b && cancelAnimationFrame(t), setTimeout(n);
+	      clearTimeout(r), g && cancelAnimationFrame(t), setTimeout(n);
 	    },
 	        r = setTimeout(u, 100);
 
-	    b && (t = requestAnimationFrame(u));
-	  })(x$1)), u = null;
+	    g && (t = requestAnimationFrame(u));
+	  })(b)), u = null, r = null;
 	}, l$1.__c = function (t, u) {
 	  u.some(function (t) {
 	    try {
-	      t.__h.forEach(g), t.__h = t.__h.filter(function (n) {
-	        return !n.__ || j$1(n);
+	      t.__H && t.__H.__.forEach(function (n) {
+	        n.u && (n.__H = n.u), n.o && (n.__ = n.o), n.o = n.u = void 0;
+	      }), t.__h.forEach(j$1), t.__h = t.__h.filter(function (n) {
+	        return !n.__ || k(n);
 	      });
 	    } catch (r) {
 	      u.some(function (n) {
 	        n.__h && (n.__h = []);
 	      }), u = [], l$1.__e(r, t.__v);
 	    }
-	  }), a && a(t, u);
+	  }), v && v(t, u);
 	}, l$1.unmount = function (t) {
-	  v && v(t);
+	  l && l(t);
 	  var u,
 	      r = t.__c;
 	  r && r.__H && (r.__H.__.forEach(function (n) {
 	    try {
-	      g(n);
+	      j$1(n);
 	    } catch (n) {
 	      u = n;
 	    }
 	  }), u && l$1.__e(u, r.__v));
 	};
-	var b = "function" == typeof requestAnimationFrame;
+	var g = "function" == typeof requestAnimationFrame;
 
-	function g(n) {
+	function j$1(n) {
 	  var t = u,
 	      r = n.__c;
 	  "function" == typeof r && (n.__c = void 0, r()), u = t;
 	}
 
-	function j$1(n) {
+	function k(n) {
 	  var t = u;
 	  n.__c = n.__(), u = t;
 	}
 
-	function k(n, t) {
+	function w$1(n, t) {
 	  return !n || n.length !== t.length || t.some(function (t, u) {
 	    return t !== n[u];
 	  });
 	}
 
-	function w$1(n, t) {
+	function z$1(n, t) {
 	  return "function" == typeof t ? t(n) : t;
-	}
-
-	/**
-	 * Debug hook.
-	 *
-	 * Given a value or set of values, emits a console error if any of them change from one render to the next.
-	 */
-
-	function useEnsureStability() {
-	  for (var _len = arguments.length, values = new Array(_len), _key = 0; _key < _len; _key++) {
-	    values[_key] = arguments[_key];
-	  }
-
-	  useHelper(values.length, 0);
-	  values.forEach(useHelper);
-	  return;
-
-	  function useHelper(value, index) {
-	    // Make sure that the provided functions are perfectly stable across renders
-	    const helperToEnsureStability = h(value);
-	    const shownError = h(false);
-
-	    if (helperToEnsureStability.current != value) {
-	      if (!shownError.current) {
-	        console.error(`This hook requires some or all of its arguments remain stable across each render; please check the ${index}-indexed value that was checked.`);
-	        debugger;
-	        shownError.current = true;
-	      }
-	    }
-	  }
-	}
-	/**
-	 * Similar to `useState`, but for values that aren't "render-important" &ndash; updates don't cause a re-render and so the value shouldn't be used during render (though it certainly can, at least by re-rendering again).
-	 *
-	 * To compensate for this, you should pass a `useEffect`-esque callback that is run whenever the value changes.  Just like `useEffect`, this callback can return a cleanup function that's run before the value changes.  If you would like to re-render when the value changes (or, say, when the value meets some criteria), this is where you'll want to put in a call to a `setState` function.
-	 *
-	 * To summarize, it's like a `useState`-`useEffect` mashup:
-	 *
-	 * 1. It's like `useState`, except this version of `setState` doesn't re-render the whole component
-	 * 2. It's like `useState`, except you can run a function when the value changes that optionally returns a cleanup function
-	 * 3. It's like `useEffect`, except you trigger the effect function "remotely" instead of it running after rendering
-	 * 4. It's like `useEffect`, except the single "dependency" is based on your calls to `setState`
-	 *
-	 * Note that while calling `setState` doesn't cause any re-renders, you can do that within your `onChange` function, called whenever the value changes via that `setState`.
-	 *
-	 * @param onChange The "effect" function to run when the value changes. Effectively the same as `useEffect`'s "effect" function.  MUST BE STABLE, either because it has no dependencies, or because it's from useStableCallback, but this will mean you cannot use getState or setState during render.
-	 * @param getInitialValue If provided, the effect will be invoked once with this value on mount. MUST BE STABLE, either because it has no dependencies, or because it's from useStableCallback, but this will mean you cannot use getState or setState during render.
-	 * @returns
-	 */
-
-	function usePassiveState(onChange, getInitialValue) {
-	  const valueRef = h(Unset$1);
-	  const warningRef = h(false);
-	  const cleanupCallbackRef = h(undefined); // Make sure that the provided functions are perfectly stable across renders
-
-	  useEnsureStability(onChange, getInitialValue); // Shared between "dependency changed" and "component unmounted".
-
-	  const onShouldCleanUp = A$1(() => {
-	    let cleanupCallback = cleanupCallbackRef.current;
-	    if (cleanupCallback) cleanupCallback();
-	  }, []); // There are a couple places where we'd like to use our initial
-	  // value in place of having no value at all yet.
-	  // This is the shared code for that, used on mount and whenever
-	  // getValue is called.
-
-	  const tryEnsureValue = A$1(() => {
-	    if (valueRef.current === Unset$1 && getInitialValue != undefined) {
-	      try {
-	        var _onChange;
-
-	        const initialValue = getInitialValue();
-	        valueRef.current = initialValue;
-	        cleanupCallbackRef.current = (_onChange = onChange === null || onChange === void 0 ? void 0 : onChange(initialValue, undefined)) !== null && _onChange !== void 0 ? _onChange : undefined;
-	      } catch (ex) {// Exceptions are intentional to allow bailout (without exposing the Unset symbol)
-	      }
-	    }
-	  }, [
-	    /* getInitialValue and onChange intentionally omitted */
-	  ]);
-	  const getValue = A$1(() => {
-	    if (warningRef.current) console.warn("During onChange, prefer using the (value, prevValue) arguments instead of getValue -- it's ambiguous as to if you're asking for the old or new value at this point in time for this component."); // The first time we call getValue, if we haven't been given a value yet,
-	    // (and we were given an initial value to use)
-	    // return the initial value instead of nothing.
-
-	    if (valueRef.current === Unset$1) tryEnsureValue();
-	    return valueRef.current === Unset$1 ? undefined : valueRef.current;
-	  }, []);
-	  d(() => {
-	    // Make sure we've run our effect at least once on mount.
-	    // (If we have an initial value, of course)
-	    tryEnsureValue();
-	  }, []); // The actual code the user calls to (possibly) run a new effect.
-
-	  const setValue = A$1(arg => {
-	    const prevDep = valueRef.current === Unset$1 ? undefined : getValue();
-	    const dep = arg instanceof Function ? arg(prevDep) : arg;
-
-	    if (dep !== valueRef.current) {
-	      var _onChange2;
-
-	      // Indicate to the user that they shouldn't call getValue during onChange
-	      warningRef.current = true; // Call any registerd cleanup function
-
-	      onShouldCleanUp();
-	      cleanupCallbackRef.current = (_onChange2 = onChange === null || onChange === void 0 ? void 0 : onChange(dep, prevDep)) !== null && _onChange2 !== void 0 ? _onChange2 : undefined;
-	      valueRef.current = dep; // Allow the user to normally call getValue again
-
-	      warningRef.current = false;
-	    }
-	  }, []);
-	  return [getValue, setValue];
-	}
-	const Unset$1 = Symbol();
-
-	function useMergedChildren(lhsProps, rhsProps) {
-	  const lhs = lhsProps === null || lhsProps === void 0 ? void 0 : lhsProps.children;
-	  const rhs = rhsProps === null || rhsProps === void 0 ? void 0 : rhsProps.children;
-
-	  if (lhs == null && rhs == null) {
-	    return undefined;
-	  } else if (lhs == null) {
-	    return rhs;
-	  } else if (rhs == null) {
-	    return lhs;
-	  } else {
-	    let ret = v$1(d$1, {}, lhs, rhs);
-	    return ret;
-	  }
 	}
 
 	function toVal(mix) {
@@ -1302,6 +1191,146 @@
 	  return str;
 	}
 
+	function getDocument(element) {
+	  var _ref, _ref2, _element$ownerDocumen;
+
+	  return (_ref = (_ref2 = (_element$ownerDocumen = element === null || element === void 0 ? void 0 : element.ownerDocument) !== null && _element$ownerDocumen !== void 0 ? _element$ownerDocumen : document) !== null && _ref2 !== void 0 ? _ref2 : window.document) !== null && _ref !== void 0 ? _ref : globalThis.document;
+	}
+
+	/**
+	 * Debug hook.
+	 *
+	 * Given a value or set of values, emits a console error if any of them change from one render to the next.
+	 *
+	 * Eventually, when useEvent lands, we hopefully won't need this.
+	 */
+
+	function useEnsureStability(parentHookName) {
+	  for (var _len = arguments.length, values = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    values[_key - 1] = arguments[_key];
+	  }
+
+	  useHelper(values.length, 0);
+	  values.forEach(useHelper);
+	  return;
+
+	  function useHelper(value, index) {
+	    // Make sure that the provided functions are perfectly stable across renders
+	    const helperToEnsureStability = s(value);
+	    const shownError = s(false);
+
+	    if (helperToEnsureStability.current != value) {
+	      if (!shownError.current) {
+	        /* eslint-disable no-debugger */
+	        debugger;
+	        console.error(`The hook ${parentHookName} requires some or all of its arguments remain stable across each render; please check the ${index}-indexed argument.`);
+	        shownError.current = true;
+	      }
+	    }
+	  }
+	}
+	/**
+	 * Similar to `useState`, but for values that aren't "render-important" &ndash; updates don't cause a re-render and so the value shouldn't be used during render (though it certainly can, at least by re-rendering again).
+	 *
+	 * To compensate for this, you should pass a `useEffect`-esque callback that is run whenever the value changes.  Just like `useEffect`, this callback can return a cleanup function that's run before the value changes.  If you would like to re-render when the value changes (or, say, when the value meets some criteria), this is where you'll want to put in a call to a `setState` function.
+	 *
+	 * To summarize, it's like a `useState`-`useEffect` mashup:
+	 *
+	 * 1. It's like `useState`, except this version of `setState` doesn't re-render the whole component
+	 * 2. It's like `useState`, except you can run a function when the value changes that optionally returns a cleanup function
+	 * 3. It's like `useEffect`, except you trigger the effect function "remotely" instead of it running after rendering
+	 * 4. It's like `useEffect`, except the single "dependency" is based on your calls to `setState`
+	 *
+	 * Note that while calling `setState` doesn't cause any re-renders, you can do that within your `onChange` function, called whenever the value changes via that `setState`.
+	 *
+	 * @param onChange The "effect" function to run when the value changes. Effectively the same as `useEffect`'s "effect" function.  MUST BE STABLE, either because it has no dependencies, or because it's from useStableCallback, but this will mean you cannot use getState or setState during render.
+	 * @param getInitialValue If provided, the effect will be invoked once with this value on mount. MUST BE STABLE, either because it has no dependencies, or because it's from useStableCallback, but this will mean you cannot use getState or setState during render.
+	 * @returns
+	 */
+
+	function usePassiveState(onChange, getInitialValue) {
+	  const valueRef = s(Unset$1);
+	  const warningRef = s(false);
+	  const cleanupCallbackRef = s(undefined); // Make sure that the provided functions are perfectly stable across renders
+
+	  useEnsureStability("usePassiveState", onChange, getInitialValue); // Shared between "dependency changed" and "component unmounted".
+
+	  const onShouldCleanUp = F(() => {
+	    const cleanupCallback = cleanupCallbackRef.current;
+	    if (cleanupCallback) cleanupCallback();
+	  }, []); // There are a couple places where we'd like to use our initial
+	  // value in place of having no value at all yet.
+	  // This is the shared code for that, used on mount and whenever
+	  // getValue is called.
+
+	  const tryEnsureValue = F(() => {
+	    if (valueRef.current === Unset$1 && getInitialValue != undefined) {
+	      try {
+	        var _onChange;
+
+	        const initialValue = getInitialValue();
+	        valueRef.current = initialValue;
+	        cleanupCallbackRef.current = (_onChange = onChange === null || onChange === void 0 ? void 0 : onChange(initialValue, undefined)) !== null && _onChange !== void 0 ? _onChange : undefined;
+	      } catch (ex) {// Exceptions are intentional to allow bailout (without exposing the Unset symbol)
+	      }
+	    }
+	  }, [
+	    /* getInitialValue and onChange intentionally omitted */
+	  ]);
+	  const getValue = F(() => {
+	    if (warningRef.current) console.warn("During onChange, prefer using the (value, prevValue) arguments instead of getValue -- it's ambiguous as to if you're asking for the old or new value at this point in time for this component."); // The first time we call getValue, if we haven't been given a value yet,
+	    // (and we were given an initial value to use)
+	    // return the initial value instead of nothing.
+
+	    if (valueRef.current === Unset$1) tryEnsureValue();
+	    return valueRef.current === Unset$1 ? undefined : valueRef.current;
+	  }, []);
+	  h(() => {
+	    // Make sure we've run our effect at least once on mount.
+	    // (If we have an initial value, of course)
+	    tryEnsureValue();
+	  }, []); // The actual code the user calls to (possibly) run a new effect.
+
+	  const setValue = F(arg => {
+	    const prevDep = valueRef.current === Unset$1 ? undefined : getValue();
+	    const dep = arg instanceof Function ? arg(prevDep) : arg;
+
+	    if (dep !== valueRef.current) {
+	      var _onChange2;
+
+	      // Indicate to the user that they shouldn't call getValue during onChange
+	      warningRef.current = true; // Call any registerd cleanup function
+
+	      onShouldCleanUp();
+	      cleanupCallbackRef.current = (_onChange2 = onChange === null || onChange === void 0 ? void 0 : onChange(dep, prevDep)) !== null && _onChange2 !== void 0 ? _onChange2 : undefined;
+	      valueRef.current = dep; // Allow the user to normally call getValue again
+
+	      warningRef.current = false;
+	    }
+	  }, []);
+	  return [getValue, setValue];
+	}
+	const Unset$1 = Symbol(); // Easy constants for getInitialValue
+	function returnNull$1() {
+	  return null;
+	}
+
+	function useMergedChildren(lhsProps, rhsProps) {
+	  const lhs = lhsProps === null || lhsProps === void 0 ? void 0 : lhsProps.children;
+	  const rhs = rhsProps === null || rhsProps === void 0 ? void 0 : rhsProps.children;
+
+	  if (lhs == null && rhs == null) {
+	    return undefined;
+	  } else if (lhs == null) {
+	    return rhs;
+	  } else if (rhs == null) {
+	    return lhs;
+	  } else {
+	    const ret = v$1(d$1, {}, lhs, rhs);
+	    return ret;
+	  }
+	}
+
 	/**
 	 * Given two sets of props, merges their `class` and `className` properties.
 	 * Duplicate classes are removed (order doesn't matter anyway).
@@ -1324,9 +1353,9 @@
 	  const rhsClassName = rhs === null || rhs === void 0 ? void 0 : rhs.className;
 
 	  if (lhsClass || rhsClass || lhsClassName || rhsClassName) {
-	    let lhsClasses = clsx(lhsClass, lhsClassName).split(" ");
-	    let rhsClasses = clsx(rhsClass, rhsClassName).split(" ");
-	    let allClasses = new Set([...Array.from(lhsClasses), ...Array.from(rhsClasses)]);
+	    const lhsClasses = clsx(lhsClass, lhsClassName).split(" ");
+	    const rhsClasses = clsx(rhsClass, rhsClassName).split(" ");
+	    const allClasses = new Set([...Array.from(lhsClasses), ...Array.from(rhsClasses)]);
 	    return Array.from(allClasses).join(" ");
 	  } else {
 	    return undefined;
@@ -1339,8 +1368,8 @@
 	  } else if (ref != null) {
 	    ref.current = instance;
 	  } else {
-	    debugger; // Intentional
-
+	    /* eslint-disable no-debugger */
+	    debugger;
 	    console.assert(false, "Unknown ref type found that was neither a RefCallback nor a RefObject");
 	  }
 	}
@@ -1356,7 +1385,7 @@
 	  return function (lhsProps, rhsProps) {
 	    const lhs = lhsProps === null || lhsProps === void 0 ? void 0 : lhsProps.ref;
 	    const rhs = rhsProps === null || rhsProps === void 0 ? void 0 : rhsProps.ref;
-	    let combined = A$1(current => {
+	    const combined = F(current => {
 	      processRef(current, lhs);
 	      processRef(current, rhs);
 	    }, [lhs, rhs]);
@@ -1372,42 +1401,6 @@
 	    }
 	  };
 	}
-	/*
-	function typetest<P extends h.JSX.HTMLAttributes<HTMLInputElement>>(props: P) {
-
-	    const ref: RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
-
-	    function acceptsRef(ref: Ref<any>) { }
-	    function acceptsOptionalRef(ref: Ref<any> | undefined) { }
-
-	    const c = [
-	        useMergedRefs<HTMLInputElement>()(undefined, undefined),
-	        useMergedRefs<HTMLInputElement>()({}, undefined),
-	        useMergedRefs<HTMLInputElement>()(props, undefined),
-	        useMergedRefs<HTMLInputElement>()(undefined, props),
-	        useMergedRefs<HTMLInputElement>()(props, props),
-	        useMergedRefs<HTMLInputElement>()({ ref }, props),
-	        useMergedRefs<HTMLInputElement>()({ ref }, { ref: undefined }),
-	        useMergedRefs<HTMLInputElement>()({ ref: undefined }, { ref }),
-	        useMergedRefs<HTMLInputElement>()({ ref }, { ref }),
-	    ] as const;
-
-	    /// @ts-expect-error
-	    acceptsRef(c[0]);
-	    /// @ts-expect-error
-	    acceptsRef(c[1]);
-
-	    acceptsOptionalRef(c[2]);
-	    acceptsOptionalRef(c[3]);
-	    acceptsOptionalRef(c[4]);
-
-	    /// @ts-expect-error TODO
-	    acceptsRef(c[5]);
-	    acceptsRef(c[6]);
-	    acceptsRef(c[7]);
-	    acceptsRef(c[8]);
-	}
-	*/
 
 	function styleStringToObject(style) {
 	  // TODO: This sucks D:
@@ -1461,11 +1454,7 @@
 	  };
 	}
 
-	let log = str => {
-	  debugger;
-	  console.warn(`Trying to merge two props with the same name: ${str}`);
-	  /* Intentional */
-	};
+	let log = console.warn;
 	/**
 	 * Given two sets of props, merges them and returns the result.
 	 *
@@ -1476,30 +1465,32 @@
 	 */
 
 	function useMergedProps() {
-	  return function (lhs2, rhs2) {
-	    // First, put in all the properties that are easy to reason about
-	    // and all lhs props. We're going to merge in rhs just after.
+	  return function (lhsAll, rhsAll) {
+	    // First, separate the props we were given into two groups:
+	    // lhsAll and rhsAll contain all the props we were given, and
+	    // lhsMisc and rhsMisc contain all props *except* for the easy ones
+	    // like className and style that we already know how to merge.
 	    const {
-	      children: lhsChildren,
-	      class: lhsClass,
-	      className: lhsClassName,
-	      style: lhsStyle,
-	      ref: lhsRef,
-	      ...lhs
-	    } = lhs2;
+	      children: _lhsChildren,
+	      class: _lhsClass,
+	      className: _lhsClassName,
+	      style: _lhsStyle,
+	      ref: _lhsRef,
+	      ...lhsMisc
+	    } = lhsAll;
 	    const {
-	      children: rhsChildren,
-	      class: rhsClass,
-	      className: rhsClassName,
-	      style: rhsStyle,
-	      ref: rhsRef,
-	      ...rhs
-	    } = rhs2;
-	    let ret = { ...lhs,
-	      ref: useMergedRefs()(lhs2, rhs2),
-	      style: useMergedStyles(lhs2, rhs2),
-	      className: useMergedClasses(lhs2, rhs2),
-	      children: useMergedChildren(lhs2, rhs2)
+	      children: _rhsChildren,
+	      class: _rhsClass,
+	      className: _rhsClassName,
+	      style: _rhsStyle,
+	      ref: _rhsRef,
+	      ...rhsMisc
+	    } = rhsAll;
+	    const ret = { ...lhsMisc,
+	      ref: useMergedRefs()(lhsAll, rhsAll),
+	      style: useMergedStyles(lhsAll, rhsAll),
+	      className: useMergedClasses(lhsAll, rhsAll),
+	      children: useMergedChildren(lhsAll, rhsAll)
 	    };
 	    if (ret.ref === undefined) delete ret.ref;
 	    if (ret.style === undefined) delete ret.style;
@@ -1508,10 +1499,10 @@
 	    // Merge every remaining existing entry in lhs with what we've already put in ret.
 	    //const lhsEntries = Object.entries(lhs) as [keyof T, T[keyof T]][];
 
-	    const rhsEntries = Object.entries(rhs);
+	    const rhsEntries = Object.entries(rhsMisc);
 
 	    for (const [rhsKey, rhsValue] of rhsEntries) {
-	      const lhsValue = lhs[rhsKey];
+	      const lhsValue = lhsMisc[rhsKey];
 
 	      if (typeof lhsValue === "function" || typeof rhsValue === "function") {
 	        // They're both functions that can be merged (or one's a function and the other's null).
@@ -1529,7 +1520,7 @@
 
 	          // Ugh.
 	          // No good strategies here, just log it if requested
-	          (_log = log) === null || _log === void 0 ? void 0 : _log(`Could not merge incompatible prop "${rhsKey}" (type: ${typeof rhsValue}, values: [${lhsValue}, ${rhsValue}])`);
+	          (_log = log) === null || _log === void 0 ? void 0 : _log(`The prop "${typeof rhsKey == "symbol" ? "<symbol>" : rhsKey}" cannot simultaneously be the values ${lhsValue} and ${rhsValue}. One must be chosen outside of useMergedProps.`);
 	          ret[rhsKey] = rhsValue;
 	        }
 	      }
@@ -1543,8 +1534,8 @@
 	  if (!lhs) return rhs;
 	  if (!rhs) return lhs;
 	  return function () {
-	    let lv = lhs(...arguments);
-	    let rv = rhs(...arguments);
+	    const lv = lhs(...arguments);
+	    const rv = rhs(...arguments);
 	    if (lv instanceof Promise || rv instanceof Promise) return Promise.all([lv, rv]);
 	  };
 	}
@@ -1725,7 +1716,7 @@
 	function acceptsNever(n: never) {}
 	*/
 
-	function returnNull$1() {
+	function returnNull() {
 	  return null;
 	}
 	/**
@@ -1740,15 +1731,26 @@
 
 
 	function useRefElement(args) {
-	  const onElementChange = args === null || args === void 0 ? void 0 : args.onElementChange; // Let us store the actual (reference to) the element we capture
+	  const {
+	    onElementChange,
+	    onMount,
+	    onUnmount
+	  } = args !== null && args !== void 0 ? args : {};
+	  useEnsureStability("useRefElement", onElementChange, onMount, onUnmount); // Called (indirectly) by the ref that the element receives.
 
-	  const [getElement, setElement] = usePassiveState(onElementChange, returnNull$1); // Create a RefCallback that's fired when mounted 
+	  const handler = F((e, prevValue) => {
+	    onElementChange === null || onElementChange === void 0 ? void 0 : onElementChange(e, prevValue);
+	    if (prevValue) onUnmount === null || onUnmount === void 0 ? void 0 : onUnmount(prevValue);
+	    if (e) onMount === null || onMount === void 0 ? void 0 : onMount(e);
+	  }, []); // Let us store the actual (reference to) the element we capture
+
+	  const [getElement, setElement] = usePassiveState(handler, returnNull); // Create a RefCallback that's fired when mounted 
 	  // and that notifies us of our element when we have it
 
-	  const myRef = A$1(e => {
+	  const myRef = F(e => {
 	    if (e) setElement(() => e);
 	  }, []);
-	  const useRefElementProps = A$1(props => useMergedProps()({
+	  const useRefElementProps = F(props => useMergedProps()({
 	    ref: myRef
 	  }, props), []); // Return both the element and the hook that modifies 
 	  // the props and allows us to actually find the element
@@ -1759,21 +1761,17 @@
 	  };
 	}
 
-	function returnNull() {
-	  return null;
-	}
-
 	function useElementSize(_ref) {
 	  let {
 	    getObserveBox,
 	    onSizeChange
 	  } = _ref;
-	  useEnsureStability(getObserveBox, onSizeChange);
-	  const [getSize, setSize] = usePassiveState(onSizeChange, returnNull);
-	  const currentObserveBox = h(undefined);
-	  const needANewObserver = A$1((element, observeBox) => {
+	  useEnsureStability("useElementSize", getObserveBox, onSizeChange);
+	  const [getSize, setSize] = usePassiveState(onSizeChange, returnNull$1);
+	  const currentObserveBox = s(undefined);
+	  const needANewObserver = F((element, observeBox) => {
 	    if (element) {
-	      const document = element.ownerDocument;
+	      const document = getDocument(element);
 	      const window = document.defaultView;
 
 	      const handleUpdate = () => {
@@ -1810,7 +1808,7 @@
 	      };
 
 	      if (window && "ResizeObserver" in window) {
-	        const observer = new ResizeObserver(entries => {
+	        const observer = new ResizeObserver(_entries => {
 	          handleUpdate();
 	        });
 	        observer.observe(element, {
@@ -1829,7 +1827,7 @@
 	    getElement,
 	    useRefElementProps
 	  } = useRefElement({
-	    onElementChange: A$1(e => needANewObserver(e, getObserveBox === null || getObserveBox === void 0 ? void 0 : getObserveBox()), [])
+	    onElementChange: F(e => needANewObserver(e, getObserveBox === null || getObserveBox === void 0 ? void 0 : getObserveBox()), [])
 	  });
 	  y(() => {
 	    if (getObserveBox) {
@@ -1868,13 +1866,13 @@
 	  let {
 	    onLogicalDirectionChange
 	  } = _ref;
-	  useEnsureStability(onLogicalDirectionChange);
-	  const [getComputedStyles, setComputedStyles] = usePassiveState(null);
+	  useEnsureStability("useLogicalDirection", onLogicalDirectionChange);
+	  const [getComputedStyles, setComputedStyles] = usePassiveState(null, returnNull$1);
 	  const {
 	    getElement,
 	    useRefElementProps
 	  } = useRefElement({
-	    onElementChange: A$1(element => {
+	    onElementChange: F(element => {
 	      if (element) {
 	        setComputedStyles(window.getComputedStyle(element));
 	      }
@@ -1893,15 +1891,15 @@
 	  const {
 	    useElementSizeProps
 	  } = useElementSize({
-	    onSizeChange: A$1(_ => onLogicalDirectionChange === null || onLogicalDirectionChange === void 0 ? void 0 : onLogicalDirectionChange(getLogicalDirectionInfo()), [])
+	    onSizeChange: F(_ => onLogicalDirectionChange === null || onLogicalDirectionChange === void 0 ? void 0 : onLogicalDirectionChange(getLogicalDirectionInfo()), [])
 	  });
-	  const getLogicalDirectionInfo = A$1(() => {
+	  const getLogicalDirectionInfo = F(() => {
 	    const computedStyles = getComputedStyles();
 
 	    if (computedStyles) {
-	      let w = computedStyles.writingMode;
+	      const w = computedStyles.writingMode;
 	      let d = computedStyles.direction;
-	      let t = computedStyles.textOrientation;
+	      const t = computedStyles.textOrientation;
 	      if (t == "upright") d = "ltr";
 	      return { ...WritingModes[w || "horizontal-tb"][d || "ltr"]
 	      };
@@ -1910,14 +1908,14 @@
 	    return null;
 	  }, []); //const [getLogicalDirectionInfo, setLogicalDirectionInfo] = usePassiveState<LogicalDirectionInfo>(onLogicalDirectionChange);
 
-	  const convertToLogicalOrientation = A$1((elementOrientation, direction) => {
+	  const convertToLogicalOrientation = F((elementOrientation, direction) => {
 	    var _direction, _direction2;
 
 	    (_direction = direction) !== null && _direction !== void 0 ? _direction : direction = getLogicalDirectionInfo();
 	    if (((_direction2 = direction) === null || _direction2 === void 0 ? void 0 : _direction2.inlineOrientation) === elementOrientation) return "inline";
 	    return "block";
 	  }, []);
-	  const convertToPhysicalSide = A$1((side, direction) => {
+	  const convertToPhysicalSide = F((side, direction) => {
 	    var _direction3, _direction$blockDirec, _direction4, _direction$blockDirec2, _direction5, _direction$inlineDire, _direction6, _direction$inlineDire2, _direction7;
 
 	    (_direction3 = direction) !== null && _direction3 !== void 0 ? _direction3 : direction = getLogicalDirectionInfo();
@@ -1936,7 +1934,7 @@
 	        return M$1[((_direction$inlineDire2 = (_direction7 = direction) === null || _direction7 === void 0 ? void 0 : _direction7.inlineDirection) !== null && _direction$inlineDire2 !== void 0 ? _direction$inlineDire2 : "ltr")[2]];
 	    }
 	  }, []);
-	  const convertToLogicalSide = A$1((side, direction) => {
+	  const convertToLogicalSide = F((side, direction) => {
 	    var _direction8, _direction9, _direction10;
 
 	    (_direction8 = direction) !== null && _direction8 !== void 0 ? _direction8 : direction = getLogicalDirectionInfo();
@@ -1970,12 +1968,14 @@
 	          return direction.inlineDirection === "rtl" ? "inline-start" : "inline-end";
 	      }
 	    }
+	    /* eslint-disable no-debugger */
+
 
 	    debugger;
 	    console.assert(false);
 	    return "inline-start";
 	  }, []);
-	  const convertToPhysicalOrientation = A$1((elementOrientation, direction) => {
+	  const convertToPhysicalOrientation = F((elementOrientation, direction) => {
 	    var _direction11;
 
 	    (_direction11 = direction) !== null && _direction11 !== void 0 ? _direction11 : direction = getLogicalDirectionInfo();
@@ -1992,7 +1992,7 @@
 	      return "horizontal";
 	    }
 	  }, []);
-	  const convertElementSize = A$1((elementSize, direction) => {
+	  const convertElementSize = F((elementSize, direction) => {
 	    var _direction14;
 
 	    (_direction14 = direction) !== null && _direction14 !== void 0 ? _direction14 : direction = getLogicalDirectionInfo();
@@ -2005,35 +2005,22 @@
 	        blockDirection
 	      } = direction; // Size is relatively simple
 
-	      let clientInlineSize = elementSize[`client${capitalize(inlineSize)}`];
-	      let clientBlockSize = elementSize[`client${capitalize(blockSize)}`];
-	      let offsetInlineSize = elementSize[`offset${capitalize(inlineSize)}`];
-	      let offsetBlockSize = elementSize[`offset${capitalize(blockSize)}`];
-	      let scrollInlineSize = elementSize[`scroll${capitalize(inlineSize)}`];
-	      let scrollBlockSize = elementSize[`scroll${capitalize(blockSize)}`]; // Position requires us to sometimes use one property (like `left`)
-	      // or sometimes two (like `left` + `width`)
-
-	      function getPhysicalLeftTop(dir) {
-	        if (dir === "ltr" || dir == "rtl") return "left";
-	        return "top";
-	      }
-
-	      function getPhysicalRightBottom(dir) {
-	        if (dir === "rtl") return "width";
-	        if (dir === "btt") return "height";
-	        return null;
-	      }
-
+	      const clientInlineSize = elementSize[`client${capitalize(inlineSize)}`];
+	      const clientBlockSize = elementSize[`client${capitalize(blockSize)}`];
+	      const offsetInlineSize = elementSize[`offset${capitalize(inlineSize)}`];
+	      const offsetBlockSize = elementSize[`offset${capitalize(blockSize)}`];
+	      const scrollInlineSize = elementSize[`scroll${capitalize(inlineSize)}`];
+	      const scrollBlockSize = elementSize[`scroll${capitalize(blockSize)}`];
 	      const f1 = getPhysicalLeftTop(inlineDirection);
 	      const f2 = getPhysicalRightBottom(inlineDirection);
 	      const f3 = getPhysicalLeftTop(blockDirection);
 	      const f4 = getPhysicalRightBottom(blockDirection);
-	      let clientInlineInset = elementSize[`client${capitalize(f1)}`] + (!f2 ? 0 : elementSize[`client${capitalize(f2)}`]);
-	      let scrollInlineInset = elementSize[`scroll${capitalize(f1)}`] + (!f2 ? 0 : elementSize[`scroll${capitalize(f2)}`]);
-	      let offsetInlineInset = elementSize[`offset${capitalize(f1)}`] == undefined ? undefined : elementSize[`offset${capitalize(f1)}`] + (!f2 ? 0 : elementSize[`offset${capitalize(f2)}`]);
-	      let clientBlockInset = elementSize[`client${capitalize(f3)}`] + (!f4 ? 0 : elementSize[`client${capitalize(f4)}`]);
-	      let scrollBlockInset = elementSize[`scroll${capitalize(f3)}`] + (!f4 ? 0 : elementSize[`scroll${capitalize(f4)}`]);
-	      let offsetBlockInset = elementSize[`offset${capitalize(f3)}`] == undefined ? undefined : elementSize[`offset${capitalize(f3)}`] + (!f4 ? 0 : elementSize[`offset${capitalize(f4)}`]);
+	      const clientInlineInset = elementSize[`client${capitalize(f1)}`] + (!f2 ? 0 : elementSize[`client${capitalize(f2)}`]);
+	      const scrollInlineInset = elementSize[`scroll${capitalize(f1)}`] + (!f2 ? 0 : elementSize[`scroll${capitalize(f2)}`]);
+	      const offsetInlineInset = elementSize[`offset${capitalize(f1)}`] == undefined ? undefined : elementSize[`offset${capitalize(f1)}`] + (!f2 ? 0 : elementSize[`offset${capitalize(f2)}`]);
+	      const clientBlockInset = elementSize[`client${capitalize(f3)}`] + (!f4 ? 0 : elementSize[`client${capitalize(f4)}`]);
+	      const scrollBlockInset = elementSize[`scroll${capitalize(f3)}`] + (!f4 ? 0 : elementSize[`scroll${capitalize(f4)}`]);
+	      const offsetBlockInset = elementSize[`offset${capitalize(f3)}`] == undefined ? undefined : elementSize[`offset${capitalize(f3)}`] + (!f4 ? 0 : elementSize[`offset${capitalize(f4)}`]);
 	      return {
 	        clientInlineSize,
 	        scrollInlineSize,
@@ -2053,7 +2040,7 @@
 	    return null;
 	  }, []);
 	  return {
-	    useLogicalDirectionProps: A$1(props => useRefElementProps(useElementSizeProps(props)), []),
+	    useLogicalDirectionProps: F(props => useRefElementProps(useElementSizeProps(props)), []),
 	    getElement,
 	    getLogicalDirectionInfo,
 	    convertToLogicalSize: convertElementSize,
@@ -2062,7 +2049,20 @@
 	    convertToLogicalSide,
 	    convertToPhysicalSide
 	  };
+	} // Position requires us to sometimes use one property (like `left`)
+	// or sometimes two (like `left` + `width`)
+
+	function getPhysicalLeftTop(dir) {
+	  if (dir === "ltr" || dir == "rtl") return "left";
+	  return "top";
+	}
+
+	function getPhysicalRightBottom(dir) {
+	  if (dir === "rtl") return "width";
+	  if (dir === "btt") return "height";
+	  return null;
 	} // Helper for extracting info from "ltr", "ttb", etc.
+
 
 	const M$1 = {
 	  t: "top",
@@ -2152,15 +2152,15 @@
 
 	function useState(initialState) {
 	  // We keep both, but overrride the `setState` functionality
-	  const [state, setStateP] = m(initialState);
-	  const ref = h(state); // Hijack the normal setter function 
+	  const [state, setStateP] = d(initialState);
+	  const ref = s(state); // Hijack the normal setter function 
 	  // to also set our ref to the new value
 
-	  const setState = A$1(value => {
+	  const setState = F(value => {
 	    if (typeof value === "function") {
-	      let callback = value;
+	      const callback = value;
 	      setStateP(prevValue => {
-	        let nextValue = callback(prevValue);
+	        const nextValue = callback(prevValue);
 	        ref.current = nextValue;
 	        return nextValue;
 	      });
@@ -2203,19 +2203,25 @@
 	}
 
 	const previousInputs = new Map();
-	const toRun = new Map();
-	const commitName = "__c" in l$1 ? "__c" : "commit" in l$1 ? "commit" : "_commit" in l$1 ? "_commit" : "__c"; // TODO: Whether this goes in options.diffed or options._commit
+	const toRun = new Map(); // TODO: Whether this goes in options.diffed or options._commit
 	// is a post-suspense question.
 	// Right now, using options._commit has the problem of running
 	// *after* refs are applied, but we need to come before even that
 	// so `ref={someStableFunction}` works.
 	// 
 	// Also it's private.
+	//
+	// ...
+	// Well, useEvent or whatever is finally, finally 4 years later finally here
+	// which is cool and means we won't need this at all soon.
+	// So for now we'll stick with diff to prevent any weirdness with
+	// commit being private and all.
 
+	const commitName = "diffed";
 	const originalCommit = l$1[commitName];
 
-	const newCommit = (vnode, commitQueue) => {
-	  for (let [id, effectInfo] of toRun) {
+	const newCommit = function () {
+	  for (const [id, effectInfo] of toRun) {
 	    const oldInputs = previousInputs.get(id);
 
 	    if (argsChanged(oldInputs, effectInfo.inputs)) {
@@ -2228,7 +2234,12 @@
 	  }
 
 	  toRun.clear();
-	  originalCommit === null || originalCommit === void 0 ? void 0 : originalCommit(vnode, commitQueue);
+
+	  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+	    args[_key] = arguments[_key];
+	  }
+
+	  originalCommit === null || originalCommit === void 0 ? void 0 : originalCommit(...args);
 	};
 
 	l$1[commitName] = newCommit;
@@ -2243,7 +2254,17 @@
 	 */
 
 	function useBeforeLayoutEffect(effect, inputs) {
-	  const [id] = m(() => generateRandomId());
+	  /*(() => {
+	      const cleanup = useRef<void | (() => void) | null>(null);
+	      const prevArgsRef = useRef<Inputs>(null!);
+	      if (argsChanged(inputs, prevArgsRef.current)) {
+	          prevArgsRef.current = inputs!;
+	          if (cleanup.current)
+	              cleanup.current();
+	          cleanup.current = effect();
+	      }
+	  })();*/
+	  const [id] = d(() => generateRandomId());
 	  toRun.set(id, {
 	    effect,
 	    inputs,
@@ -2274,11 +2295,11 @@
 	 */
 
 	function useStableGetter(value) {
-	  const ref = h(Unset);
+	  const ref = s(Unset);
 	  useBeforeLayoutEffect(() => {
 	    ref.current = value;
 	  }, [value]);
-	  return A$1(() => {
+	  return F(() => {
 	    if (ref.current === Unset) {
 	      throw new Error('Value retrieved from useStableGetter() cannot be called during render.');
 	    }
@@ -2296,7 +2317,7 @@
 
 	function useStableCallback(fn) {
 	  const currentCallbackGetter = useStableGetter(fn);
-	  return A$1(function () {
+	  return F(function () {
 	    return currentCallbackGetter()(...arguments);
 	  }, []);
 	}
@@ -2314,10 +2335,10 @@
 
 	function useEffect(effect, inputs) {
 	  let impl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : y;
-	  const prevInputs = h(undefined);
+	  const prevInputs = s(undefined);
 
 	  const effect2 = () => {
-	    let changes = [];
+	    const changes = [];
 
 	    if (inputs && prevInputs.current) {
 	      for (let i = 0; i < Math.max(prevInputs.current.length, inputs.length); ++i) {
@@ -2346,7 +2367,7 @@
 	 */
 
 	function useLayoutEffect(effect, inputs) {
-	  return useEffect(effect, inputs, d);
+	  return useEffect(effect, inputs, h);
 	}
 
 	/**
@@ -2366,17 +2387,17 @@
 	  // This is blindly updated any time a child mounts or unmounts itself.
 	  // Used to make sure that any time the array of managed children updates,
 	  // we also re-render.
-	  const [childUpdateIndex, setChildUpdateIndex] = useState(0);
+	  const [_childUpdateIndex, setChildUpdateIndex] = useState(0);
 	  const [totalChildrenMounted, setTotalChildrenMounted, getTotalChildrenMounted] = useState(0);
-	  const [totalChildrenUnounted, setTotalChildrenUnounted, getTotalChildrenUnounted] = useState(0);
+	  const [totalChildrenUnounted, setTotalChildrenUnounted, _getTotalChildrenUnounted] = useState(0);
 	  const childrenCurrentlyMounted = totalChildrenMounted - totalChildrenUnounted;
-	  const managedChildren = h([]
+	  const managedChildren = s([]
 	  /** TODO: Any problems caused by using an array when it should be an object? */
 	  );
-	  const mountedChildren = h([]);
-	  const mountOrder = h(new Map());
-	  const indicesByElement = h(new Map());
-	  const deletedIndices = h(new Set()); // Used to keep track of indices that have "over-mounted" and by how much.
+	  const mountedChildren = s([]);
+	  const mountOrder = s(new Map());
+	  const indicesByElement = s(new Map());
+	  const deletedIndices = s(new Set()); // Used to keep track of indices that have "over-mounted" and by how much.
 	  // We need this so that we don't erase saved information when a component
 	  // "overmounts" over another which then, correctly, switches *itself* to something else.
 	  // In general, this should only happen when components are swapping between indices.
@@ -2388,16 +2409,16 @@
 	  // Namely, is this map all 0s when the parent element re-renders? 
 	  // Probably not because of setChildUpdateIndex
 
-	  const overmountCount = h(new Map());
-	  const getMountIndex = A$1(index => {
+	  const overmountCount = s(new Map());
+	  const getMountIndex = F(index => {
 	    return mountOrder.current.get(index);
 	  }, []);
-	  const useManagedChild = A$1(info => {
+	  const useManagedChild = F(info => {
 	    const {
 	      getElement,
 	      useRefElementProps
 	    } = useRefElement({
-	      onElementChange: A$1(element => {
+	      onElementChange: F(element => {
 	        if (element) {
 	          indicesByElement.current.set(element, info.index);
 	          deletedIndices.current.delete(info.index);
@@ -2435,7 +2456,7 @@
 	      }, [])
 	    });
 	    useLayoutEffect(() => {
-	      let index = getTotalChildrenMounted();
+	      const index = getTotalChildrenMounted();
 	      mountOrder.current.set(info.index, index);
 	      mountedChildren.current[index] = info;
 	      setTotalChildrenMounted(t => ++t);
@@ -2581,7 +2602,7 @@
 
 	      var InertRoot = function () {
 	        /**
-	         * @param {!Element} rootElement The Element at the root of the inert subtree.
+	         * @param {!HTMLElement} rootElement The HTMLElement at the root of the inert subtree.
 	         * @param {!InertManager} inertManager The global singleton InertManager object.
 	         */
 	        function InertRoot(rootElement, inertManager) {
@@ -2590,7 +2611,7 @@
 
 
 	          this._inertManager = inertManager;
-	          /** @type {!Element} */
+	          /** @type {!HTMLElement} */
 
 	          this._rootElement = rootElement;
 	          /**
@@ -2730,7 +2751,7 @@
 	            }
 
 	            var element =
-	            /** @type {!Element} */
+	            /** @type {!HTMLElement} */
 	            node; // If a descendant inert root becomes un-inert, its descendants will still be inert because of
 	            // this inert root, so all of its managed nodes need to be adopted by this InertRoot.
 
@@ -2784,7 +2805,7 @@
 	          }
 	          /**
 	           * If a descendant node is found with an `inert` attribute, adopt its managed nodes.
-	           * @param {!Element} node
+	           * @param {!HTMLElement} node
 	           */
 
 	        }, {
@@ -2815,7 +2836,7 @@
 	          value: function _onMutation(records, self) {
 	            records.forEach(function (record) {
 	              var target =
-	              /** @type {!Element} */
+	              /** @type {!HTMLElement} */
 	              record.target;
 
 	              if (record.type === 'childList') {
@@ -2933,7 +2954,7 @@
 
 	            if (this._node && this._node.nodeType === Node.ELEMENT_NODE) {
 	              var element =
-	              /** @type {!Element} */
+	              /** @type {!HTMLElement} */
 	              this._node;
 
 	              if (this._savedTabIndex !== null) {
@@ -2985,7 +3006,7 @@
 	            }
 
 	            var element =
-	            /** @type {!Element} */
+	            /** @type {!HTMLElement} */
 	            this.node;
 
 	            if (matches.call(element, _focusableElementsString)) {
@@ -3141,7 +3162,7 @@
 	        }
 	        /**
 	         * Set whether the given element should be an inert root or not.
-	         * @param {!Element} root
+	         * @param {!HTMLElement} root
 	         * @param {boolean} inert
 	         */
 
@@ -3307,7 +3328,7 @@
 	                  }
 
 	                  var target =
-	                  /** @type {!Element} */
+	                  /** @type {!HTMLElement} */
 	                  record.target;
 	                  var inert = target.hasAttribute('inert');
 
@@ -3324,7 +3345,7 @@
 	      /**
 	       * Recursively walk the composed tree from |node|.
 	       * @param {!Node} node
-	       * @param {(function (!Element))=} callback Callback to be called for each element traversed,
+	       * @param {(function (!HTMLElement))=} callback Callback to be called for each element traversed,
 	       *     before descending into child nodes.
 	       * @param {?ShadowRoot=} shadowRootAncestor The nearest ShadowRoot ancestor, if any.
 	       */
@@ -3333,7 +3354,7 @@
 	      function composedTreeWalk(node, callback, shadowRootAncestor) {
 	        if (node.nodeType == Node.ELEMENT_NODE) {
 	          var element =
-	          /** @type {!Element} */
+	          /** @type {!HTMLElement} */
 	          node;
 
 	          if (callback) {
@@ -3416,18 +3437,18 @@
 	        node.appendChild(style);
 	      }
 
-	      if (!Element.prototype.hasOwnProperty('inert')) {
+	      if (!HTMLElement.prototype.hasOwnProperty('inert')) {
 	        /** @type {!InertManager} */
 	        var inertManager = new InertManager(document);
-	        Object.defineProperty(Element.prototype, 'inert', {
+	        Object.defineProperty(HTMLElement.prototype, 'inert', {
 	          enumerable: true,
 
-	          /** @this {!Element} */
+	          /** @this {!HTMLElement} */
 	          get: function get() {
 	            return this.hasAttribute('inert');
 	          },
 
-	          /** @this {!Element} */
+	          /** @this {!HTMLElement} */
 	          set: function set(inert) {
 	            inertManager.setInert(this, inert);
 	          }
@@ -4076,7 +4097,7 @@
 
 	    for (var o in r = {}, e) {
 	      var i = e[o];
-	      j && "children" === o && "noscript" === t || "value" === o && "defaultValue" in e && null == i || ("defaultValue" === o && "value" in e && null == e.value ? o = "value" : "download" === o && !0 === i ? i = "" : /ondoubleclick/i.test(o) ? o = "ondblclick" : /^onchange(textarea|input)/i.test(o + t) && !z(e.type) ? o = "oninput" : /^onfocus$/i.test(o) ? o = "onfocusin" : /^onblur$/i.test(o) ? o = "onfocusout" : /^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(o) ? o = o.toLowerCase() : u && V.test(o) ? o = o.replace(/[A-Z0-9]/, "-$&").toLowerCase() : null === i && (i = void 0), r[o] = i);
+	      j && "children" === o && "noscript" === t || "value" === o && "defaultValue" in e && null == i || ("defaultValue" === o && "value" in e && null == e.value ? o = "value" : "download" === o && !0 === i ? i = "" : /ondoubleclick/i.test(o) ? o = "ondblclick" : /^onchange(textarea|input)/i.test(o + t) && !z(e.type) ? o = "oninput" : /^onfocus$/i.test(o) ? o = "onfocusin" : /^onblur$/i.test(o) ? o = "onfocusout" : /^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(o) ? o = o.toLowerCase() : u && V.test(o) ? o = o.replace(/[A-Z0-9]/, "-$&").toLowerCase() : null === i && (i = void 0), /^oninput/i.test(o) && (o = o.toLowerCase(), r[o] && (o = "oninputCapture")), r[o] = i);
 	    }
 
 	    "select" == t && r.multiple && Array.isArray(r.value) && (r.value = A$2(e.children).forEach(function (n) {
@@ -4092,7 +4113,7 @@
 	var Q = l$1.__r;
 
 	l$1.__r = function (n) {
-	  Q && Q(n);
+	  Q && Q(n), n.__c;
 	};
 
 	/**
@@ -4142,55 +4163,55 @@
 	    getElement,
 	    useRefElementProps
 	  } = useRefElement({});
-	  const [phase, setPhase] = m(animateOnMount ? "init" : null);
-	  const [direction, setDirection] = m(show == null ? null : show ? "enter" : "exit");
-	  const [surfaceWidth, setSurfaceWidth] = m(null);
-	  const [surfaceHeight, setSurfaceHeight] = m(null);
-	  const [surfaceX, setSurfaceX] = m(null);
-	  const [surfaceY, setSurfaceY] = m(null);
-	  const [transitioningWidth, setTransitioningWidth] = m(null);
-	  const [transitioningHeight, setTransitioningHeight] = m(null);
-	  const [transitioningX, setTransitioningX] = m(null);
-	  const [transitioningY, setTransitioningY] = m(null);
-	  const [logicalDirectionInfo, setLogicalDirectionInfo] = m(null);
+	  const [phase, setPhase] = d(animateOnMount ? "init" : null);
+	  const [direction, setDirection] = d(show == null ? null : show ? "enter" : "exit");
+	  const [surfaceWidth, setSurfaceWidth] = d(null);
+	  const [surfaceHeight, setSurfaceHeight] = d(null);
+	  const [surfaceX, setSurfaceX] = d(null);
+	  const [surfaceY, setSurfaceY] = d(null);
+	  const [transitioningWidth, setTransitioningWidth] = d(null);
+	  const [transitioningHeight, setTransitioningHeight] = d(null);
+	  const [transitioningX, setTransitioningX] = d(null);
+	  const [transitioningY, setTransitioningY] = d(null);
+	  const [logicalDirectionInfo, setLogicalDirectionInfo] = d(null);
 	  const {
 	    getLogicalDirectionInfo,
 	    useLogicalDirectionProps
 	  } = useLogicalDirection({
 	    onLogicalDirectionChange: setLogicalDirectionInfo
 	  });
-	  const onTransitionUpdateRef = h(onTransitionUpdate);
-	  const phaseRef = h(phase);
-	  const directionRef = h(direction);
-	  const durationRef = h(duration);
-	  const tooEarlyTimeoutRef = h(null);
-	  const tooEarlyValueRef = h(true);
-	  const tooLateTimeoutRef = h(null);
-	  const onTransitionEnd = A$1(e => {
+	  const onTransitionUpdateRef = s(onTransitionUpdate);
+	  const phaseRef = s(phase);
+	  const directionRef = s(direction);
+	  const durationRef = s(duration);
+	  const tooEarlyTimeoutRef = s(null);
+	  const tooEarlyValueRef = s(true);
+	  const tooLateTimeoutRef = s(null);
+	  const onTransitionEnd = F(e => {
 	    if (e.target === getElement() && tooEarlyValueRef.current == false) {
 	      setPhase("finalize");
 	    }
 	  }, []);
-	  d(() => {
+	  h(() => {
 	    onTransitionUpdateRef.current = onTransitionUpdate;
 	  }, [onTransitionUpdate]);
-	  d(() => {
+	  h(() => {
 	    phaseRef.current = phase;
 	  }, [phase]);
-	  d(() => {
+	  h(() => {
 	    directionRef.current = direction;
 	  }, [direction]);
-	  d(() => {
+	  h(() => {
 	    durationRef.current = duration;
 	  }, [duration]);
-	  d(() => {
+	  h(() => {
 	    var _onTransitionUpdateRe;
 
 	    if (direction && phase) (_onTransitionUpdateRe = onTransitionUpdateRef.current) === null || _onTransitionUpdateRe === void 0 ? void 0 : _onTransitionUpdateRe.call(onTransitionUpdateRef, direction, phase);
 	  }, [direction, phase]); // Every time the phase changes to "transition", add our transition timeout timeouts
 	  // to catch any time onTransitionEnd fails to report for whatever reason to be safe
 
-	  d(() => {
+	  h(() => {
 	    if (phase == "transition") {
 	      var _durationRef$current;
 
@@ -4213,7 +4234,7 @@
 	  }, [phase]); // Any time "show" changes, update our direction and phase.
 	  // In addition, measure the size of the element if requested.
 
-	  d(() => {
+	  h(() => {
 	    const element = getElement();
 
 	    if (element && show != null) {
@@ -4263,7 +4284,7 @@
 	  }, [show, measure, classBase]); // Any time the phase changes to init, immediately before the screen is painted,
 	  // change the phase to "transition" and re-render ().
 
-	  d(() => {
+	  h(() => {
 	    const element = getElement();
 
 	    if (element && directionRef.current != null) {
@@ -4296,7 +4317,7 @@
 	  let almostDone = useRefElementProps(useLogicalDirectionProps({
 	    ref,
 	    style: removeEmpty({
-	      [`--${classBase}-duration`]: duration,
+	      [`--${classBase}-duration`]: duration ? `${duration}ms` : undefined,
 	      [`--${classBase}-surface-x`]: surfaceX,
 	      [`--${classBase}-surface-y`]: surfaceY,
 	      [`--${classBase}-surface-width`]: surfaceWidth,
@@ -4357,7 +4378,7 @@
 	    childMountBehavior,
 	    ...props
 	  } = _ref3;
-	  const [hasShownOnce, setHasShownOnce] = m(false);
+	  const [hasShownOnce, setHasShownOnce] = d(false);
 	  const shouldSetHasShownOnce = hasShownOnce === false && childMountBehavior === "mount-on-show" && show === true;
 	  y(() => {
 	    if (shouldSetHasShownOnce) setHasShownOnce(true);
@@ -4620,8 +4641,8 @@
 	    slideTargetBlock
 	  } = _ref;
 	  (_classBase = classBase) !== null && _classBase !== void 0 ? _classBase : classBase = "transition";
-	  const lastValidTargetInline = h((_slideTargetInline = slideTargetInline) !== null && _slideTargetInline !== void 0 ? _slideTargetInline : 1);
-	  const lastValidTargetBlock = h((_slideTargetBlock = slideTargetBlock) !== null && _slideTargetBlock !== void 0 ? _slideTargetBlock : 0);
+	  const lastValidTargetInline = s((_slideTargetInline = slideTargetInline) !== null && _slideTargetInline !== void 0 ? _slideTargetInline : 1);
+	  const lastValidTargetBlock = s((_slideTargetBlock = slideTargetBlock) !== null && _slideTargetBlock !== void 0 ? _slideTargetBlock : 0);
 	  y(() => {
 	    if (slideTargetInline) lastValidTargetInline.current = slideTargetInline;
 	  }, [slideTargetInline]);
@@ -4867,8 +4888,8 @@
 	    perspective
 	  } = _ref;
 	  (_classBase = classBase) !== null && _classBase !== void 0 ? _classBase : classBase = "transition";
-	  const lastValidTargetInline = h((_flipAngleInline = flipAngleInline) !== null && _flipAngleInline !== void 0 ? _flipAngleInline : 180);
-	  const lastValidTargetBlock = h((_flipAngleBlock = flipAngleBlock) !== null && _flipAngleBlock !== void 0 ? _flipAngleBlock : 0);
+	  const lastValidTargetInline = s((_flipAngleInline = flipAngleInline) !== null && _flipAngleInline !== void 0 ? _flipAngleInline : 180);
+	  const lastValidTargetBlock = s((_flipAngleBlock = flipAngleBlock) !== null && _flipAngleBlock !== void 0 ? _flipAngleBlock : 0);
 	  y(() => {
 	    if (flipAngleInline) lastValidTargetInline.current = flipAngleInline;
 	  }, [flipAngleInline]);
@@ -5018,7 +5039,7 @@
 	// This is what actually changes History and updates the window's URL.
 
 	function useSetEntireHash() {
-	  return A$1((hash, action) => {
+	  return F((hash, action) => {
 	    var _action;
 
 	    (_action = action) !== null && _action !== void 0 ? _action : action = "push";
@@ -5112,7 +5133,7 @@
 
 	function usePopLocalPath(level) {
 	  const setEntireHash = useSetEntireHash();
-	  return A$1(function popLocalHash(dir) {
+	  return F(function popLocalHash(dir) {
 	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
 	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
 	    let newHashPath = oldHashPath.slice(0, level).map(s => s !== null && s !== void 0 ? s : "");
@@ -5133,7 +5154,7 @@
 	function usePushLocalPath(level) {
 	  const setEntireHash = useSetEntireHash(); //const level = useContext(RouterLevelContext);
 
-	  return A$1(function pushLocalHash(dir) {
+	  return F(function pushLocalHash(dir) {
 	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
 	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
 	    dir = trimHash(dir);
@@ -5163,7 +5184,7 @@
 	function useRouterProvider() {
 	  var _useContext;
 
-	  const level = (_useContext = F(RouterContext)) === null || _useContext === void 0 ? void 0 : _useContext.level;
+	  const level = (_useContext = T$1(RouterContext)) === null || _useContext === void 0 ? void 0 : _useContext.level;
 	  const {
 	    useManagedChild: useRouterChild,
 	    mountedChildren
@@ -5171,15 +5192,15 @@
 	  // we notify all children so that they can show/hide themselves accordingly
 	  // depending on if they are a "default" router or not.
 
-	  const onChildrenMatchCountChange = A$1(anyMatches => {
+	  const onChildrenMatchCountChange = F(anyMatches => {
 	    for (let child of mountedChildren) {
 	      child === null || child === void 0 ? void 0 : child.notifyOfSiblingsHaveNoMatches(!anyMatches);
 	    }
 	  }, []);
 	  const [anyMatchesAmongChildren, setAnyMatchesAmongChildren] = usePassiveState(onChildrenMatchCountChange, returnFalse); // Keep track of the number of children currently matching
 
-	  const matchIndices = h(new Set());
-	  const matchChangeHandler = A$1((index, matches) => {
+	  const matchIndices = s(new Set());
+	  const matchChangeHandler = F((index, matches) => {
 	    if (matches) {
 	      matchIndices.current.add(index);
 	    } else {
@@ -5188,7 +5209,7 @@
 
 	    setAnyMatchesAmongChildren(matchIndices.current.size != 0);
 	  }, []);
-	  return _(() => ({
+	  return A$1(() => ({
 	    matchChangeHandler,
 	    useRouterChild,
 	    level: (level !== null && level !== void 0 ? level : -2) + 1
@@ -5210,13 +5231,13 @@
 	    level,
 	    matchChangeHandler,
 	    useRouterChild
-	  } = F(RouterContext); // This is the hash at this level specifically, 
+	  } = T$1(RouterContext); // This is the hash at this level specifically, 
 	  // so it contains no directory separators.
 
 	  const popLocalPath = usePopLocalPath(level);
 	  const pushLocalPath = usePushLocalPath(level);
 	  const [getLocalPath, setLocalPath] = useLocalPath(level, onPathChange);
-	  return _(() => ({
+	  return A$1(() => ({
 	    getLocalPath,
 	    popLocalPath,
 	    pushLocalPath,
@@ -5233,8 +5254,8 @@
 	 */
 
 	function useLocalPathMatches(level, requestedLocalHash) {
-	  const [matches, setMatches] = m(false);
-	  useLocalPath(level, A$1(localPath => {
+	  const [matches, setMatches] = d(false);
+	  useLocalPath(level, F(localPath => {
 	    var _localPath;
 
 	    let matches;
@@ -5262,11 +5283,11 @@
 	    level,
 	    matchChangeHandler,
 	    useRouterChild
-	  } = F(RouterContext);
+	  } = T$1(RouterContext);
 	  const [siblingsHaveNoMatches, setSiblingsHaveNoMatches] = useState(false);
-	  const index = _(() => (localPath !== null && localPath !== void 0 ? localPath : "") + `-${Math.random()}`, [localPath !== null && localPath !== void 0 ? localPath : ""]);
+	  const index = A$1(() => (localPath !== null && localPath !== void 0 ? localPath : "") + `-${Math.random()}`, [localPath !== null && localPath !== void 0 ? localPath : ""]);
 	  let matches = useLocalPathMatches(level, localPath !== null && localPath !== void 0 ? localPath : "");
-	  const contextFromParent = F(RouterContext); // Any time our match status changes, notify the parent.
+	  const contextFromParent = T$1(RouterContext); // Any time our match status changes, notify the parent.
 	  // This is how siblingsHaveNoMatches changes.
 
 	  useEffect(() => {
@@ -5293,12 +5314,12 @@
 	  });
 	  const useManagedChildProps2 = infoFromParent === null || infoFromParent === void 0 ? void 0 : infoFromParent.useManagedChildProps;
 	  const getElement2 = infoFromParent === null || infoFromParent === void 0 ? void 0 : infoFromParent.getElement;
-	  const useManagedChildProps = A$1(props => {
+	  const useManagedChildProps = F(props => {
 	    var _useManagedChildProps;
 
 	    return (_useManagedChildProps = useManagedChildProps2 === null || useManagedChildProps2 === void 0 ? void 0 : useManagedChildProps2(props)) !== null && _useManagedChildProps !== void 0 ? _useManagedChildProps : props;
 	  }, []);
-	  const getElement = A$1(() => {
+	  const getElement = F(() => {
 	    var _getElement;
 
 	    return (_getElement = getElement2 === null || getElement2 === void 0 ? void 0 : getElement2()) !== null && _getElement !== void 0 ? _getElement : null;
@@ -5324,7 +5345,7 @@
 	    useRouterChild
 	  } = useRouterProvider();
 	  return v$1(RouterContext.Provider, {
-	    value: _(() => ({
+	    value: A$1(() => ({
 	      level,
 	      matchChangeHandler,
 	      useRouterChild
@@ -5354,7 +5375,7 @@
 	  } = useRouterConsumer({
 	    localPath
 	  });
-	  const backupRef = h(null);
+	  const backupRef = s(null);
 	  (_ref4 = ref) !== null && _ref4 !== void 0 ? _ref4 : ref = backupRef;
 	  const {
 	    getLocalPath,
@@ -5363,12 +5384,12 @@
 	    setLocalPath: setLocalPath,
 	    level
 	  } = useRouterControls({
-	    onPathChange: A$1(newPath => {
+	    onPathChange: F(newPath => {
 	      if (matches) onMatchChange === null || onMatchChange === void 0 ? void 0 : onMatchChange(newPath);
 	      onPathChange === null || onPathChange === void 0 ? void 0 : onPathChange(newPath, matches);
 	    }, [onPathChange, matches])
 	  });
-	  s(ref, () => ({
+	  _(ref, () => ({
 	    level,
 	    getElement,
 	    getLocalPath,
@@ -5377,7 +5398,7 @@
 	    setLocalPath
 	  }), [level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
 	  let TransitionImpl = Transition;
-	  const DefaultTransition = F(RouterTransitionContext);
+	  const DefaultTransition = T$1(RouterTransitionContext);
 
 	  if (!TransitionImpl) {
 	    TransitionImpl = DefaultTransition;
@@ -5394,7 +5415,7 @@
 	    show: matches || optional,
 	    ...useManagedChildProps(useMergedProps()(rest, {
 	      className: "router",
-	      "data-level": `${level}`,
+	      "data-level": `${levelString}`,
 	      'data-path': typeof localPath == "string" ? localPath : undefined,
 	      children
 	    }))
