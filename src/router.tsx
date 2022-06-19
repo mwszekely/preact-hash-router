@@ -1,11 +1,12 @@
 import { cloneElement, ComponentChildren, createContext, Fragment, h, JSX, Ref, RenderableProps, VNode } from "preact";
-import { useMergedProps } from "preact-prop-helpers";
+import { useMergedProps, useStableCallback } from "preact-prop-helpers";
 import { forwardRef } from "preact/compat";
-import { useCallback, useContext, useImperativeHandle, useMemo, useRef } from "preact/hooks";
-import { RouterControls, RouterPathType } from "./util";
-import { useRouterControls } from "./use-router-controls";
+import { useContext, useImperativeHandle, useMemo, useRef } from "preact/hooks";
+import { RootRouterError } from "./root-router-error";
 import { useRouterConsumer } from "./use-router-consumer";
+import { useRouterControls } from "./use-router-controls";
 import { RouterContext, useRouterProvider } from "./use-router-provider";
+import { RouterControls, RouterPathType } from "./util";
 
 export interface RouterProps<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element> {
     /**
@@ -50,31 +51,45 @@ export interface RouterProps<T extends <E extends HTMLElement>(...args: any[]) =
     Transition?: T;
 }
 
-export function useRouter({ localPath }: { localPath?: RouterPathType | null }) {
-    const { level, matchChangeHandler, useRouterChild } = useRouterProvider();
+export function useRouter({ localPath }: { localPath: RouterPathType | null }) {
+    const { level, useRouterChild } = useRouterProvider();
     const { useManagedChildProps, getElement, matches } = useRouterConsumer({ localPath });
-    return { level, matchChangeHandler, useRouterChild, useManagedChildProps, getElement, matches };
+    return { level, useRouterChild, useManagedChildProps, getElement, matches };
 }
 
 export const RouterProvider = forwardRef(RouterProviderImpl) as typeof RouterProviderImpl;
-function RouterProviderImpl({ children }: { children: ComponentChildren }) {
-    const { level, matchChangeHandler, useRouterChild } = useRouterProvider();
+
+function RouterProviderImpl({ children, ...props }: { children: VNode<any> }, ref?: Ref<any>) {
+    const { level, useRouterChild } = useRouterProvider();
     return (
-        <RouterContext.Provider value={useMemo(() => ({ level, matchChangeHandler, useRouterChild }), [level, matchChangeHandler, useRouterChild])}>
-            {children}
+        <RouterContext.Provider value={useMemo(() => ({ level, useRouterChild }), [level, useRouterChild])}>
+            {cloneElement(children, useMergedProps<any>()(children.props, { ref, ...props }))}
         </RouterContext.Provider>
     );
 }
 
 export const RouterConsumer = forwardRef(RouterConsumerImpl) as typeof RouterConsumerImpl;
 function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>({ Transition, onPathChange, onMatchChange, children, optional, localPath, ...rest }: RenderableProps<RouterProps<T>>, ref?: Ref<RouterRefType>): JSX.Element {
-    const { useManagedChildProps, getElement, matches, siblingsHaveNoMatches } = useRouterConsumer({ localPath });
+    const { useManagedChildProps, getElement, matches, siblingsHaveNoMatches } = useRouterConsumer({ localPath: localPath ?? null });
 
     const backupRef = useRef<any>(null);
     ref ??= backupRef;
 
-    const { getLocalPath, popLocalPath, pushLocalPath, setLocalPath: setLocalPath, level } = useRouterControls({ onPathChange: useCallback((newPath: string | null) => { if (matches) onMatchChange?.(newPath); onPathChange?.(newPath, matches); }, [onPathChange, matches]) });
-    useImperativeHandle(ref, () => ({ level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath }), [level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
+    const { getLocalPath, popLocalPath, pushLocalPath, setLocalPath: setLocalPath, level } = useRouterControls({
+        onPathChange: useStableCallback((newPath: string | null) => {
+            if (matches)
+                onMatchChange?.(newPath);
+            onPathChange?.(newPath, matches);
+        })
+    });
+    useImperativeHandle(ref, () => ({
+        level,
+        getElement,
+        getLocalPath,
+        popLocalPath,
+        pushLocalPath,
+        setLocalPath
+    }), [level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
 
     let TransitionImpl = Transition;
     const DefaultTransition = useContext(RouterTransitionContext);
@@ -89,25 +104,30 @@ function RouterConsumerImpl<T extends <E extends HTMLElement>(...args: any[]) =>
     }
 
 
-    return (<TransitionImpl show={matches || optional} {...useManagedChildProps(useMergedProps()(rest, { className: "router", "data-level": `${levelString}`, 'data-path': typeof localPath == "string" ? localPath : undefined, children })) as any} />)
+    return (<TransitionImpl show={matches || optional} {...useManagedChildProps(useMergedProps()(rest, { className: "router", "data-level": `${levelString}`, 'data-path': localPath == null ? "<null>" : typeof localPath == "string" ? localPath : undefined, "data-showing-default": siblingsHaveNoMatches, children })) as any} />)
 }
 
 export const Router: typeof RouterImpl = forwardRef(RouterImpl) as any;
-function RouterImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>(props: RenderableProps<RouterProps<T>>, ref?: Ref<RouterRefType>): JSX.Element {
-    return (
-        <RouterProvider>
-            <RouterConsumer {...props} ref={ref} />
-        </RouterProvider>
-    )
+function RouterImpl<T extends <E extends HTMLElement>(...args: any[]) => h.JSX.Element>({ children, ...props }: Omit<RenderableProps<RouterProps<T>>, "children"> & { children: VNode<any> }, ref?: Ref<RouterRefType>): JSX.Element {
+    const isRoot = (useContext(RouterContext) == null);
+    if (isRoot) {
+        if (ref != null)
+            throw new RootRouterError();
+        return <RouterProvider {...props} children={children} />
+    }
+    else
+        return (
+            <RouterConsumer ref={ref} {...props}>
+                <RouterProvider children={children} />
+            </RouterConsumer>
+        )
 }
 
 
 
 // Extremely simple "transition" that just swaps children in and out without animating them.
 const DefaultTransition = forwardRef(function DefaultTransition({ show, children, ...rest }: { show: boolean, children: ComponentChildren }, ref?: Ref<any>) {
-    if (show)
-        return <>{cloneElement(children as VNode<any>, useMergedProps<any>()({ ref, ...(children as VNode<any>).props }, rest))}</>
-    return null;
+    return <>{cloneElement(children as VNode<any>, useMergedProps<any>()({ ref, ...(children as VNode<any>).props, hidden: !show }, rest))}</>
 });
 
 type TransitionType = <E extends HTMLElement>(...args: any[]) => (h.JSX.Element | null);

@@ -1,652 +1,29 @@
 (function () {
 	'use strict';
 
-	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-	function createCommonjsModule(fn) {
-	  var module = { exports: {} };
-		return fn(module, module.exports), module.exports;
-	}
-
-	var preact = createCommonjsModule(function (module, exports) {
-	  var n,
-	      l,
-	      u,
-	      t,
-	      i,
-	      o,
-	      r,
-	      f,
-	      e = {},
-	      c = [],
-	      s = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
-
-	  function a(n, l) {
-	    for (var u in l) n[u] = l[u];
-
-	    return n;
-	  }
-
-	  function p(n) {
-	    var l = n.parentNode;
-	    l && l.removeChild(n);
-	  }
-
-	  function h(l, u, t) {
-	    var i,
-	        o,
-	        r,
-	        f = {};
-
-	    for (r in u) "key" == r ? i = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
-
-	    if (arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : t), "function" == typeof l && null != l.defaultProps) for (r in l.defaultProps) void 0 === f[r] && (f[r] = l.defaultProps[r]);
-	    return v(l, f, i, o, null);
-	  }
-
-	  function v(n, t, i, o, r) {
-	    var f = {
-	      type: n,
-	      props: t,
-	      key: i,
-	      ref: o,
-	      __k: null,
-	      __: null,
-	      __b: 0,
-	      __e: null,
-	      __d: void 0,
-	      __c: null,
-	      __h: null,
-	      constructor: void 0,
-	      __v: null == r ? ++u : r
-	    };
-	    return null == r && null != l.vnode && l.vnode(f), f;
-	  }
-
-	  function y(n) {
-	    return n.children;
-	  }
-
-	  function d(n, l) {
-	    this.props = n, this.context = l;
-	  }
-
-	  function _(n, l) {
-	    if (null == l) return n.__ ? _(n.__, n.__.__k.indexOf(n) + 1) : null;
-
-	    for (var u; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) return u.__e;
-
-	    return "function" == typeof n.type ? _(n) : null;
-	  }
-
-	  function k(n) {
-	    var l, u;
-
-	    if (null != (n = n.__) && null != n.__c) {
-	      for (n.__e = n.__c.base = null, l = 0; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) {
-	        n.__e = n.__c.base = u.__e;
-	        break;
-	      }
-
-	      return k(n);
-	    }
-	  }
-
-	  function x(n) {
-	    (!n.__d && (n.__d = !0) && i.push(n) && !b.__r++ || r !== l.debounceRendering) && ((r = l.debounceRendering) || o)(b);
-	  }
-
-	  function b() {
-	    for (var n; b.__r = i.length;) n = i.sort(function (n, l) {
-	      return n.__v.__b - l.__v.__b;
-	    }), i = [], n.some(function (n) {
-	      var l, u, t, i, o, r;
-	      n.__d && (o = (i = (l = n).__v).__e, (r = l.__P) && (u = [], (t = a({}, i)).__v = i.__v + 1, I(r, i, t, l.__n, void 0 !== r.ownerSVGElement, null != i.__h ? [o] : null, u, null == o ? _(i) : o, i.__h), T(u, i), i.__e != o && k(i)));
-	    });
-	  }
-
-	  function m(n, l, u, t, i, o, r, f, s, a) {
-	    var p,
-	        h,
-	        d,
-	        k,
-	        x,
-	        b,
-	        m,
-	        A = t && t.__k || c,
-	        P = A.length;
-
-	    for (u.__k = [], p = 0; p < l.length; p++) if (null != (k = u.__k[p] = null == (k = l[p]) || "boolean" == typeof k ? null : "string" == typeof k || "number" == typeof k || "bigint" == typeof k ? v(null, k, null, null, k) : Array.isArray(k) ? v(y, {
-	      children: k
-	    }, null, null, null) : k.__b > 0 ? v(k.type, k.props, k.key, null, k.__v) : k)) {
-	      if (k.__ = u, k.__b = u.__b + 1, null === (d = A[p]) || d && k.key == d.key && k.type === d.type) A[p] = void 0;else for (h = 0; h < P; h++) {
-	        if ((d = A[h]) && k.key == d.key && k.type === d.type) {
-	          A[h] = void 0;
-	          break;
-	        }
-
-	        d = null;
-	      }
-	      I(n, k, d = d || e, i, o, r, f, s, a), x = k.__e, (h = k.ref) && d.ref != h && (m || (m = []), d.ref && m.push(d.ref, null, k), m.push(h, k.__c || x, k)), null != x ? (null == b && (b = x), "function" == typeof k.type && k.__k === d.__k ? k.__d = s = g(k, s, n) : s = w(n, k, d, A, x, s), "function" == typeof u.type && (u.__d = s)) : s && d.__e == s && s.parentNode != n && (s = _(d));
-	    }
-
-	    for (u.__e = b, p = P; p--;) null != A[p] && ("function" == typeof u.type && null != A[p].__e && A[p].__e == u.__d && (u.__d = _(t, p + 1)), L(A[p], A[p]));
-
-	    if (m) for (p = 0; p < m.length; p++) z(m[p], m[++p], m[++p]);
-	  }
-
-	  function g(n, l, u) {
-	    for (var t, i = n.__k, o = 0; i && o < i.length; o++) (t = i[o]) && (t.__ = n, l = "function" == typeof t.type ? g(t, l, u) : w(u, t, t, i, t.__e, l));
-
-	    return l;
-	  }
-
-	  function w(n, l, u, t, i, o) {
-	    var r, f, e;
-	    if (void 0 !== l.__d) r = l.__d, l.__d = void 0;else if (null == u || i != o || null == i.parentNode) n: if (null == o || o.parentNode !== n) n.appendChild(i), r = null;else {
-	      for (f = o, e = 0; (f = f.nextSibling) && e < t.length; e += 2) if (f == i) break n;
-
-	      n.insertBefore(i, o), r = o;
-	    }
-	    return void 0 !== r ? r : i.nextSibling;
-	  }
-
-	  function A(n, l, u, t, i) {
-	    var o;
-
-	    for (o in u) "children" === o || "key" === o || o in l || C(n, o, null, u[o], t);
-
-	    for (o in l) i && "function" != typeof l[o] || "children" === o || "key" === o || "value" === o || "checked" === o || u[o] === l[o] || C(n, o, l[o], u[o], t);
-	  }
-
-	  function P(n, l, u) {
-	    "-" === l[0] ? n.setProperty(l, u) : n[l] = null == u ? "" : "number" != typeof u || s.test(l) ? u : u + "px";
-	  }
-
-	  function C(n, l, u, t, i) {
-	    var o;
-
-	    n: if ("style" === l) {
-	      if ("string" == typeof u) n.style.cssText = u;else {
-	        if ("string" == typeof t && (n.style.cssText = t = ""), t) for (l in t) u && l in u || P(n.style, l, "");
-	        if (u) for (l in u) t && u[l] === t[l] || P(n.style, l, u[l]);
-	      }
-	    } else if ("o" === l[0] && "n" === l[1]) o = l !== (l = l.replace(/Capture$/, "")), l = l.toLowerCase() in n ? l.toLowerCase().slice(2) : l.slice(2), n.l || (n.l = {}), n.l[l + o] = u, u ? t || n.addEventListener(l, o ? H : $, o) : n.removeEventListener(l, o ? H : $, o);else if ("dangerouslySetInnerHTML" !== l) {
-	      if (i) l = l.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");else if ("href" !== l && "list" !== l && "form" !== l && "tabIndex" !== l && "download" !== l && l in n) try {
-	        n[l] = null == u ? "" : u;
-	        break n;
-	      } catch (n) {}
-	      "function" == typeof u || (null != u && (!1 !== u || "a" === l[0] && "r" === l[1]) ? n.setAttribute(l, u) : n.removeAttribute(l));
-	    }
-	  }
-
-	  function $(n) {
-	    this.l[n.type + !1](l.event ? l.event(n) : n);
-	  }
-
-	  function H(n) {
-	    this.l[n.type + !0](l.event ? l.event(n) : n);
-	  }
-
-	  function I(n, u, t, i, o, r, f, e, c) {
-	    var s,
-	        p,
-	        h,
-	        v,
-	        _,
-	        k,
-	        x,
-	        b,
-	        g,
-	        w,
-	        A,
-	        P,
-	        C,
-	        $ = u.type;
-
-	    if (void 0 !== u.constructor) return null;
-	    null != t.__h && (c = t.__h, e = u.__e = t.__e, u.__h = null, r = [e]), (s = l.__b) && s(u);
-
-	    try {
-	      n: if ("function" == typeof $) {
-	        if (b = u.props, g = (s = $.contextType) && i[s.__c], w = s ? g ? g.props.value : s.__ : i, t.__c ? x = (p = u.__c = t.__c).__ = p.__E : ("prototype" in $ && $.prototype.render ? u.__c = p = new $(b, w) : (u.__c = p = new d(b, w), p.constructor = $, p.render = M), g && g.sub(p), p.props = b, p.state || (p.state = {}), p.context = w, p.__n = i, h = p.__d = !0, p.__h = []), null == p.__s && (p.__s = p.state), null != $.getDerivedStateFromProps && (p.__s == p.state && (p.__s = a({}, p.__s)), a(p.__s, $.getDerivedStateFromProps(b, p.__s))), v = p.props, _ = p.state, h) null == $.getDerivedStateFromProps && null != p.componentWillMount && p.componentWillMount(), null != p.componentDidMount && p.__h.push(p.componentDidMount);else {
-	          if (null == $.getDerivedStateFromProps && b !== v && null != p.componentWillReceiveProps && p.componentWillReceiveProps(b, w), !p.__e && null != p.shouldComponentUpdate && !1 === p.shouldComponentUpdate(b, p.__s, w) || u.__v === t.__v) {
-	            p.props = b, p.state = p.__s, u.__v !== t.__v && (p.__d = !1), p.__v = u, u.__e = t.__e, u.__k = t.__k, u.__k.forEach(function (n) {
-	              n && (n.__ = u);
-	            }), p.__h.length && f.push(p);
-	            break n;
-	          }
-
-	          null != p.componentWillUpdate && p.componentWillUpdate(b, p.__s, w), null != p.componentDidUpdate && p.__h.push(function () {
-	            p.componentDidUpdate(v, _, k);
-	          });
-	        }
-	        if (p.context = w, p.props = b, p.__v = u, p.__P = n, A = l.__r, P = 0, "prototype" in $ && $.prototype.render) p.state = p.__s, p.__d = !1, A && A(u), s = p.render(p.props, p.state, p.context);else do {
-	          p.__d = !1, A && A(u), s = p.render(p.props, p.state, p.context), p.state = p.__s;
-	        } while (p.__d && ++P < 25);
-	        p.state = p.__s, null != p.getChildContext && (i = a(a({}, i), p.getChildContext())), h || null == p.getSnapshotBeforeUpdate || (k = p.getSnapshotBeforeUpdate(v, _)), C = null != s && s.type === y && null == s.key ? s.props.children : s, m(n, Array.isArray(C) ? C : [C], u, t, i, o, r, f, e, c), p.base = u.__e, u.__h = null, p.__h.length && f.push(p), x && (p.__E = p.__ = null), p.__e = !1;
-	      } else null == r && u.__v === t.__v ? (u.__k = t.__k, u.__e = t.__e) : u.__e = j(t.__e, u, t, i, o, r, f, c);
-
-	      (s = l.diffed) && s(u);
-	    } catch (n) {
-	      u.__v = null, (c || null != r) && (u.__e = e, u.__h = !!c, r[r.indexOf(e)] = null), l.__e(n, u, t);
-	    }
-	  }
-
-	  function T(n, u) {
-	    l.__c && l.__c(u, n), n.some(function (u) {
-	      try {
-	        n = u.__h, u.__h = [], n.some(function (n) {
-	          n.call(u);
-	        });
-	      } catch (n) {
-	        l.__e(n, u.__v);
-	      }
-	    });
-	  }
-
-	  function j(l, u, t, i, o, r, f, c) {
-	    var s,
-	        a,
-	        h,
-	        v = t.props,
-	        y = u.props,
-	        d = u.type,
-	        k = 0;
-	    if ("svg" === d && (o = !0), null != r) for (; k < r.length; k++) if ((s = r[k]) && "setAttribute" in s == !!d && (d ? s.localName === d : 3 === s.nodeType)) {
-	      l = s, r[k] = null;
-	      break;
-	    }
-
-	    if (null == l) {
-	      if (null === d) return document.createTextNode(y);
-	      l = o ? document.createElementNS("http://www.w3.org/2000/svg", d) : document.createElement(d, y.is && y), r = null, c = !1;
-	    }
-
-	    if (null === d) v === y || c && l.data === y || (l.data = y);else {
-	      if (r = r && n.call(l.childNodes), a = (v = t.props || e).dangerouslySetInnerHTML, h = y.dangerouslySetInnerHTML, !c) {
-	        if (null != r) for (v = {}, k = 0; k < l.attributes.length; k++) v[l.attributes[k].name] = l.attributes[k].value;
-	        (h || a) && (h && (a && h.__html == a.__html || h.__html === l.innerHTML) || (l.innerHTML = h && h.__html || ""));
-	      }
-
-	      if (A(l, y, v, o, c), h) u.__k = [];else if (k = u.props.children, m(l, Array.isArray(k) ? k : [k], u, t, i, o && "foreignObject" !== d, r, f, r ? r[0] : t.__k && _(t, 0), c), null != r) for (k = r.length; k--;) null != r[k] && p(r[k]);
-	      c || ("value" in y && void 0 !== (k = y.value) && (k !== l.value || "progress" === d && !k || "option" === d && k !== v.value) && C(l, "value", k, v.value, !1), "checked" in y && void 0 !== (k = y.checked) && k !== l.checked && C(l, "checked", k, v.checked, !1));
-	    }
-	    return l;
-	  }
-
-	  function z(n, u, t) {
-	    try {
-	      "function" == typeof n ? n(u) : n.current = u;
-	    } catch (n) {
-	      l.__e(n, t);
-	    }
-	  }
-
-	  function L(n, u, t) {
-	    var i, o;
-
-	    if (l.unmount && l.unmount(n), (i = n.ref) && (i.current && i.current !== n.__e || z(i, null, u)), null != (i = n.__c)) {
-	      if (i.componentWillUnmount) try {
-	        i.componentWillUnmount();
-	      } catch (n) {
-	        l.__e(n, u);
-	      }
-	      i.base = i.__P = null;
-	    }
-
-	    if (i = n.__k) for (o = 0; o < i.length; o++) i[o] && L(i[o], u, "function" != typeof n.type);
-	    t || null == n.__e || p(n.__e), n.__e = n.__d = void 0;
-	  }
-
-	  function M(n, l, u) {
-	    return this.constructor(n, u);
-	  }
-
-	  function N(u, t, i) {
-	    var o, r, f;
-	    l.__ && l.__(u, t), r = (o = "function" == typeof i) ? null : i && i.__k || t.__k, f = [], I(t, u = (!o && i || t).__k = h(y, null, [u]), r || e, e, void 0 !== t.ownerSVGElement, !o && i ? [i] : r ? null : t.firstChild ? n.call(t.childNodes) : null, f, !o && i ? i : r ? r.__e : t.firstChild, o), T(f, u);
-	  }
-
-	  n = c.slice, l = {
-	    __e: function (n, l, u, t) {
-	      for (var i, o, r; l = l.__;) if ((i = l.__c) && !i.__) try {
-	        if ((o = i.constructor) && null != o.getDerivedStateFromError && (i.setState(o.getDerivedStateFromError(n)), r = i.__d), null != i.componentDidCatch && (i.componentDidCatch(n, t || {}), r = i.__d), r) return i.__E = i;
-	      } catch (l) {
-	        n = l;
-	      }
-
-	      throw n;
-	    }
-	  }, u = 0, t = function (n) {
-	    return null != n && void 0 === n.constructor;
-	  }, d.prototype.setState = function (n, l) {
-	    var u;
-	    u = null != this.__s && this.__s !== this.state ? this.__s : this.__s = a({}, this.state), "function" == typeof n && (n = n(a({}, u), this.props)), n && a(u, n), null != n && this.__v && (l && this.__h.push(l), x(this));
-	  }, d.prototype.forceUpdate = function (n) {
-	    this.__v && (this.__e = !0, n && this.__h.push(n), x(this));
-	  }, d.prototype.render = y, i = [], o = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, b.__r = 0, f = 0, exports.render = N, exports.hydrate = function n(l, u) {
-	    N(l, u, n);
-	  }, exports.createElement = h, exports.h = h, exports.Fragment = y, exports.createRef = function () {
-	    return {
-	      current: null
-	    };
-	  }, exports.isValidElement = t, exports.Component = d, exports.cloneElement = function (l, u, t) {
-	    var i,
-	        o,
-	        r,
-	        f = a({}, l.props);
-
-	    for (r in u) "key" == r ? i = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
-
-	    return arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : t), v(l.type, f, i || l.key, o || l.ref, null);
-	  }, exports.createContext = function (n, l) {
-	    var u = {
-	      __c: l = "__cC" + f++,
-	      __: n,
-	      Consumer: function (n, l) {
-	        return n.children(l);
-	      },
-	      Provider: function (n) {
-	        var u, t;
-	        return this.getChildContext || (u = [], (t = {})[l] = this, this.getChildContext = function () {
-	          return t;
-	        }, this.shouldComponentUpdate = function (n) {
-	          this.props.value !== n.value && u.some(x);
-	        }, this.sub = function (n) {
-	          u.push(n);
-	          var l = n.componentWillUnmount;
-
-	          n.componentWillUnmount = function () {
-	            u.splice(u.indexOf(n), 1), l && l.call(n);
-	          };
-	        }), n.children;
-	      }
-	    };
-	    return u.Provider.__ = u.Consumer.contextType = u;
-	  }, exports.toChildArray = function n(l, u) {
-	    return u = u || [], null == l || "boolean" == typeof l || (Array.isArray(l) ? l.some(function (l) {
-	      n(l, u);
-	    }) : u.push(l)), u;
-	  }, exports.options = l;
-	});
-
-	createCommonjsModule(function (module, exports) {
-	  "undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.8.1", preact.options, {
-	    Fragment: preact.Fragment,
-	    Component: preact.Component
-	  }), exports.addHookName = function (e, o) {
-	    return preact.options.__a && preact.options.__a(o), e;
-	  };
-	});
-
-	createCommonjsModule(function (module, exports) {
-	  var n = preact;
-	  var e = {};
-
-	  function t(e) {
-	    return e.type === n.Fragment ? "Fragment" : "function" == typeof e.type ? e.type.displayName || e.type.name : "string" == typeof e.type ? e.type : "#text";
-	  }
-
-	  var o = [],
-	      r = [];
-
-	  function a() {
-	    return o.length > 0 ? o[o.length - 1] : null;
-	  }
-
-	  var i = !1;
-
-	  function s(e) {
-	    return "function" == typeof e.type && e.type != n.Fragment;
-	  }
-
-	  function c(n) {
-	    for (var e = [n], o = n; null != o.__o;) e.push(o.__o), o = o.__o;
-
-	    return e.reduce(function (n, e) {
-	      n += "  in " + t(e);
-	      var o = e.__source;
-	      return o ? n += " (at " + o.fileName + ":" + o.lineNumber + ")" : i || (i = !0, console.warn("Add @babel/plugin-transform-react-jsx-source to get a more detailed component stack. Note that you should not add it to production builds of your App for bundle size reasons.")), n + "\n";
-	    }, "");
-	  }
-
-	  var l = "function" == typeof WeakMap,
-	      u = n.Component.prototype.setState;
-
-	  n.Component.prototype.setState = function (n, e) {
-	    return null == this.__v ? null == this.state && console.warn('Calling "this.setState" inside the constructor of a component is a no-op and might be a bug in your application. Instead, set "this.state = {}" directly.\n\n' + c(a())) : null == this.__P && console.warn('Can\'t call "this.setState" on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.\n\n' + c(this.__v)), u.call(this, n, e);
-	  };
-
-	  var f = n.Component.prototype.forceUpdate;
-
-	  function p(n) {
-	    var e = n.props,
-	        o = t(n),
-	        r = "";
-
-	    for (var a in e) if (e.hasOwnProperty(a) && "children" !== a) {
-	      var i = e[a];
-	      "function" == typeof i && (i = "function " + (i.displayName || i.name) + "() {}"), i = Object(i) !== i || i.toString ? i + "" : Object.prototype.toString.call(i), r += " " + a + "=" + JSON.stringify(i);
-	    }
-
-	    var s = e.children;
-	    return "<" + o + r + (s && s.length ? ">..</" + o + ">" : " />");
-	  }
-
-	  n.Component.prototype.forceUpdate = function (n) {
-	    return null == this.__v ? console.warn('Calling "this.forceUpdate" inside the constructor of a component is a no-op and might be a bug in your application.\n\n' + c(a())) : null == this.__P && console.warn('Can\'t call "this.forceUpdate" on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.\n\n' + c(this.__v)), f.call(this, n);
-	  }, function () {
-	    !function () {
-	      var e = n.options.__b,
-	          t = n.options.diffed,
-	          a = n.options.__,
-	          i = n.options.vnode,
-	          c = n.options.__r;
-	      n.options.diffed = function (n) {
-	        s(n) && r.pop(), o.pop(), t && t(n);
-	      }, n.options.__b = function (n) {
-	        s(n) && o.push(n), e && e(n);
-	      }, n.options.__ = function (n, e) {
-	        r = [], a && a(n, e);
-	      }, n.options.vnode = function (n) {
-	        n.__o = r.length > 0 ? r[r.length - 1] : null, i && i(n);
-	      }, n.options.__r = function (n) {
-	        s(n) && r.push(n), c && c(n);
-	      };
-	    }();
-	    var a = !1,
-	        i = n.options.__b,
-	        u = n.options.diffed,
-	        f = n.options.vnode,
-	        d = n.options.__e,
-	        h = n.options.__,
-	        y = n.options.__h,
-	        v = l ? {
-	      useEffect: new WeakMap(),
-	      useLayoutEffect: new WeakMap(),
-	      lazyPropTypes: new WeakMap()
-	    } : null,
-	        m = [];
-	    n.options.__e = function (n, e, o, r) {
-	      if (e && e.__c && "function" == typeof n.then) {
-	        var a = n;
-	        n = new Error("Missing Suspense. The throwing component was: " + t(e));
-
-	        for (var i = e; i; i = i.__) if (i.__c && i.__c.__c) {
-	          n = a;
-	          break;
-	        }
-
-	        if (n instanceof Error) throw n;
-	      }
-
-	      try {
-	        (r = r || {}).componentStack = c(e), d(n, e, o, r), "function" != typeof n.then && setTimeout(function () {
-	          throw n;
-	        });
-	      } catch (n) {
-	        throw n;
-	      }
-	    }, n.options.__ = function (n, e) {
-	      if (!e) throw new Error("Undefined parent passed to render(), this is the second argument.\nCheck if the element is available in the DOM/has the correct id.");
-	      var o;
-
-	      switch (e.nodeType) {
-	        case 1:
-	        case 11:
-	        case 9:
-	          o = !0;
-	          break;
-
-	        default:
-	          o = !1;
-	      }
-
-	      if (!o) {
-	        var r = t(n);
-	        throw new Error("Expected a valid HTML node as a second argument to render.\tReceived " + e + " instead: render(<" + r + " />, " + e + ");");
-	      }
-
-	      h && h(n, e);
-	    }, n.options.__b = function (n) {
-	      var o = n.type,
-	          r = function n(e) {
-	        return e ? "function" == typeof e.type ? n(e.__) : e : {};
-	      }(n.__);
-
-	      if (a = !0, void 0 === o) throw new Error("Undefined component passed to createElement()\n\nYou likely forgot to export your component or might have mixed up default and named imports" + p(n) + "\n\n" + c(n));
-
-	      if (null != o && "object" == typeof o) {
-	        if (void 0 !== o.__k && void 0 !== o.__e) throw new Error("Invalid type passed to createElement(): " + o + "\n\nDid you accidentally pass a JSX literal as JSX twice?\n\n  let My" + t(n) + " = " + p(o) + ";\n  let vnode = <My" + t(n) + " />;\n\nThis usually happens when you export a JSX literal and not the component.\n\n" + c(n));
-	        throw new Error("Invalid type passed to createElement(): " + (Array.isArray(o) ? "array" : o));
-	      }
-
-	      if ("thead" !== o && "tfoot" !== o && "tbody" !== o || "table" === r.type ? "tr" === o && "thead" !== r.type && "tfoot" !== r.type && "tbody" !== r.type && "table" !== r.type ? console.error("Improper nesting of table. Your <tr> should have a <thead/tbody/tfoot/table> parent." + p(n) + "\n\n" + c(n)) : "td" === o && "tr" !== r.type ? console.error("Improper nesting of table. Your <td> should have a <tr> parent." + p(n) + "\n\n" + c(n)) : "th" === o && "tr" !== r.type && console.error("Improper nesting of table. Your <th> should have a <tr>." + p(n) + "\n\n" + c(n)) : console.error("Improper nesting of table. Your <thead/tbody/tfoot> should have a <table> parent." + p(n) + "\n\n" + c(n)), void 0 !== n.ref && "function" != typeof n.ref && "object" != typeof n.ref && !("$$typeof" in n)) throw new Error('Component\'s "ref" property should be a function, or an object created by createRef(), but got [' + typeof n.ref + "] instead\n" + p(n) + "\n\n" + c(n));
-	      if ("string" == typeof n.type) for (var s in n.props) if ("o" === s[0] && "n" === s[1] && "function" != typeof n.props[s] && null != n.props[s]) throw new Error("Component's \"" + s + '" property should be a function, but got [' + typeof n.props[s] + "] instead\n" + p(n) + "\n\n" + c(n));
-
-	      if ("function" == typeof n.type && n.type.propTypes) {
-	        if ("Lazy" === n.type.displayName && v && !v.lazyPropTypes.has(n.type)) {
-	          var l = "PropTypes are not supported on lazy(). Use propTypes on the wrapped component itself. ";
-
-	          try {
-	            var u = n.type();
-	            v.lazyPropTypes.set(n.type, !0), console.warn(l + "Component wrapped in lazy() is " + t(u));
-	          } catch (n) {
-	            console.warn(l + "We will log the wrapped component's name once it is loaded.");
-	          }
-	        }
-
-	        var f = n.props;
-	        n.type.__f && delete (f = function (n, e) {
-	          for (var t in e) n[t] = e[t];
-
-	          return n;
-	        }({}, f)).ref, function (n, t, o, r, a) {
-	          Object.keys(n).forEach(function (o) {
-	            var i;
-
-	            try {
-	              i = n[o](t, o, r, "prop", null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-	            } catch (n) {
-	              i = n;
-	            }
-
-	            !i || i.message in e || (e[i.message] = !0, console.error("Failed prop type: " + i.message + (a && "\n" + a() || "")));
-	          });
-	        }(n.type.propTypes, f, 0, t(n), function () {
-	          return c(n);
-	        });
-	      }
-
-	      i && i(n);
-	    }, n.options.__h = function (n, e, t) {
-	      if (!n || !a) throw new Error("Hook can only be invoked from render methods.");
-	      y && y(n, e, t);
-	    };
-
-	    var b = function (n, e) {
-	      return {
-	        get: function () {
-	          var t = "get" + n + e;
-	          m && m.indexOf(t) < 0 && (m.push(t), console.warn("getting vnode." + n + " is deprecated, " + e));
-	        },
-	        set: function () {
-	          var t = "set" + n + e;
-	          m && m.indexOf(t) < 0 && (m.push(t), console.warn("setting vnode." + n + " is not allowed, " + e));
-	        }
-	      };
-	    },
-	        w = {
-	      nodeName: b("nodeName", "use vnode.type"),
-	      attributes: b("attributes", "use vnode.props"),
-	      children: b("children", "use vnode.props.children")
-	    },
-	        g = Object.create({}, w);
-
-	    n.options.vnode = function (n) {
-	      var e = n.props;
-
-	      if (null !== n.type && null != e && ("__source" in e || "__self" in e)) {
-	        var t = n.props = {};
-
-	        for (var o in e) {
-	          var r = e[o];
-	          "__source" === o ? n.__source = r : "__self" === o ? n.__self = r : t[o] = r;
-	        }
-	      }
-
-	      n.__proto__ = g, f && f(n);
-	    }, n.options.diffed = function (n) {
-	      if (n.__k && n.__k.forEach(function (e) {
-	        if (e && void 0 === e.type) {
-	          delete e.__, delete e.__b;
-	          var t = Object.keys(e).join(",");
-	          throw new Error("Objects are not valid as a child. Encountered an object with the keys {" + t + "}.\n\n" + c(n));
-	        }
-	      }), a = !1, u && u(n), null != n.__k) for (var e = [], t = 0; t < n.__k.length; t++) {
-	        var o = n.__k[t];
-
-	        if (o && null != o.key) {
-	          var r = o.key;
-
-	          if (-1 !== e.indexOf(r)) {
-	            console.error('Following component has two or more children with the same key attribute: "' + r + '". This may cause glitches and misbehavior in rendering process. Component: \n\n' + p(n) + "\n\n" + c(n));
-	            break;
-	          }
-
-	          e.push(r);
-	        }
-	      }
-	    };
-	  }(), exports.resetPropWarnings = function () {
-	    e = {};
-	  };
-	});
-
-	var n,
-	    l$1,
-	    u$1,
-	    t$1,
-	    o$1,
-	    r$1,
-	    f$1,
-	    e$1 = {},
-	    c$1 = [],
-	    s$1 = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
-
-	function a$1(n, l) {
+	var n$3,
+	    l$3,
+	    u$3,
+	    t$3,
+	    o$3,
+	    r$3,
+	    f$3,
+	    e$3 = {},
+	    c$3 = [],
+	    s$3 = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
+
+	function a$3(n, l) {
 	  for (var u in l) n[u] = l[u];
 
 	  return n;
 	}
 
-	function h$1(n) {
+	function h$2(n) {
 	  var l = n.parentNode;
 	  l && l.removeChild(n);
 	}
 
-	function v$1(l, u, i) {
+	function v$2(l, u, i) {
 	  var t,
 	      o,
 	      r,
@@ -654,11 +31,11 @@
 
 	  for (r in u) "key" == r ? t = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
 
-	  if (arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : i), "function" == typeof l && null != l.defaultProps) for (r in l.defaultProps) void 0 === f[r] && (f[r] = l.defaultProps[r]);
-	  return y$1(l, f, t, o, null);
+	  if (arguments.length > 2 && (f.children = arguments.length > 3 ? n$3.call(arguments, 2) : i), "function" == typeof l && null != l.defaultProps) for (r in l.defaultProps) void 0 === f[r] && (f[r] = l.defaultProps[r]);
+	  return y$2(l, f, t, o, null);
 	}
 
-	function y$1(n, i, t, o, r) {
+	function y$2(n, i, t, o, r) {
 	  var f = {
 	    type: n,
 	    props: i,
@@ -672,28 +49,28 @@
 	    __c: null,
 	    __h: null,
 	    constructor: void 0,
-	    __v: null == r ? ++u$1 : r
+	    __v: null == r ? ++u$3 : r
 	  };
-	  return null == r && null != l$1.vnode && l$1.vnode(f), f;
+	  return null == r && null != l$3.vnode && l$3.vnode(f), f;
 	}
 
-	function d$1(n) {
+	function d$2(n) {
 	  return n.children;
 	}
 
-	function _$1(n, l) {
+	function _$2(n, l) {
 	  this.props = n, this.context = l;
 	}
 
-	function k$1(n, l) {
-	  if (null == l) return n.__ ? k$1(n.__, n.__.__k.indexOf(n) + 1) : null;
+	function k$2(n, l) {
+	  if (null == l) return n.__ ? k$2(n.__, n.__.__k.indexOf(n) + 1) : null;
 
 	  for (var u; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) return u.__e;
 
-	  return "function" == typeof n.type ? k$1(n) : null;
+	  return "function" == typeof n.type ? k$2(n) : null;
 	}
 
-	function b$1(n) {
+	function b$2(n) {
 	  var l, u;
 
 	  if (null != (n = n.__) && null != n.__c) {
@@ -702,24 +79,24 @@
 	      break;
 	    }
 
-	    return b$1(n);
+	    return b$2(n);
 	  }
 	}
 
-	function m$1(n) {
-	  (!n.__d && (n.__d = !0) && t$1.push(n) && !g$1.__r++ || r$1 !== l$1.debounceRendering) && ((r$1 = l$1.debounceRendering) || o$1)(g$1);
+	function m$2(n) {
+	  (!n.__d && (n.__d = !0) && t$3.push(n) && !g$2.__r++ || r$3 !== l$3.debounceRendering) && ((r$3 = l$3.debounceRendering) || o$3)(g$2);
 	}
 
-	function g$1() {
-	  for (var n; g$1.__r = t$1.length;) n = t$1.sort(function (n, l) {
+	function g$2() {
+	  for (var n; g$2.__r = t$3.length;) n = t$3.sort(function (n, l) {
 	    return n.__v.__b - l.__v.__b;
-	  }), t$1 = [], n.some(function (n) {
+	  }), t$3 = [], n.some(function (n) {
 	    var l, u, i, t, o, r;
-	    n.__d && (o = (t = (l = n).__v).__e, (r = l.__P) && (u = [], (i = a$1({}, t)).__v = t.__v + 1, j$2(r, t, i, l.__n, void 0 !== r.ownerSVGElement, null != t.__h ? [o] : null, u, null == o ? k$1(t) : o, t.__h), z$2(u, t), t.__e != o && b$1(t)));
+	    n.__d && (o = (t = (l = n).__v).__e, (r = l.__P) && (u = [], (i = a$3({}, t)).__v = t.__v + 1, j$3(r, t, i, l.__n, void 0 !== r.ownerSVGElement, null != t.__h ? [o] : null, u, null == o ? k$2(t) : o, t.__h), z$3(u, t), t.__e != o && b$2(t)));
 	  });
 	}
 
-	function w$2(n, l, u, i, t, o, r, f, s, a) {
+	function w$3(n, l, u, i, t, o, r, f, s, a) {
 	  var h,
 	      v,
 	      p,
@@ -727,12 +104,12 @@
 	      b,
 	      m,
 	      g,
-	      w = i && i.__k || c$1,
+	      w = i && i.__k || c$3,
 	      A = w.length;
 
-	  for (u.__k = [], h = 0; h < l.length; h++) if (null != (_ = u.__k[h] = null == (_ = l[h]) || "boolean" == typeof _ ? null : "string" == typeof _ || "number" == typeof _ || "bigint" == typeof _ ? y$1(null, _, null, null, _) : Array.isArray(_) ? y$1(d$1, {
+	  for (u.__k = [], h = 0; h < l.length; h++) if (null != (_ = u.__k[h] = null == (_ = l[h]) || "boolean" == typeof _ ? null : "string" == typeof _ || "number" == typeof _ || "bigint" == typeof _ ? y$2(null, _, null, null, _) : Array.isArray(_) ? y$2(d$2, {
 	    children: _
-	  }, null, null, null) : _.__b > 0 ? y$1(_.type, _.props, _.key, null, _.__v) : _)) {
+	  }, null, null, null) : _.__b > 0 ? y$2(_.type, _.props, _.key, null, _.__v) : _)) {
 	    if (_.__ = u, _.__b = u.__b + 1, null === (p = w[h]) || p && _.key == p.key && _.type === p.type) w[h] = void 0;else for (v = 0; v < A; v++) {
 	      if ((p = w[v]) && _.key == p.key && _.type === p.type) {
 	        w[v] = void 0;
@@ -741,27 +118,27 @@
 
 	      p = null;
 	    }
-	    j$2(n, _, p = p || e$1, t, o, r, f, s, a), b = _.__e, (v = _.ref) && p.ref != v && (g || (g = []), p.ref && g.push(p.ref, null, _), g.push(v, _.__c || b, _)), null != b ? (null == m && (m = b), "function" == typeof _.type && _.__k === p.__k ? _.__d = s = x$1(_, s, n) : s = P$1(n, _, p, w, b, s), "function" == typeof u.type && (u.__d = s)) : s && p.__e == s && s.parentNode != n && (s = k$1(p));
+	    j$3(n, _, p = p || e$3, t, o, r, f, s, a), b = _.__e, (v = _.ref) && p.ref != v && (g || (g = []), p.ref && g.push(p.ref, null, _), g.push(v, _.__c || b, _)), null != b ? (null == m && (m = b), "function" == typeof _.type && _.__k === p.__k ? _.__d = s = x$2(_, s, n) : s = P$2(n, _, p, w, b, s), "function" == typeof u.type && (u.__d = s)) : s && p.__e == s && s.parentNode != n && (s = k$2(p));
 	  }
 
-	  for (u.__e = m, h = A; h--;) null != w[h] && ("function" == typeof u.type && null != w[h].__e && w[h].__e == u.__d && (u.__d = k$1(i, h + 1)), N(w[h], w[h]));
+	  for (u.__e = m, h = A; h--;) null != w[h] && ("function" == typeof u.type && null != w[h].__e && w[h].__e == u.__d && (u.__d = k$2(i, h + 1)), N$1(w[h], w[h]));
 
-	  if (g) for (h = 0; h < g.length; h++) M$2(g[h], g[++h], g[++h]);
+	  if (g) for (h = 0; h < g.length; h++) M$3(g[h], g[++h], g[++h]);
 	}
 
-	function x$1(n, l, u) {
-	  for (var i, t = n.__k, o = 0; t && o < t.length; o++) (i = t[o]) && (i.__ = n, l = "function" == typeof i.type ? x$1(i, l, u) : P$1(u, i, i, t, i.__e, l));
+	function x$2(n, l, u) {
+	  for (var i, t = n.__k, o = 0; t && o < t.length; o++) (i = t[o]) && (i.__ = n, l = "function" == typeof i.type ? x$2(i, l, u) : P$2(u, i, i, t, i.__e, l));
 
 	  return l;
 	}
 
-	function A$2(n, l) {
+	function A$3(n, l) {
 	  return l = l || [], null == n || "boolean" == typeof n || (Array.isArray(n) ? n.some(function (n) {
-	    A$2(n, l);
+	    A$3(n, l);
 	  }) : l.push(n)), l;
 	}
 
-	function P$1(n, l, u, i, t, o) {
+	function P$2(n, l, u, i, t, o) {
 	  var r, f, e;
 	  if (void 0 !== l.__d) r = l.__d, l.__d = void 0;else if (null == u || t != o || null == t.parentNode) n: if (null == o || o.parentNode !== n) n.appendChild(t), r = null;else {
 	    for (f = o, e = 0; (f = f.nextSibling) && e < i.length; e += 2) if (f == t) break n;
@@ -771,27 +148,27 @@
 	  return void 0 !== r ? r : t.nextSibling;
 	}
 
-	function C$1(n, l, u, i, t) {
+	function C$2(n, l, u, i, t) {
 	  var o;
 
-	  for (o in u) "children" === o || "key" === o || o in l || H$1(n, o, null, u[o], i);
+	  for (o in u) "children" === o || "key" === o || o in l || H$2(n, o, null, u[o], i);
 
-	  for (o in l) t && "function" != typeof l[o] || "children" === o || "key" === o || "value" === o || "checked" === o || u[o] === l[o] || H$1(n, o, l[o], u[o], i);
+	  for (o in l) t && "function" != typeof l[o] || "children" === o || "key" === o || "value" === o || "checked" === o || u[o] === l[o] || H$2(n, o, l[o], u[o], i);
 	}
 
-	function $(n, l, u) {
-	  "-" === l[0] ? n.setProperty(l, u) : n[l] = null == u ? "" : "number" != typeof u || s$1.test(l) ? u : u + "px";
+	function $$1(n, l, u) {
+	  "-" === l[0] ? n.setProperty(l, u) : n[l] = null == u ? "" : "number" != typeof u || s$3.test(l) ? u : u + "px";
 	}
 
-	function H$1(n, l, u, i, t) {
+	function H$2(n, l, u, i, t) {
 	  var o;
 
 	  n: if ("style" === l) {
 	    if ("string" == typeof u) n.style.cssText = u;else {
-	      if ("string" == typeof i && (n.style.cssText = i = ""), i) for (l in i) u && l in u || $(n.style, l, "");
-	      if (u) for (l in u) i && u[l] === i[l] || $(n.style, l, u[l]);
+	      if ("string" == typeof i && (n.style.cssText = i = ""), i) for (l in i) u && l in u || $$1(n.style, l, "");
+	      if (u) for (l in u) i && u[l] === i[l] || $$1(n.style, l, u[l]);
 	    }
-	  } else if ("o" === l[0] && "n" === l[1]) o = l !== (l = l.replace(/Capture$/, "")), l = l.toLowerCase() in n ? l.toLowerCase().slice(2) : l.slice(2), n.l || (n.l = {}), n.l[l + o] = u, u ? i || n.addEventListener(l, o ? T$2 : I, o) : n.removeEventListener(l, o ? T$2 : I, o);else if ("dangerouslySetInnerHTML" !== l) {
+	  } else if ("o" === l[0] && "n" === l[1]) o = l !== (l = l.replace(/Capture$/, "")), l = l.toLowerCase() in n ? l.toLowerCase().slice(2) : l.slice(2), n.l || (n.l = {}), n.l[l + o] = u, u ? i || n.addEventListener(l, o ? T$3 : I$1, o) : n.removeEventListener(l, o ? T$3 : I$1, o);else if ("dangerouslySetInnerHTML" !== l) {
 	    if (t) l = l.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");else if ("href" !== l && "list" !== l && "form" !== l && "tabIndex" !== l && "download" !== l && l in n) try {
 	      n[l] = null == u ? "" : u;
 	      break n;
@@ -800,15 +177,15 @@
 	  }
 	}
 
-	function I(n) {
-	  this.l[n.type + !1](l$1.event ? l$1.event(n) : n);
+	function I$1(n) {
+	  this.l[n.type + !1](l$3.event ? l$3.event(n) : n);
 	}
 
-	function T$2(n) {
-	  this.l[n.type + !0](l$1.event ? l$1.event(n) : n);
+	function T$3(n) {
+	  this.l[n.type + !0](l$3.event ? l$3.event(n) : n);
 	}
 
-	function j$2(n, u, i, t, o, r, f, e, c) {
+	function j$3(n, u, i, t, o, r, f, e, c) {
 	  var s,
 	      h,
 	      v,
@@ -824,11 +201,11 @@
 	      C,
 	      $ = u.type;
 	  if (void 0 !== u.constructor) return null;
-	  null != i.__h && (c = i.__h, e = u.__e = i.__e, u.__h = null, r = [e]), (s = l$1.__b) && s(u);
+	  null != i.__h && (c = i.__h, e = u.__e = i.__e, u.__h = null, r = [e]), (s = l$3.__b) && s(u);
 
 	  try {
 	    n: if ("function" == typeof $) {
-	      if (m = u.props, g = (s = $.contextType) && t[s.__c], x = s ? g ? g.props.value : s.__ : t, i.__c ? b = (h = u.__c = i.__c).__ = h.__E : ("prototype" in $ && $.prototype.render ? u.__c = h = new $(m, x) : (u.__c = h = new _$1(m, x), h.constructor = $, h.render = O$1), g && g.sub(h), h.props = m, h.state || (h.state = {}), h.context = x, h.__n = t, v = h.__d = !0, h.__h = []), null == h.__s && (h.__s = h.state), null != $.getDerivedStateFromProps && (h.__s == h.state && (h.__s = a$1({}, h.__s)), a$1(h.__s, $.getDerivedStateFromProps(m, h.__s))), y = h.props, p = h.state, v) null == $.getDerivedStateFromProps && null != h.componentWillMount && h.componentWillMount(), null != h.componentDidMount && h.__h.push(h.componentDidMount);else {
+	      if (m = u.props, g = (s = $.contextType) && t[s.__c], x = s ? g ? g.props.value : s.__ : t, i.__c ? b = (h = u.__c = i.__c).__ = h.__E : ("prototype" in $ && $.prototype.render ? u.__c = h = new $(m, x) : (u.__c = h = new _$2(m, x), h.constructor = $, h.render = O$1), g && g.sub(h), h.props = m, h.state || (h.state = {}), h.context = x, h.__n = t, v = h.__d = !0, h.__h = []), null == h.__s && (h.__s = h.state), null != $.getDerivedStateFromProps && (h.__s == h.state && (h.__s = a$3({}, h.__s)), a$3(h.__s, $.getDerivedStateFromProps(m, h.__s))), y = h.props, p = h.state, v) null == $.getDerivedStateFromProps && null != h.componentWillMount && h.componentWillMount(), null != h.componentDidMount && h.__h.push(h.componentDidMount);else {
 	        if (null == $.getDerivedStateFromProps && m !== y && null != h.componentWillReceiveProps && h.componentWillReceiveProps(m, x), !h.__e && null != h.shouldComponentUpdate && !1 === h.shouldComponentUpdate(m, h.__s, x) || u.__v === i.__v) {
 	          h.props = m, h.state = h.__s, u.__v !== i.__v && (h.__d = !1), h.__v = u, u.__e = i.__e, u.__k = i.__k, u.__k.forEach(function (n) {
 	            n && (n.__ = u);
@@ -840,31 +217,31 @@
 	          h.componentDidUpdate(y, p, k);
 	        });
 	      }
-	      if (h.context = x, h.props = m, h.__v = u, h.__P = n, A = l$1.__r, P = 0, "prototype" in $ && $.prototype.render) h.state = h.__s, h.__d = !1, A && A(u), s = h.render(h.props, h.state, h.context);else do {
+	      if (h.context = x, h.props = m, h.__v = u, h.__P = n, A = l$3.__r, P = 0, "prototype" in $ && $.prototype.render) h.state = h.__s, h.__d = !1, A && A(u), s = h.render(h.props, h.state, h.context);else do {
 	        h.__d = !1, A && A(u), s = h.render(h.props, h.state, h.context), h.state = h.__s;
 	      } while (h.__d && ++P < 25);
-	      h.state = h.__s, null != h.getChildContext && (t = a$1(a$1({}, t), h.getChildContext())), v || null == h.getSnapshotBeforeUpdate || (k = h.getSnapshotBeforeUpdate(y, p)), C = null != s && s.type === d$1 && null == s.key ? s.props.children : s, w$2(n, Array.isArray(C) ? C : [C], u, i, t, o, r, f, e, c), h.base = u.__e, u.__h = null, h.__h.length && f.push(h), b && (h.__E = h.__ = null), h.__e = !1;
-	    } else null == r && u.__v === i.__v ? (u.__k = i.__k, u.__e = i.__e) : u.__e = L$1(i.__e, u, i, t, o, r, f, c);
+	      h.state = h.__s, null != h.getChildContext && (t = a$3(a$3({}, t), h.getChildContext())), v || null == h.getSnapshotBeforeUpdate || (k = h.getSnapshotBeforeUpdate(y, p)), C = null != s && s.type === d$2 && null == s.key ? s.props.children : s, w$3(n, Array.isArray(C) ? C : [C], u, i, t, o, r, f, e, c), h.base = u.__e, u.__h = null, h.__h.length && f.push(h), b && (h.__E = h.__ = null), h.__e = !1;
+	    } else null == r && u.__v === i.__v ? (u.__k = i.__k, u.__e = i.__e) : u.__e = L$2(i.__e, u, i, t, o, r, f, c);
 
-	    (s = l$1.diffed) && s(u);
+	    (s = l$3.diffed) && s(u);
 	  } catch (n) {
-	    u.__v = null, (c || null != r) && (u.__e = e, u.__h = !!c, r[r.indexOf(e)] = null), l$1.__e(n, u, i);
+	    u.__v = null, (c || null != r) && (u.__e = e, u.__h = !!c, r[r.indexOf(e)] = null), l$3.__e(n, u, i);
 	  }
 	}
 
-	function z$2(n, u) {
-	  l$1.__c && l$1.__c(u, n), n.some(function (u) {
+	function z$3(n, u) {
+	  l$3.__c && l$3.__c(u, n), n.some(function (u) {
 	    try {
 	      n = u.__h, u.__h = [], n.some(function (n) {
 	        n.call(u);
 	      });
 	    } catch (n) {
-	      l$1.__e(n, u.__v);
+	      l$3.__e(n, u.__v);
 	    }
 	  });
 	}
 
-	function L$1(l, u, i, t, o, r, f, c) {
+	function L$2(l, u, i, t, o, r, f, c) {
 	  var s,
 	      a,
 	      v,
@@ -883,39 +260,39 @@
 	  }
 
 	  if (null === d) y === p || c && l.data === p || (l.data = p);else {
-	    if (r = r && n.call(l.childNodes), a = (y = i.props || e$1).dangerouslySetInnerHTML, v = p.dangerouslySetInnerHTML, !c) {
+	    if (r = r && n$3.call(l.childNodes), a = (y = i.props || e$3).dangerouslySetInnerHTML, v = p.dangerouslySetInnerHTML, !c) {
 	      if (null != r) for (y = {}, _ = 0; _ < l.attributes.length; _++) y[l.attributes[_].name] = l.attributes[_].value;
 	      (v || a) && (v && (a && v.__html == a.__html || v.__html === l.innerHTML) || (l.innerHTML = v && v.__html || ""));
 	    }
 
-	    if (C$1(l, p, y, o, c), v) u.__k = [];else if (_ = u.props.children, w$2(l, Array.isArray(_) ? _ : [_], u, i, t, o && "foreignObject" !== d, r, f, r ? r[0] : i.__k && k$1(i, 0), c), null != r) for (_ = r.length; _--;) null != r[_] && h$1(r[_]);
-	    c || ("value" in p && void 0 !== (_ = p.value) && (_ !== l.value || "progress" === d && !_ || "option" === d && _ !== y.value) && H$1(l, "value", _, y.value, !1), "checked" in p && void 0 !== (_ = p.checked) && _ !== l.checked && H$1(l, "checked", _, y.checked, !1));
+	    if (C$2(l, p, y, o, c), v) u.__k = [];else if (_ = u.props.children, w$3(l, Array.isArray(_) ? _ : [_], u, i, t, o && "foreignObject" !== d, r, f, r ? r[0] : i.__k && k$2(i, 0), c), null != r) for (_ = r.length; _--;) null != r[_] && h$2(r[_]);
+	    c || ("value" in p && void 0 !== (_ = p.value) && (_ !== l.value || "progress" === d && !_ || "option" === d && _ !== y.value) && H$2(l, "value", _, y.value, !1), "checked" in p && void 0 !== (_ = p.checked) && _ !== l.checked && H$2(l, "checked", _, y.checked, !1));
 	  }
 	  return l;
 	}
 
-	function M$2(n, u, i) {
+	function M$3(n, u, i) {
 	  try {
 	    "function" == typeof n ? n(u) : n.current = u;
 	  } catch (n) {
-	    l$1.__e(n, i);
+	    l$3.__e(n, i);
 	  }
 	}
 
-	function N(n, u, i) {
+	function N$1(n, u, i) {
 	  var t, o;
 
-	  if (l$1.unmount && l$1.unmount(n), (t = n.ref) && (t.current && t.current !== n.__e || M$2(t, null, u)), null != (t = n.__c)) {
+	  if (l$3.unmount && l$3.unmount(n), (t = n.ref) && (t.current && t.current !== n.__e || M$3(t, null, u)), null != (t = n.__c)) {
 	    if (t.componentWillUnmount) try {
 	      t.componentWillUnmount();
 	    } catch (n) {
-	      l$1.__e(n, u);
+	      l$3.__e(n, u);
 	    }
 	    t.base = t.__P = null;
 	  }
 
-	  if (t = n.__k) for (o = 0; o < t.length; o++) t[o] && N(t[o], u, "function" != typeof n.type);
-	  i || null == n.__e || h$1(n.__e), n.__e = n.__d = void 0;
+	  if (t = n.__k) for (o = 0; o < t.length; o++) t[o] && N$1(t[o], u, "function" != typeof n.type);
+	  i || null == n.__e || h$2(n.__e), n.__e = n.__d = void 0;
 	}
 
 	function O$1(n, l, u) {
@@ -924,23 +301,23 @@
 
 	function S$1(u, i, t) {
 	  var o, r, f;
-	  l$1.__ && l$1.__(u, i), r = (o = "function" == typeof t) ? null : t && t.__k || i.__k, f = [], j$2(i, u = (!o && t || i).__k = v$1(d$1, null, [u]), r || e$1, e$1, void 0 !== i.ownerSVGElement, !o && t ? [t] : r ? null : i.firstChild ? n.call(i.childNodes) : null, f, !o && t ? t : r ? r.__e : i.firstChild, o), z$2(f, u);
+	  l$3.__ && l$3.__(u, i), r = (o = "function" == typeof t) ? null : t && t.__k || i.__k, f = [], j$3(i, u = (!o && t || i).__k = v$2(d$2, null, [u]), r || e$3, e$3, void 0 !== i.ownerSVGElement, !o && t ? [t] : r ? null : i.firstChild ? n$3.call(i.childNodes) : null, f, !o && t ? t : r ? r.__e : i.firstChild, o), z$3(f, u);
 	}
 
 	function B(l, u, i) {
 	  var t,
 	      o,
 	      r,
-	      f = a$1({}, l.props);
+	      f = a$3({}, l.props);
 
 	  for (r in u) "key" == r ? t = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
 
-	  return arguments.length > 2 && (f.children = arguments.length > 3 ? n.call(arguments, 2) : i), y$1(l.type, f, t || l.key, o || l.ref, null);
+	  return arguments.length > 2 && (f.children = arguments.length > 3 ? n$3.call(arguments, 2) : i), y$2(l.type, f, t || l.key, o || l.ref, null);
 	}
 
 	function D(n, l) {
 	  var u = {
-	    __c: l = "__cC" + f$1++,
+	    __c: l = "__cC" + f$3++,
 	    __: n,
 	    Consumer: function (n, l) {
 	      return n.children(l);
@@ -950,7 +327,7 @@
 	      return this.getChildContext || (u = [], (i = {})[l] = this, this.getChildContext = function () {
 	        return i;
 	      }, this.shouldComponentUpdate = function (n) {
-	        this.props.value !== n.value && u.some(m$1);
+	        this.props.value !== n.value && u.some(m$2);
 	      }, this.sub = function (n) {
 	        u.push(n);
 	        var l = n.componentWillUnmount;
@@ -964,7 +341,7 @@
 	  return u.Provider.__ = u.Consumer.contextType = u;
 	}
 
-	n = c$1.slice, l$1 = {
+	n$3 = c$3.slice, l$3 = {
 	  __e: function (n, l, u, i) {
 	    for (var t, o, r; l = l.__;) if ((t = l.__c) && !t.__) try {
 	      if ((o = t.constructor) && null != o.getDerivedStateFromError && (t.setState(o.getDerivedStateFromError(n)), r = t.__d), null != t.componentDidCatch && (t.componentDidCatch(n, i || {}), r = t.__d), r) return t.__E = t;
@@ -974,71 +351,66 @@
 
 	    throw n;
 	  }
-	}, u$1 = 0, _$1.prototype.setState = function (n, l) {
+	}, u$3 = 0, _$2.prototype.setState = function (n, l) {
 	  var u;
-	  u = null != this.__s && this.__s !== this.state ? this.__s : this.__s = a$1({}, this.state), "function" == typeof n && (n = n(a$1({}, u), this.props)), n && a$1(u, n), null != n && this.__v && (l && this.__h.push(l), m$1(this));
-	}, _$1.prototype.forceUpdate = function (n) {
-	  this.__v && (this.__e = !0, n && this.__h.push(n), m$1(this));
-	}, _$1.prototype.render = d$1, t$1 = [], o$1 = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, g$1.__r = 0, f$1 = 0;
+	  u = null != this.__s && this.__s !== this.state ? this.__s : this.__s = a$3({}, this.state), "function" == typeof n && (n = n(a$3({}, u), this.props)), n && a$3(u, n), null != n && this.__v && (l && this.__h.push(l), m$2(this));
+	}, _$2.prototype.forceUpdate = function (n) {
+	  this.__v && (this.__e = !0, n && this.__h.push(n), m$2(this));
+	}, _$2.prototype.render = d$2, t$3 = [], o$3 = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, g$2.__r = 0, f$3 = 0;
 
-	"undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.8.1", l$1, {
-	  Fragment: d$1,
-	  Component: _$1
-	});
+	var t$2,
+	    u$2,
+	    r$2,
+	    o$2,
+	    i$2 = 0,
+	    c$2 = [],
+	    f$2 = l$3.__b,
+	    e$2 = l$3.__r,
+	    a$2 = l$3.diffed,
+	    v$1 = l$3.__c,
+	    l$2 = l$3.unmount;
 
-	var t,
-	    u,
-	    r,
-	    o,
-	    i = 0,
-	    c = [],
-	    f = l$1.__b,
-	    e = l$1.__r,
-	    a = l$1.diffed,
-	    v = l$1.__c,
-	    l = l$1.unmount;
-
-	function m(t, r) {
-	  l$1.__h && l$1.__h(u, t, i || r), i = 0;
-	  var o = u.__H || (u.__H = {
+	function m$1(t, r) {
+	  l$3.__h && l$3.__h(u$2, t, i$2 || r), i$2 = 0;
+	  var o = u$2.__H || (u$2.__H = {
 	    __: [],
 	    __h: []
 	  });
 	  return t >= o.__.length && o.__.push({}), o.__[t];
 	}
 
-	function d(n) {
-	  return i = 1, p(z$1, n);
+	function d$1(n) {
+	  return i$2 = 1, p$2(z$2, n);
 	}
 
-	function p(n, r, o) {
-	  var i = m(t++, 2);
-	  return i.t = n, i.__c || (i.__ = [o ? o(r) : z$1(void 0, r), function (n) {
+	function p$2(n, r, o) {
+	  var i = m$1(t$2++, 2);
+	  return i.t = n, i.__c || (i.__ = [o ? o(r) : z$2(void 0, r), function (n) {
 	    var t = i.t(i.__[0], n);
 	    i.__[0] !== t && (i.__ = [t, i.__[1]], i.__c.setState({}));
-	  }], i.__c = u), i.__;
+	  }], i.__c = u$2), i.__;
 	}
 
-	function y(r, o) {
-	  var i = m(t++, 3);
-	  !l$1.__s && w$1(i.__H, o) && (i.__ = r, i.u = o, u.__H.__h.push(i));
+	function y$1(r, o) {
+	  var i = m$1(t$2++, 3);
+	  !l$3.__s && w$2(i.__H, o) && (i.__ = r, i.u = o, u$2.__H.__h.push(i));
 	}
 
-	function h(r, o) {
-	  var i = m(t++, 4);
-	  !l$1.__s && w$1(i.__H, o) && (i.__ = r, i.u = o, u.__h.push(i));
+	function h$1(r, o) {
+	  var i = m$1(t$2++, 4);
+	  !l$3.__s && w$2(i.__H, o) && (i.__ = r, i.u = o, u$2.__h.push(i));
 	}
 
-	function s(n) {
-	  return i = 5, A$1(function () {
+	function s$2(n) {
+	  return i$2 = 5, A$2(function () {
 	    return {
 	      current: n
 	    };
 	  }, []);
 	}
 
-	function _(n, t, u) {
-	  i = 6, h(function () {
+	function _$1(n, t, u) {
+	  i$2 = 6, h$1(function () {
 	    return "function" == typeof n ? (n(t()), function () {
 	      return n(null);
 	    }) : n ? (n.current = t(), function () {
@@ -1047,99 +419,99 @@
 	  }, null == u ? u : u.concat(n));
 	}
 
-	function A$1(n, u) {
-	  var r = m(t++, 7);
-	  return w$1(r.__H, u) ? (r.o = n(), r.u = u, r.__h = n, r.o) : r.__;
+	function A$2(n, u) {
+	  var r = m$1(t$2++, 7);
+	  return w$2(r.__H, u) ? (r.o = n(), r.u = u, r.__h = n, r.o) : r.__;
 	}
 
 	function F(n, t) {
-	  return i = 8, A$1(function () {
+	  return i$2 = 8, A$2(function () {
 	    return n;
 	  }, t);
 	}
 
-	function T$1(n) {
-	  var r = u.context[n.__c],
-	      o = m(t++, 9);
-	  return o.c = n, r ? (null == o.__ && (o.__ = !0, r.sub(u)), r.props.value) : n.__;
+	function T$2(n) {
+	  var r = u$2.context[n.__c],
+	      o = m$1(t$2++, 9);
+	  return o.c = n, r ? (null == o.__ && (o.__ = !0, r.sub(u$2)), r.props.value) : n.__;
 	}
 
-	function b() {
-	  for (var t; t = c.shift();) if (t.__P) try {
-	    t.__H.__h.forEach(j$1), t.__H.__h.forEach(k), t.__H.__h = [];
+	function b$1() {
+	  for (var t; t = c$2.shift();) if (t.__P) try {
+	    t.__H.__h.forEach(j$2), t.__H.__h.forEach(k$1), t.__H.__h = [];
 	  } catch (u) {
-	    t.__H.__h = [], l$1.__e(u, t.__v);
+	    t.__H.__h = [], l$3.__e(u, t.__v);
 	  }
 	}
 
-	l$1.__b = function (n) {
-	  u = null, f && f(n);
-	}, l$1.__r = function (n) {
-	  e && e(n), t = 0;
-	  var o = (u = n.__c).__H;
-	  o && (r === u ? (o.__h = [], u.__h = [], o.__.forEach(function (n) {
+	l$3.__b = function (n) {
+	  u$2 = null, f$2 && f$2(n);
+	}, l$3.__r = function (n) {
+	  e$2 && e$2(n), t$2 = 0;
+	  var o = (u$2 = n.__c).__H;
+	  o && (r$2 === u$2 ? (o.__h = [], u$2.__h = [], o.__.forEach(function (n) {
 	    n.o = n.u = void 0;
 	  })) : (o.__.forEach(function (n) {
 	    n.u && (n.__H = n.u), n.o && (n.__ = n.o), n.o = n.u = void 0;
-	  }), o.__h.forEach(j$1), o.__h.forEach(k), o.__h = [])), r = u;
-	}, l$1.diffed = function (t) {
-	  a && a(t);
+	  }), o.__h.forEach(j$2), o.__h.forEach(k$1), o.__h = [])), r$2 = u$2;
+	}, l$3.diffed = function (t) {
+	  a$2 && a$2(t);
 	  var i = t.__c;
-	  i && i.__H && i.__H.__h.length && (1 !== c.push(i) && o === l$1.requestAnimationFrame || ((o = l$1.requestAnimationFrame) || function (n) {
+	  i && i.__H && i.__H.__h.length && (1 !== c$2.push(i) && o$2 === l$3.requestAnimationFrame || ((o$2 = l$3.requestAnimationFrame) || function (n) {
 	    var t,
 	        u = function () {
-	      clearTimeout(r), g && cancelAnimationFrame(t), setTimeout(n);
+	      clearTimeout(r), g$1 && cancelAnimationFrame(t), setTimeout(n);
 	    },
 	        r = setTimeout(u, 100);
 
-	    g && (t = requestAnimationFrame(u));
-	  })(b)), u = null, r = null;
-	}, l$1.__c = function (t, u) {
+	    g$1 && (t = requestAnimationFrame(u));
+	  })(b$1)), u$2 = null, r$2 = null;
+	}, l$3.__c = function (t, u) {
 	  u.some(function (t) {
 	    try {
 	      t.__H && t.__H.__.forEach(function (n) {
 	        n.u && (n.__H = n.u), n.o && (n.__ = n.o), n.o = n.u = void 0;
-	      }), t.__h.forEach(j$1), t.__h = t.__h.filter(function (n) {
-	        return !n.__ || k(n);
+	      }), t.__h.forEach(j$2), t.__h = t.__h.filter(function (n) {
+	        return !n.__ || k$1(n);
 	      });
 	    } catch (r) {
 	      u.some(function (n) {
 	        n.__h && (n.__h = []);
-	      }), u = [], l$1.__e(r, t.__v);
+	      }), u = [], l$3.__e(r, t.__v);
 	    }
-	  }), v && v(t, u);
-	}, l$1.unmount = function (t) {
-	  l && l(t);
+	  }), v$1 && v$1(t, u);
+	}, l$3.unmount = function (t) {
+	  l$2 && l$2(t);
 	  var u,
 	      r = t.__c;
 	  r && r.__H && (r.__H.__.forEach(function (n) {
 	    try {
-	      j$1(n);
+	      j$2(n);
 	    } catch (n) {
 	      u = n;
 	    }
-	  }), u && l$1.__e(u, r.__v));
+	  }), u && l$3.__e(u, r.__v));
 	};
-	var g = "function" == typeof requestAnimationFrame;
+	var g$1 = "function" == typeof requestAnimationFrame;
 
-	function j$1(n) {
-	  var t = u,
+	function j$2(n) {
+	  var t = u$2,
 	      r = n.__c;
-	  "function" == typeof r && (n.__c = void 0, r()), u = t;
+	  "function" == typeof r && (n.__c = void 0, r()), u$2 = t;
 	}
 
-	function k(n) {
-	  var t = u;
-	  n.__c = n.__(), u = t;
+	function k$1(n) {
+	  var t = u$2;
+	  n.__c = n.__(), u$2 = t;
 	}
 
-	function w$1(n, t) {
+	function w$2(n, t) {
 	  return !n || n.length !== t.length || t.some(function (t, u) {
 	    return t !== n[u];
 	  });
 	}
 
-	function z$1(n, t) {
+	function z$2(n, t) {
 	  return "function" == typeof t ? t(n) : t;
 	}
 
@@ -1216,8 +588,8 @@
 
 	  function useHelper(value, index) {
 	    // Make sure that the provided functions are perfectly stable across renders
-	    const helperToEnsureStability = s(value);
-	    const shownError = s(false);
+	    const helperToEnsureStability = s$2(value);
+	    const shownError = s$2(false);
 
 	    if (helperToEnsureStability.current != value) {
 	      if (!shownError.current) {
@@ -1249,9 +621,9 @@
 	 */
 
 	function usePassiveState(onChange, getInitialValue) {
-	  const valueRef = s(Unset$1);
-	  const warningRef = s(false);
-	  const cleanupCallbackRef = s(undefined); // Make sure that the provided functions are perfectly stable across renders
+	  const valueRef = s$2(Unset$1);
+	  const warningRef = s$2(false);
+	  const cleanupCallbackRef = s$2(undefined); // Make sure that the provided functions are perfectly stable across renders
 
 	  useEnsureStability("usePassiveState", onChange, getInitialValue); // Shared between "dependency changed" and "component unmounted".
 
@@ -1285,7 +657,7 @@
 	    if (valueRef.current === Unset$1) tryEnsureValue();
 	    return valueRef.current === Unset$1 ? undefined : valueRef.current;
 	  }, []);
-	  h(() => {
+	  h$1(() => {
 	    // Make sure we've run our effect at least once on mount.
 	    // (If we have an initial value, of course)
 	    tryEnsureValue();
@@ -1326,7 +698,7 @@
 	  } else if (rhs == null) {
 	    return lhs;
 	  } else {
-	    const ret = v$1(d$1, {}, lhs, rhs);
+	    const ret = v$2(d$2, {}, lhs, rhs);
 	    return ret;
 	  }
 	}
@@ -1768,7 +1140,7 @@
 	  } = _ref;
 	  useEnsureStability("useElementSize", getObserveBox, onSizeChange);
 	  const [getSize, setSize] = usePassiveState(onSizeChange, returnNull$1);
-	  const currentObserveBox = s(undefined);
+	  const currentObserveBox = s$2(undefined);
 	  const needANewObserver = F((element, observeBox) => {
 	    if (element) {
 	      const document = getDocument(element);
@@ -1829,7 +1201,7 @@
 	  } = useRefElement({
 	    onElementChange: F(e => needANewObserver(e, getObserveBox === null || getObserveBox === void 0 ? void 0 : getObserveBox()), [])
 	  });
-	  y(() => {
+	  y$1(() => {
 	    if (getObserveBox) {
 	      if (currentObserveBox.current !== getObserveBox()) needANewObserver(getElement(), getObserveBox());
 	    }
@@ -1922,16 +1294,16 @@
 
 	    switch (side) {
 	      case "block-start":
-	        return M$1[((_direction$blockDirec = (_direction4 = direction) === null || _direction4 === void 0 ? void 0 : _direction4.blockDirection) !== null && _direction$blockDirec !== void 0 ? _direction$blockDirec : "ttb")[0]];
+	        return M$2[((_direction$blockDirec = (_direction4 = direction) === null || _direction4 === void 0 ? void 0 : _direction4.blockDirection) !== null && _direction$blockDirec !== void 0 ? _direction$blockDirec : "ttb")[0]];
 
 	      case "block-end":
-	        return M$1[((_direction$blockDirec2 = (_direction5 = direction) === null || _direction5 === void 0 ? void 0 : _direction5.blockDirection) !== null && _direction$blockDirec2 !== void 0 ? _direction$blockDirec2 : "ttb")[2]];
+	        return M$2[((_direction$blockDirec2 = (_direction5 = direction) === null || _direction5 === void 0 ? void 0 : _direction5.blockDirection) !== null && _direction$blockDirec2 !== void 0 ? _direction$blockDirec2 : "ttb")[2]];
 
 	      case "inline-start":
-	        return M$1[((_direction$inlineDire = (_direction6 = direction) === null || _direction6 === void 0 ? void 0 : _direction6.inlineDirection) !== null && _direction$inlineDire !== void 0 ? _direction$inlineDire : "ltr")[0]];
+	        return M$2[((_direction$inlineDire = (_direction6 = direction) === null || _direction6 === void 0 ? void 0 : _direction6.inlineDirection) !== null && _direction$inlineDire !== void 0 ? _direction$inlineDire : "ltr")[0]];
 
 	      case "inline-end":
-	        return M$1[((_direction$inlineDire2 = (_direction7 = direction) === null || _direction7 === void 0 ? void 0 : _direction7.inlineDirection) !== null && _direction$inlineDire2 !== void 0 ? _direction$inlineDire2 : "ltr")[2]];
+	        return M$2[((_direction$inlineDire2 = (_direction7 = direction) === null || _direction7 === void 0 ? void 0 : _direction7.inlineDirection) !== null && _direction$inlineDire2 !== void 0 ? _direction$inlineDire2 : "ltr")[2]];
 	    }
 	  }, []);
 	  const convertToLogicalSide = F((side, direction) => {
@@ -2064,7 +1436,7 @@
 	} // Helper for extracting info from "ltr", "ttb", etc.
 
 
-	const M$1 = {
+	const M$2 = {
 	  t: "top",
 	  b: "bottom",
 	  l: "left",
@@ -2152,8 +1524,8 @@
 
 	function useState(initialState) {
 	  // We keep both, but overrride the `setState` functionality
-	  const [state, setStateP] = d(initialState);
-	  const ref = s(state); // Hijack the normal setter function 
+	  const [state, setStateP] = d$1(initialState);
+	  const ref = s$2(state); // Hijack the normal setter function 
 	  // to also set our ref to the new value
 
 	  const setState = F(value => {
@@ -2218,7 +1590,7 @@
 	// commit being private and all.
 
 	const commitName = "diffed";
-	const originalCommit = l$1[commitName];
+	const originalCommit = l$3[commitName];
 
 	const newCommit = function () {
 	  for (const [id, effectInfo] of toRun) {
@@ -2242,7 +1614,7 @@
 	  originalCommit === null || originalCommit === void 0 ? void 0 : originalCommit(...args);
 	};
 
-	l$1[commitName] = newCommit;
+	l$3[commitName] = newCommit;
 	/**
 	 * Semi-private function to allow stable callbacks even within `useLayoutEffect` and ref assignment.
 	 *
@@ -2264,13 +1636,13 @@
 	          cleanup.current = effect();
 	      }
 	  })();*/
-	  const [id] = d(() => generateRandomId());
+	  const [id] = d$1(() => generateRandomId());
 	  toRun.set(id, {
 	    effect,
 	    inputs,
 	    cleanup: null
 	  });
-	  y(() => {
+	  y$1(() => {
 	    return () => {
 	      toRun.delete(id);
 	      previousInputs.delete(id);
@@ -2295,7 +1667,7 @@
 	 */
 
 	function useStableGetter(value) {
-	  const ref = s(Unset);
+	  const ref = s$2(Unset);
 	  useBeforeLayoutEffect(() => {
 	    ref.current = value;
 	  }, [value]);
@@ -2334,8 +1706,8 @@
 	 */
 
 	function useEffect(effect, inputs) {
-	  let impl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : y;
-	  const prevInputs = s(undefined);
+	  let impl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : y$1;
+	  const prevInputs = s$2(undefined);
 
 	  const effect2 = () => {
 	    const changes = [];
@@ -2367,7 +1739,7 @@
 	 */
 
 	function useLayoutEffect(effect, inputs) {
-	  return useEffect(effect, inputs, h);
+	  return useEffect(effect, inputs, h$1);
 	}
 
 	/**
@@ -2391,13 +1763,13 @@
 	  const [totalChildrenMounted, setTotalChildrenMounted, getTotalChildrenMounted] = useState(0);
 	  const [totalChildrenUnounted, setTotalChildrenUnounted, _getTotalChildrenUnounted] = useState(0);
 	  const childrenCurrentlyMounted = totalChildrenMounted - totalChildrenUnounted;
-	  const managedChildren = s([]
+	  const managedChildren = s$2([]
 	  /** TODO: Any problems caused by using an array when it should be an object? */
 	  );
-	  const mountedChildren = s([]);
-	  const mountOrder = s(new Map());
-	  const indicesByElement = s(new Map());
-	  const deletedIndices = s(new Set()); // Used to keep track of indices that have "over-mounted" and by how much.
+	  const mountedChildren = s$2([]);
+	  const mountOrder = s$2(new Map());
+	  const indicesByElement = s$2(new Map());
+	  const deletedIndices = s$2(new Set()); // Used to keep track of indices that have "over-mounted" and by how much.
 	  // We need this so that we don't erase saved information when a component
 	  // "overmounts" over another which then, correctly, switches *itself* to something else.
 	  // In general, this should only happen when components are swapping between indices.
@@ -2409,7 +1781,7 @@
 	  // Namely, is this map all 0s when the parent element re-renders? 
 	  // Probably not because of setChildUpdateIndex
 
-	  const overmountCount = s(new Map());
+	  const overmountCount = s$2(new Map());
 	  const getMountIndex = F(index => {
 	    return mountOrder.current.get(index);
 	  }, []);
@@ -2521,7 +1893,7 @@
 	  // Again, no matter what combination of sub- or sub-sub-functions used.
 	  let stableHandler = useStableCallback(handler !== null && handler !== void 0 ? handler : () => {});
 	  if (handler == null) stableHandler = null;
-	  y(() => {
+	  y$1(() => {
 	    if (stableHandler) {
 	      target.addEventListener(type, stableHandler, options);
 	      return () => target.removeEventListener(type, stableHandler, options);
@@ -2529,7 +1901,9 @@
 	  }, [target, type, stableHandler]);
 	}
 
-	createCommonjsModule(function (module, exports) {
+	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+	(function (module, exports) {
 	  (function (global, factory) {
 	    factory() ;
 	  })(commonjsGlobal, function () {
@@ -3456,7 +2830,7 @@
 	      }
 	    })();
 	  });
-	});
+	})();
 
 	/**
 	 * @license
@@ -3882,7 +3256,7 @@
 	  document.$blockingElements = new BlockingElementsImpl();
 	})();
 
-	function C(n, t) {
+	function C$1(n, t) {
 	  for (var e in t) n[e] = t[e];
 
 	  return n;
@@ -3900,36 +3274,36 @@
 	  this.props = n;
 	}
 
-	(E.prototype = new _$1()).isPureReactComponent = !0, E.prototype.shouldComponentUpdate = function (n, t) {
+	(E.prototype = new _$2()).isPureReactComponent = !0, E.prototype.shouldComponentUpdate = function (n, t) {
 	  return S(this.props, n) || S(this.state, t);
 	};
-	var w = l$1.__b;
+	var w$1 = l$3.__b;
 
-	l$1.__b = function (n) {
-	  n.type && n.type.__f && n.ref && (n.props.ref = n.ref, n.ref = null), w && w(n);
+	l$3.__b = function (n) {
+	  n.type && n.type.__f && n.ref && (n.props.ref = n.ref, n.ref = null), w$1 && w$1(n);
 	};
 
 	var R = "undefined" != typeof Symbol && Symbol.for && Symbol.for("react.forward_ref") || 3911;
 
-	function x(n) {
+	function x$1(n) {
 	  function t(t) {
-	    var e = C({}, t);
+	    var e = C$1({}, t);
 	    return delete e.ref, n(e, t.ref || null);
 	  }
 
 	  return t.$$typeof = R, t.render = t, t.prototype.isReactComponent = t.__f = !0, t.displayName = "ForwardRef(" + (n.displayName || n.name) + ")", t;
 	}
 
-	var A = l$1.__e;
+	var A$1 = l$3.__e;
 
-	l$1.__e = function (n, t, e, r) {
+	l$3.__e = function (n, t, e, r) {
 	  if (n.then) for (var u, o = t; o = o.__;) if ((u = o.__c) && u.__c) return null == t.__e && (t.__e = e.__e, t.__k = e.__k), u.__c(n, t);
-	  A(n, t, e, r);
+	  A$1(n, t, e, r);
 	};
 
-	var O = l$1.unmount;
+	var O = l$3.unmount;
 
-	function L() {
+	function L$1() {
 	  this.__u = 0, this.t = null, this.__b = null;
 	}
 
@@ -3938,14 +3312,14 @@
 	  return t && t.__e && t.__e(n);
 	}
 
-	function M() {
+	function M$1() {
 	  this.u = null, this.o = null;
 	}
 
-	l$1.unmount = function (n) {
+	l$3.unmount = function (n) {
 	  var t = n.__c;
 	  t && t.__R && t.__R(), t && !0 === n.__h && (n.type = null), O && O(n);
-	}, (L.prototype = new _$1()).__c = function (n, t) {
+	}, (L$1.prototype = new _$2()).__c = function (n, t) {
 	  var e = t.__c,
 	      r = this;
 	  null == r.t && (r.t = []), r.t.push(e);
@@ -3982,9 +3356,9 @@
 	  r.__u++ || f || r.setState({
 	    __e: r.__b = r.__v.__k[0]
 	  }), n.then(i, i);
-	}, L.prototype.componentWillUnmount = function () {
+	}, L$1.prototype.componentWillUnmount = function () {
 	  this.t = [];
-	}, L.prototype.render = function (n, t) {
+	}, L$1.prototype.render = function (n, t) {
 	  if (this.__b) {
 	    if (this.__v.__k) {
 	      var e = document.createElement("div"),
@@ -3993,7 +3367,7 @@
 	      this.__v.__k[0] = function n(t, e, r) {
 	        return t && (t.__c && t.__c.__H && (t.__c.__H.__.forEach(function (n) {
 	          "function" == typeof n.__c && n.__c();
-	        }), t.__c.__H = null), null != (t = C({}, t)).__c && (t.__c.__P === r && (t.__c.__P = e), t.__c = null), t.__k = t.__k && t.__k.map(function (t) {
+	        }), t.__c.__H = null), null != (t = C$1({}, t)).__c && (t.__c.__P === r && (t.__c.__P = e), t.__c = null), t.__k = t.__k && t.__k.map(function (t) {
 	          return n(t, e, r);
 	        })), t;
 	      }(this.__b, e, r.__O = r.__P);
@@ -4002,11 +3376,11 @@
 	    this.__b = null;
 	  }
 
-	  var u = t.__e && v$1(d$1, null, n.fallback);
-	  return u && (u.__h = null), [v$1(d$1, null, t.__e ? null : n.children), u];
+	  var u = t.__e && v$2(d$2, null, n.fallback);
+	  return u && (u.__h = null), [v$2(d$2, null, t.__e ? null : n.children), u];
 	};
 
-	var T = function (n, t, e) {
+	var T$1 = function (n, t, e) {
 	  if (++e[1] === e[0] && n.o.delete(t), n.props.revealOrder && ("t" !== n.props.revealOrder[0] || !n.o.size)) for (e = n.u; e;) {
 	    for (; e.length > 3;) e.pop()();
 
@@ -4015,41 +3389,41 @@
 	  }
 	};
 
-	(M.prototype = new _$1()).__e = function (n) {
+	(M$1.prototype = new _$2()).__e = function (n) {
 	  var t = this,
 	      e = U(t.__v),
 	      r = t.o.get(n);
 	  return r[0]++, function (u) {
 	    var o = function () {
-	      t.props.revealOrder ? (r.push(u), T(t, n, r)) : u();
+	      t.props.revealOrder ? (r.push(u), T$1(t, n, r)) : u();
 	    };
 
 	    e ? e(o) : o();
 	  };
-	}, M.prototype.render = function (n) {
+	}, M$1.prototype.render = function (n) {
 	  this.u = null, this.o = new Map();
-	  var t = A$2(n.children);
+	  var t = A$3(n.children);
 	  n.revealOrder && "b" === n.revealOrder[0] && t.reverse();
 
 	  for (var e = t.length; e--;) this.o.set(t[e], this.u = [1, 0, this.u]);
 
 	  return n.children;
-	}, M.prototype.componentDidUpdate = M.prototype.componentDidMount = function () {
+	}, M$1.prototype.componentDidUpdate = M$1.prototype.componentDidMount = function () {
 	  var n = this;
 	  this.o.forEach(function (t, e) {
-	    T(n, e, t);
+	    T$1(n, e, t);
 	  });
 	};
 
-	var P = "undefined" != typeof Symbol && Symbol.for && Symbol.for("react.element") || 60103,
+	var P$1 = "undefined" != typeof Symbol && Symbol.for && Symbol.for("react.element") || 60103,
 	    V = /^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|marker(?!H|W|U)|overline|paint|stop|strikethrough|stroke|text(?!L)|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/,
-	    j = "undefined" != typeof document,
-	    z = function (n) {
+	    j$1 = "undefined" != typeof document,
+	    z$1 = function (n) {
 	  return ("undefined" != typeof Symbol && "symbol" == typeof Symbol() ? /fil|che|rad/i : /fil|che|ra/i).test(n);
 	};
 
-	_$1.prototype.isReactComponent = {}, ["componentWillMount", "componentWillReceiveProps", "componentWillUpdate"].forEach(function (n) {
-	  Object.defineProperty(_$1.prototype, n, {
+	_$2.prototype.isReactComponent = {}, ["componentWillMount", "componentWillReceiveProps", "componentWillUpdate"].forEach(function (n) {
+	  Object.defineProperty(_$2.prototype, n, {
 	    configurable: !0,
 	    get: function () {
 	      return this["UNSAFE_" + n];
@@ -4063,7 +3437,7 @@
 	    }
 	  });
 	});
-	var H = l$1.event;
+	var H$1 = l$3.event;
 
 	function Z() {}
 
@@ -4075,8 +3449,8 @@
 	  return this.defaultPrevented;
 	}
 
-	l$1.event = function (n) {
-	  return H && (n = H(n)), n.persist = Z, n.isPropagationStopped = Y, n.isDefaultPrevented = q, n.nativeEvent = n;
+	l$3.event = function (n) {
+	  return H$1 && (n = H$1(n)), n.persist = Z, n.isPropagationStopped = Y, n.isDefaultPrevented = q, n.nativeEvent = n;
 	};
 
 	var J = {
@@ -4085,9 +3459,9 @@
 	    return this.class;
 	  }
 	},
-	    K = l$1.vnode;
+	    K = l$3.vnode;
 
-	l$1.vnode = function (n) {
+	l$3.vnode = function (n) {
 	  var t = n.type,
 	      e = n.props,
 	      r = e;
@@ -4097,22 +3471,22 @@
 
 	    for (var o in r = {}, e) {
 	      var i = e[o];
-	      j && "children" === o && "noscript" === t || "value" === o && "defaultValue" in e && null == i || ("defaultValue" === o && "value" in e && null == e.value ? o = "value" : "download" === o && !0 === i ? i = "" : /ondoubleclick/i.test(o) ? o = "ondblclick" : /^onchange(textarea|input)/i.test(o + t) && !z(e.type) ? o = "oninput" : /^onfocus$/i.test(o) ? o = "onfocusin" : /^onblur$/i.test(o) ? o = "onfocusout" : /^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(o) ? o = o.toLowerCase() : u && V.test(o) ? o = o.replace(/[A-Z0-9]/, "-$&").toLowerCase() : null === i && (i = void 0), /^oninput/i.test(o) && (o = o.toLowerCase(), r[o] && (o = "oninputCapture")), r[o] = i);
+	      j$1 && "children" === o && "noscript" === t || "value" === o && "defaultValue" in e && null == i || ("defaultValue" === o && "value" in e && null == e.value ? o = "value" : "download" === o && !0 === i ? i = "" : /ondoubleclick/i.test(o) ? o = "ondblclick" : /^onchange(textarea|input)/i.test(o + t) && !z$1(e.type) ? o = "oninput" : /^onfocus$/i.test(o) ? o = "onfocusin" : /^onblur$/i.test(o) ? o = "onfocusout" : /^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(o) ? o = o.toLowerCase() : u && V.test(o) ? o = o.replace(/[A-Z0-9]/, "-$&").toLowerCase() : null === i && (i = void 0), /^oninput/i.test(o) && (o = o.toLowerCase(), r[o] && (o = "oninputCapture")), r[o] = i);
 	    }
 
-	    "select" == t && r.multiple && Array.isArray(r.value) && (r.value = A$2(e.children).forEach(function (n) {
+	    "select" == t && r.multiple && Array.isArray(r.value) && (r.value = A$3(e.children).forEach(function (n) {
 	      n.props.selected = -1 != r.value.indexOf(n.props.value);
-	    })), "select" == t && null != r.defaultValue && (r.value = A$2(e.children).forEach(function (n) {
+	    })), "select" == t && null != r.defaultValue && (r.value = A$3(e.children).forEach(function (n) {
 	      n.props.selected = r.multiple ? -1 != r.defaultValue.indexOf(n.props.value) : r.defaultValue == n.props.value;
 	    })), n.props = r, e.class != e.className && (J.enumerable = "className" in e, null != e.className && (r.class = e.className), Object.defineProperty(r, "className", J));
 	  }
 
-	  n.$$typeof = P, K && K(n);
+	  n.$$typeof = P$1, K && K(n);
 	};
 
-	var Q = l$1.__r;
+	var Q = l$3.__r;
 
-	l$1.__r = function (n) {
+	l$3.__r = function (n) {
 	  Q && Q(n), n.__c;
 	};
 
@@ -4122,7 +3496,7 @@
 	 */
 
 	function forwardElementRef(Component) {
-	  const ForwardedComponent = x(Component);
+	  const ForwardedComponent = x$1(Component);
 	  return ForwardedComponent;
 	}
 
@@ -4163,55 +3537,55 @@
 	    getElement,
 	    useRefElementProps
 	  } = useRefElement({});
-	  const [phase, setPhase] = d(animateOnMount ? "init" : null);
-	  const [direction, setDirection] = d(show == null ? null : show ? "enter" : "exit");
-	  const [surfaceWidth, setSurfaceWidth] = d(null);
-	  const [surfaceHeight, setSurfaceHeight] = d(null);
-	  const [surfaceX, setSurfaceX] = d(null);
-	  const [surfaceY, setSurfaceY] = d(null);
-	  const [transitioningWidth, setTransitioningWidth] = d(null);
-	  const [transitioningHeight, setTransitioningHeight] = d(null);
-	  const [transitioningX, setTransitioningX] = d(null);
-	  const [transitioningY, setTransitioningY] = d(null);
-	  const [logicalDirectionInfo, setLogicalDirectionInfo] = d(null);
+	  const [phase, setPhase] = d$1(animateOnMount ? "init" : null);
+	  const [direction, setDirection] = d$1(show == null ? null : show ? "enter" : "exit");
+	  const [surfaceWidth, setSurfaceWidth] = d$1(null);
+	  const [surfaceHeight, setSurfaceHeight] = d$1(null);
+	  const [surfaceX, setSurfaceX] = d$1(null);
+	  const [surfaceY, setSurfaceY] = d$1(null);
+	  const [transitioningWidth, setTransitioningWidth] = d$1(null);
+	  const [transitioningHeight, setTransitioningHeight] = d$1(null);
+	  const [transitioningX, setTransitioningX] = d$1(null);
+	  const [transitioningY, setTransitioningY] = d$1(null);
+	  const [logicalDirectionInfo, setLogicalDirectionInfo] = d$1(null);
 	  const {
 	    getLogicalDirectionInfo,
 	    useLogicalDirectionProps
 	  } = useLogicalDirection({
 	    onLogicalDirectionChange: setLogicalDirectionInfo
 	  });
-	  const onTransitionUpdateRef = s(onTransitionUpdate);
-	  const phaseRef = s(phase);
-	  const directionRef = s(direction);
-	  const durationRef = s(duration);
-	  const tooEarlyTimeoutRef = s(null);
-	  const tooEarlyValueRef = s(true);
-	  const tooLateTimeoutRef = s(null);
+	  const onTransitionUpdateRef = s$2(onTransitionUpdate);
+	  const phaseRef = s$2(phase);
+	  const directionRef = s$2(direction);
+	  const durationRef = s$2(duration);
+	  const tooEarlyTimeoutRef = s$2(null);
+	  const tooEarlyValueRef = s$2(true);
+	  const tooLateTimeoutRef = s$2(null);
 	  const onTransitionEnd = F(e => {
 	    if (e.target === getElement() && tooEarlyValueRef.current == false) {
 	      setPhase("finalize");
 	    }
 	  }, []);
-	  h(() => {
+	  h$1(() => {
 	    onTransitionUpdateRef.current = onTransitionUpdate;
 	  }, [onTransitionUpdate]);
-	  h(() => {
+	  h$1(() => {
 	    phaseRef.current = phase;
 	  }, [phase]);
-	  h(() => {
+	  h$1(() => {
 	    directionRef.current = direction;
 	  }, [direction]);
-	  h(() => {
+	  h$1(() => {
 	    durationRef.current = duration;
 	  }, [duration]);
-	  h(() => {
+	  h$1(() => {
 	    var _onTransitionUpdateRe;
 
 	    if (direction && phase) (_onTransitionUpdateRe = onTransitionUpdateRef.current) === null || _onTransitionUpdateRe === void 0 ? void 0 : _onTransitionUpdateRe.call(onTransitionUpdateRef, direction, phase);
 	  }, [direction, phase]); // Every time the phase changes to "transition", add our transition timeout timeouts
 	  // to catch any time onTransitionEnd fails to report for whatever reason to be safe
 
-	  h(() => {
+	  h$1(() => {
 	    if (phase == "transition") {
 	      var _durationRef$current;
 
@@ -4234,7 +3608,7 @@
 	  }, [phase]); // Any time "show" changes, update our direction and phase.
 	  // In addition, measure the size of the element if requested.
 
-	  h(() => {
+	  h$1(() => {
 	    const element = getElement();
 
 	    if (element && show != null) {
@@ -4284,7 +3658,7 @@
 	  }, [show, measure, classBase]); // Any time the phase changes to init, immediately before the screen is painted,
 	  // change the phase to "transition" and re-render ().
 
-	  h(() => {
+	  h$1(() => {
 	    const element = getElement();
 
 	    if (element && directionRef.current != null) {
@@ -4378,13 +3752,13 @@
 	    childMountBehavior,
 	    ...props
 	  } = _ref3;
-	  const [hasShownOnce, setHasShownOnce] = d(false);
+	  const [hasShownOnce, setHasShownOnce] = d$1(false);
 	  const shouldSetHasShownOnce = hasShownOnce === false && childMountBehavior === "mount-on-show" && show === true;
-	  y(() => {
+	  y$1(() => {
 	    if (shouldSetHasShownOnce) setHasShownOnce(true);
 	  }, [shouldSetHasShownOnce]);
-	  if (childMountBehavior === "mount-when-showing" && !show) child = v$1("div", null);
-	  if (childMountBehavior === "mount-on-show" && !show && hasShownOnce === false) child = v$1("div", null);
+	  if (childMountBehavior === "mount-when-showing" && !show) child = v$2("div", null);
+	  if (childMountBehavior === "mount-on-show" && !show && hasShownOnce === false) child = v$2("div", null);
 
 	  if (!childIsVNode(child)) {
 	    throw new Error("A Transitionable component must have exactly one component child (e.g. a <div>, but not \"a string\").");
@@ -4458,7 +3832,7 @@
 	    show,
 	    ...rest
 	  } = _ref6;
-	  return v$1(Transitionable, {
+	  return v$2(Transitionable, {
 	    show: show,
 	    ...useCreateClipProps({
 	      classBase,
@@ -4516,7 +3890,7 @@
 	    show,
 	    ...rest
 	  } = _ref2;
-	  return v$1(Transitionable, {
+	  return v$2(Transitionable, {
 	    show: show,
 	    ...useCreateFadeProps({
 	      classBase,
@@ -4536,7 +3910,7 @@
 	    show,
 	    ...rest
 	  } = _ref;
-	  return v$1(Clip, {
+	  return v$2(Clip, {
 	    show: show,
 	    ...useCreateFadeProps({
 	      classBase,
@@ -4591,7 +3965,7 @@
 	    minBlockSize,
 	    ...rest
 	  } = _ref2;
-	  return v$1(Transitionable, {
+	  return v$2(Transitionable, {
 	    show: show,
 	    ...useCreateCollapseProps({
 	      classBase,
@@ -4616,7 +3990,7 @@
 	    show,
 	    ...rest
 	  } = _ref;
-	  return v$1(Collapse, {
+	  return v$2(Collapse, {
 	    show: show,
 	    ...useCreateFadeProps({
 	      classBase,
@@ -4641,12 +4015,12 @@
 	    slideTargetBlock
 	  } = _ref;
 	  (_classBase = classBase) !== null && _classBase !== void 0 ? _classBase : classBase = "transition";
-	  const lastValidTargetInline = s((_slideTargetInline = slideTargetInline) !== null && _slideTargetInline !== void 0 ? _slideTargetInline : 1);
-	  const lastValidTargetBlock = s((_slideTargetBlock = slideTargetBlock) !== null && _slideTargetBlock !== void 0 ? _slideTargetBlock : 0);
-	  y(() => {
+	  const lastValidTargetInline = s$2((_slideTargetInline = slideTargetInline) !== null && _slideTargetInline !== void 0 ? _slideTargetInline : 1);
+	  const lastValidTargetBlock = s$2((_slideTargetBlock = slideTargetBlock) !== null && _slideTargetBlock !== void 0 ? _slideTargetBlock : 0);
+	  y$1(() => {
 	    if (slideTargetInline) lastValidTargetInline.current = slideTargetInline;
 	  }, [slideTargetInline]);
-	  y(() => {
+	  y$1(() => {
 	    if (slideTargetBlock) lastValidTargetBlock.current = slideTargetBlock;
 	  }, [slideTargetBlock]);
 	  if (slideTargetInline == 0) slideTargetInline = lastValidTargetInline.current;
@@ -4681,7 +4055,7 @@
 	    show,
 	    ...rest
 	  } = _ref2;
-	  return v$1(Transitionable, {
+	  return v$2(Transitionable, {
 	    show: show,
 	    ...useCreateSlideProps({
 	      classBase,
@@ -4709,7 +4083,7 @@
 	    show,
 	    ...rest
 	  } = _ref;
-	  return v$1(Slide, {
+	  return v$2(Slide, {
 	    show: show,
 	    ...useCreateFadeProps({
 	      classBase,
@@ -4766,7 +4140,7 @@
 	    show,
 	    ...rest
 	  } = _ref6;
-	  return v$1(Transitionable, {
+	  return v$2(Transitionable, {
 	    show: show,
 	    ...useCreateZoomProps({
 	      classBase,
@@ -4798,7 +4172,7 @@
 	    show,
 	    ...rest
 	  } = _ref;
-	  return v$1(Zoom, {
+	  return v$2(Zoom, {
 	    show: show,
 	    ...useCreateFadeProps({
 	      classBase,
@@ -4830,7 +4204,7 @@
 	    show,
 	    ...rest
 	  } = _ref;
-	  return v$1(Slide, {
+	  return v$2(Slide, {
 	    show: show,
 	    ...useCreateZoomProps({
 	      classBase,
@@ -4862,7 +4236,7 @@
 	    show,
 	    ...rest
 	  } = _ref;
-	  return v$1(SlideZoom, {
+	  return v$2(SlideZoom, {
 	    show: show,
 	    ...useCreateFadeProps({
 	      classBase,
@@ -4888,12 +4262,12 @@
 	    perspective
 	  } = _ref;
 	  (_classBase = classBase) !== null && _classBase !== void 0 ? _classBase : classBase = "transition";
-	  const lastValidTargetInline = s((_flipAngleInline = flipAngleInline) !== null && _flipAngleInline !== void 0 ? _flipAngleInline : 180);
-	  const lastValidTargetBlock = s((_flipAngleBlock = flipAngleBlock) !== null && _flipAngleBlock !== void 0 ? _flipAngleBlock : 0);
-	  y(() => {
+	  const lastValidTargetInline = s$2((_flipAngleInline = flipAngleInline) !== null && _flipAngleInline !== void 0 ? _flipAngleInline : 180);
+	  const lastValidTargetBlock = s$2((_flipAngleBlock = flipAngleBlock) !== null && _flipAngleBlock !== void 0 ? _flipAngleBlock : 0);
+	  y$1(() => {
 	    if (flipAngleInline) lastValidTargetInline.current = flipAngleInline;
 	  }, [flipAngleInline]);
-	  y(() => {
+	  y$1(() => {
 	    if (flipAngleBlock) lastValidTargetBlock.current = flipAngleBlock;
 	  }, [flipAngleBlock]);
 	  if (flipAngleInline == 0) flipAngleInline = lastValidTargetInline.current;
@@ -4930,7 +4304,7 @@
 	    show,
 	    ...rest
 	  } = _ref2;
-	  return v$1(Transitionable, {
+	  return v$2(Transitionable, {
 	    show: show,
 	    ...useCreateFlipProps({
 	      classBase,
@@ -4991,6 +4365,627 @@
 	// Not perfect, but it's not supposed to be. `inline` is for perfect.
 
 	const inlineElements = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
+
+	var preact = {};
+
+	var n$2,
+	    l$1,
+	    u$1,
+	    t$1,
+	    i$1,
+	    o$1,
+	    r$1,
+	    f$1,
+	    e$1 = {},
+	    c$1 = [],
+	    s$1 = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
+
+	function a$1(n, l) {
+	  for (var u in l) n[u] = l[u];
+
+	  return n;
+	}
+
+	function p$1(n) {
+	  var l = n.parentNode;
+	  l && l.removeChild(n);
+	}
+
+	function h(l, u, t) {
+	  var i,
+	      o,
+	      r,
+	      f = {};
+
+	  for (r in u) "key" == r ? i = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
+
+	  if (arguments.length > 2 && (f.children = arguments.length > 3 ? n$2.call(arguments, 2) : t), "function" == typeof l && null != l.defaultProps) for (r in l.defaultProps) void 0 === f[r] && (f[r] = l.defaultProps[r]);
+	  return v(l, f, i, o, null);
+	}
+
+	function v(n, t, i, o, r) {
+	  var f = {
+	    type: n,
+	    props: t,
+	    key: i,
+	    ref: o,
+	    __k: null,
+	    __: null,
+	    __b: 0,
+	    __e: null,
+	    __d: void 0,
+	    __c: null,
+	    __h: null,
+	    constructor: void 0,
+	    __v: null == r ? ++u$1 : r
+	  };
+	  return null == r && null != l$1.vnode && l$1.vnode(f), f;
+	}
+
+	function y(n) {
+	  return n.children;
+	}
+
+	function d(n, l) {
+	  this.props = n, this.context = l;
+	}
+
+	function _(n, l) {
+	  if (null == l) return n.__ ? _(n.__, n.__.__k.indexOf(n) + 1) : null;
+
+	  for (var u; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) return u.__e;
+
+	  return "function" == typeof n.type ? _(n) : null;
+	}
+
+	function k(n) {
+	  var l, u;
+
+	  if (null != (n = n.__) && null != n.__c) {
+	    for (n.__e = n.__c.base = null, l = 0; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) {
+	      n.__e = n.__c.base = u.__e;
+	      break;
+	    }
+
+	    return k(n);
+	  }
+	}
+
+	function x(n) {
+	  (!n.__d && (n.__d = !0) && i$1.push(n) && !b.__r++ || r$1 !== l$1.debounceRendering) && ((r$1 = l$1.debounceRendering) || o$1)(b);
+	}
+
+	function b() {
+	  for (var n; b.__r = i$1.length;) n = i$1.sort(function (n, l) {
+	    return n.__v.__b - l.__v.__b;
+	  }), i$1 = [], n.some(function (n) {
+	    var l, u, t, i, o, r;
+	    n.__d && (o = (i = (l = n).__v).__e, (r = l.__P) && (u = [], (t = a$1({}, i)).__v = i.__v + 1, I(r, i, t, l.__n, void 0 !== r.ownerSVGElement, null != i.__h ? [o] : null, u, null == o ? _(i) : o, i.__h), T(u, i), i.__e != o && k(i)));
+	  });
+	}
+
+	function m(n, l, u, t, i, o, r, f, s, a) {
+	  var p,
+	      h,
+	      d,
+	      k,
+	      x,
+	      b,
+	      m,
+	      A = t && t.__k || c$1,
+	      P = A.length;
+
+	  for (u.__k = [], p = 0; p < l.length; p++) if (null != (k = u.__k[p] = null == (k = l[p]) || "boolean" == typeof k ? null : "string" == typeof k || "number" == typeof k || "bigint" == typeof k ? v(null, k, null, null, k) : Array.isArray(k) ? v(y, {
+	    children: k
+	  }, null, null, null) : k.__b > 0 ? v(k.type, k.props, k.key, null, k.__v) : k)) {
+	    if (k.__ = u, k.__b = u.__b + 1, null === (d = A[p]) || d && k.key == d.key && k.type === d.type) A[p] = void 0;else for (h = 0; h < P; h++) {
+	      if ((d = A[h]) && k.key == d.key && k.type === d.type) {
+	        A[h] = void 0;
+	        break;
+	      }
+
+	      d = null;
+	    }
+	    I(n, k, d = d || e$1, i, o, r, f, s, a), x = k.__e, (h = k.ref) && d.ref != h && (m || (m = []), d.ref && m.push(d.ref, null, k), m.push(h, k.__c || x, k)), null != x ? (null == b && (b = x), "function" == typeof k.type && k.__k === d.__k ? k.__d = s = g(k, s, n) : s = w(n, k, d, A, x, s), "function" == typeof u.type && (u.__d = s)) : s && d.__e == s && s.parentNode != n && (s = _(d));
+	  }
+
+	  for (u.__e = b, p = P; p--;) null != A[p] && ("function" == typeof u.type && null != A[p].__e && A[p].__e == u.__d && (u.__d = _(t, p + 1)), L(A[p], A[p]));
+
+	  if (m) for (p = 0; p < m.length; p++) z(m[p], m[++p], m[++p]);
+	}
+
+	function g(n, l, u) {
+	  for (var t, i = n.__k, o = 0; i && o < i.length; o++) (t = i[o]) && (t.__ = n, l = "function" == typeof t.type ? g(t, l, u) : w(u, t, t, i, t.__e, l));
+
+	  return l;
+	}
+
+	function w(n, l, u, t, i, o) {
+	  var r, f, e;
+	  if (void 0 !== l.__d) r = l.__d, l.__d = void 0;else if (null == u || i != o || null == i.parentNode) n: if (null == o || o.parentNode !== n) n.appendChild(i), r = null;else {
+	    for (f = o, e = 0; (f = f.nextSibling) && e < t.length; e += 2) if (f == i) break n;
+
+	    n.insertBefore(i, o), r = o;
+	  }
+	  return void 0 !== r ? r : i.nextSibling;
+	}
+
+	function A(n, l, u, t, i) {
+	  var o;
+
+	  for (o in u) "children" === o || "key" === o || o in l || C(n, o, null, u[o], t);
+
+	  for (o in l) i && "function" != typeof l[o] || "children" === o || "key" === o || "value" === o || "checked" === o || u[o] === l[o] || C(n, o, l[o], u[o], t);
+	}
+
+	function P(n, l, u) {
+	  "-" === l[0] ? n.setProperty(l, u) : n[l] = null == u ? "" : "number" != typeof u || s$1.test(l) ? u : u + "px";
+	}
+
+	function C(n, l, u, t, i) {
+	  var o;
+
+	  n: if ("style" === l) {
+	    if ("string" == typeof u) n.style.cssText = u;else {
+	      if ("string" == typeof t && (n.style.cssText = t = ""), t) for (l in t) u && l in u || P(n.style, l, "");
+	      if (u) for (l in u) t && u[l] === t[l] || P(n.style, l, u[l]);
+	    }
+	  } else if ("o" === l[0] && "n" === l[1]) o = l !== (l = l.replace(/Capture$/, "")), l = l.toLowerCase() in n ? l.toLowerCase().slice(2) : l.slice(2), n.l || (n.l = {}), n.l[l + o] = u, u ? t || n.addEventListener(l, o ? H : $, o) : n.removeEventListener(l, o ? H : $, o);else if ("dangerouslySetInnerHTML" !== l) {
+	    if (i) l = l.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");else if ("href" !== l && "list" !== l && "form" !== l && "tabIndex" !== l && "download" !== l && l in n) try {
+	      n[l] = null == u ? "" : u;
+	      break n;
+	    } catch (n) {}
+	    "function" == typeof u || (null != u && (!1 !== u || "a" === l[0] && "r" === l[1]) ? n.setAttribute(l, u) : n.removeAttribute(l));
+	  }
+	}
+
+	function $(n) {
+	  this.l[n.type + !1](l$1.event ? l$1.event(n) : n);
+	}
+
+	function H(n) {
+	  this.l[n.type + !0](l$1.event ? l$1.event(n) : n);
+	}
+
+	function I(n, u, t, i, o, r, f, e, c) {
+	  var s,
+	      p,
+	      h,
+	      v,
+	      _,
+	      k,
+	      x,
+	      b,
+	      g,
+	      w,
+	      A,
+	      P,
+	      C,
+	      $ = u.type;
+
+	  if (void 0 !== u.constructor) return null;
+	  null != t.__h && (c = t.__h, e = u.__e = t.__e, u.__h = null, r = [e]), (s = l$1.__b) && s(u);
+
+	  try {
+	    n: if ("function" == typeof $) {
+	      if (b = u.props, g = (s = $.contextType) && i[s.__c], w = s ? g ? g.props.value : s.__ : i, t.__c ? x = (p = u.__c = t.__c).__ = p.__E : ("prototype" in $ && $.prototype.render ? u.__c = p = new $(b, w) : (u.__c = p = new d(b, w), p.constructor = $, p.render = M), g && g.sub(p), p.props = b, p.state || (p.state = {}), p.context = w, p.__n = i, h = p.__d = !0, p.__h = []), null == p.__s && (p.__s = p.state), null != $.getDerivedStateFromProps && (p.__s == p.state && (p.__s = a$1({}, p.__s)), a$1(p.__s, $.getDerivedStateFromProps(b, p.__s))), v = p.props, _ = p.state, h) null == $.getDerivedStateFromProps && null != p.componentWillMount && p.componentWillMount(), null != p.componentDidMount && p.__h.push(p.componentDidMount);else {
+	        if (null == $.getDerivedStateFromProps && b !== v && null != p.componentWillReceiveProps && p.componentWillReceiveProps(b, w), !p.__e && null != p.shouldComponentUpdate && !1 === p.shouldComponentUpdate(b, p.__s, w) || u.__v === t.__v) {
+	          p.props = b, p.state = p.__s, u.__v !== t.__v && (p.__d = !1), p.__v = u, u.__e = t.__e, u.__k = t.__k, u.__k.forEach(function (n) {
+	            n && (n.__ = u);
+	          }), p.__h.length && f.push(p);
+	          break n;
+	        }
+
+	        null != p.componentWillUpdate && p.componentWillUpdate(b, p.__s, w), null != p.componentDidUpdate && p.__h.push(function () {
+	          p.componentDidUpdate(v, _, k);
+	        });
+	      }
+	      if (p.context = w, p.props = b, p.__v = u, p.__P = n, A = l$1.__r, P = 0, "prototype" in $ && $.prototype.render) p.state = p.__s, p.__d = !1, A && A(u), s = p.render(p.props, p.state, p.context);else do {
+	        p.__d = !1, A && A(u), s = p.render(p.props, p.state, p.context), p.state = p.__s;
+	      } while (p.__d && ++P < 25);
+	      p.state = p.__s, null != p.getChildContext && (i = a$1(a$1({}, i), p.getChildContext())), h || null == p.getSnapshotBeforeUpdate || (k = p.getSnapshotBeforeUpdate(v, _)), C = null != s && s.type === y && null == s.key ? s.props.children : s, m(n, Array.isArray(C) ? C : [C], u, t, i, o, r, f, e, c), p.base = u.__e, u.__h = null, p.__h.length && f.push(p), x && (p.__E = p.__ = null), p.__e = !1;
+	    } else null == r && u.__v === t.__v ? (u.__k = t.__k, u.__e = t.__e) : u.__e = j(t.__e, u, t, i, o, r, f, c);
+
+	    (s = l$1.diffed) && s(u);
+	  } catch (n) {
+	    u.__v = null, (c || null != r) && (u.__e = e, u.__h = !!c, r[r.indexOf(e)] = null), l$1.__e(n, u, t);
+	  }
+	}
+
+	function T(n, u) {
+	  l$1.__c && l$1.__c(u, n), n.some(function (u) {
+	    try {
+	      n = u.__h, u.__h = [], n.some(function (n) {
+	        n.call(u);
+	      });
+	    } catch (n) {
+	      l$1.__e(n, u.__v);
+	    }
+	  });
+	}
+
+	function j(l, u, t, i, o, r, f, c) {
+	  var s,
+	      a,
+	      h,
+	      v = t.props,
+	      y = u.props,
+	      d = u.type,
+	      k = 0;
+	  if ("svg" === d && (o = !0), null != r) for (; k < r.length; k++) if ((s = r[k]) && "setAttribute" in s == !!d && (d ? s.localName === d : 3 === s.nodeType)) {
+	    l = s, r[k] = null;
+	    break;
+	  }
+
+	  if (null == l) {
+	    if (null === d) return document.createTextNode(y);
+	    l = o ? document.createElementNS("http://www.w3.org/2000/svg", d) : document.createElement(d, y.is && y), r = null, c = !1;
+	  }
+
+	  if (null === d) v === y || c && l.data === y || (l.data = y);else {
+	    if (r = r && n$2.call(l.childNodes), a = (v = t.props || e$1).dangerouslySetInnerHTML, h = y.dangerouslySetInnerHTML, !c) {
+	      if (null != r) for (v = {}, k = 0; k < l.attributes.length; k++) v[l.attributes[k].name] = l.attributes[k].value;
+	      (h || a) && (h && (a && h.__html == a.__html || h.__html === l.innerHTML) || (l.innerHTML = h && h.__html || ""));
+	    }
+
+	    if (A(l, y, v, o, c), h) u.__k = [];else if (k = u.props.children, m(l, Array.isArray(k) ? k : [k], u, t, i, o && "foreignObject" !== d, r, f, r ? r[0] : t.__k && _(t, 0), c), null != r) for (k = r.length; k--;) null != r[k] && p$1(r[k]);
+	    c || ("value" in y && void 0 !== (k = y.value) && (k !== l.value || "progress" === d && !k || "option" === d && k !== v.value) && C(l, "value", k, v.value, !1), "checked" in y && void 0 !== (k = y.checked) && k !== l.checked && C(l, "checked", k, v.checked, !1));
+	  }
+	  return l;
+	}
+
+	function z(n, u, t) {
+	  try {
+	    "function" == typeof n ? n(u) : n.current = u;
+	  } catch (n) {
+	    l$1.__e(n, t);
+	  }
+	}
+
+	function L(n, u, t) {
+	  var i, o;
+
+	  if (l$1.unmount && l$1.unmount(n), (i = n.ref) && (i.current && i.current !== n.__e || z(i, null, u)), null != (i = n.__c)) {
+	    if (i.componentWillUnmount) try {
+	      i.componentWillUnmount();
+	    } catch (n) {
+	      l$1.__e(n, u);
+	    }
+	    i.base = i.__P = null;
+	  }
+
+	  if (i = n.__k) for (o = 0; o < i.length; o++) i[o] && L(i[o], u, "function" != typeof n.type);
+	  t || null == n.__e || p$1(n.__e), n.__e = n.__d = void 0;
+	}
+
+	function M(n, l, u) {
+	  return this.constructor(n, u);
+	}
+
+	function N(u, t, i) {
+	  var o, r, f;
+	  l$1.__ && l$1.__(u, t), r = (o = "function" == typeof i) ? null : i && i.__k || t.__k, f = [], I(t, u = (!o && i || t).__k = h(y, null, [u]), r || e$1, e$1, void 0 !== t.ownerSVGElement, !o && i ? [i] : r ? null : t.firstChild ? n$2.call(t.childNodes) : null, f, !o && i ? i : r ? r.__e : t.firstChild, o), T(f, u);
+	}
+
+	n$2 = c$1.slice, l$1 = {
+	  __e: function (n, l, u, t) {
+	    for (var i, o, r; l = l.__;) if ((i = l.__c) && !i.__) try {
+	      if ((o = i.constructor) && null != o.getDerivedStateFromError && (i.setState(o.getDerivedStateFromError(n)), r = i.__d), null != i.componentDidCatch && (i.componentDidCatch(n, t || {}), r = i.__d), r) return i.__E = i;
+	    } catch (l) {
+	      n = l;
+	    }
+
+	    throw n;
+	  }
+	}, u$1 = 0, t$1 = function (n) {
+	  return null != n && void 0 === n.constructor;
+	}, d.prototype.setState = function (n, l) {
+	  var u;
+	  u = null != this.__s && this.__s !== this.state ? this.__s : this.__s = a$1({}, this.state), "function" == typeof n && (n = n(a$1({}, u), this.props)), n && a$1(u, n), null != n && this.__v && (l && this.__h.push(l), x(this));
+	}, d.prototype.forceUpdate = function (n) {
+	  this.__v && (this.__e = !0, n && this.__h.push(n), x(this));
+	}, d.prototype.render = y, i$1 = [], o$1 = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, b.__r = 0, f$1 = 0, preact.render = N, preact.hydrate = function n(l, u) {
+	  N(l, u, n);
+	}, preact.createElement = h, preact.h = h, preact.Fragment = y, preact.createRef = function () {
+	  return {
+	    current: null
+	  };
+	}, preact.isValidElement = t$1, preact.Component = d, preact.cloneElement = function (l, u, t) {
+	  var i,
+	      o,
+	      r,
+	      f = a$1({}, l.props);
+
+	  for (r in u) "key" == r ? i = u[r] : "ref" == r ? o = u[r] : f[r] = u[r];
+
+	  return arguments.length > 2 && (f.children = arguments.length > 3 ? n$2.call(arguments, 2) : t), v(l.type, f, i || l.key, o || l.ref, null);
+	}, preact.createContext = function (n, l) {
+	  var u = {
+	    __c: l = "__cC" + f$1++,
+	    __: n,
+	    Consumer: function (n, l) {
+	      return n.children(l);
+	    },
+	    Provider: function (n) {
+	      var u, t;
+	      return this.getChildContext || (u = [], (t = {})[l] = this, this.getChildContext = function () {
+	        return t;
+	      }, this.shouldComponentUpdate = function (n) {
+	        this.props.value !== n.value && u.some(x);
+	      }, this.sub = function (n) {
+	        u.push(n);
+	        var l = n.componentWillUnmount;
+
+	        n.componentWillUnmount = function () {
+	          u.splice(u.indexOf(n), 1), l && l.call(n);
+	        };
+	      }), n.children;
+	    }
+	  };
+	  return u.Provider.__ = u.Consumer.contextType = u;
+	}, preact.toChildArray = function n(l, u) {
+	  return u = u || [], null == l || "boolean" == typeof l || (Array.isArray(l) ? l.some(function (l) {
+	    n(l, u);
+	  }) : u.push(l)), u;
+	}, preact.options = l$1;
+
+	var n$1 = preact;
+	"undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.8.1", n$1.options, {
+	  Fragment: n$1.Fragment,
+	  Component: n$1.Component
+	});
+
+	var n = preact;
+	var e = {};
+
+	function t(e) {
+	  return e.type === n.Fragment ? "Fragment" : "function" == typeof e.type ? e.type.displayName || e.type.name : "string" == typeof e.type ? e.type : "#text";
+	}
+
+	var o = [],
+	    r = [];
+
+	function a() {
+	  return o.length > 0 ? o[o.length - 1] : null;
+	}
+
+	var i = !1;
+
+	function s(e) {
+	  return "function" == typeof e.type && e.type != n.Fragment;
+	}
+
+	function c(n) {
+	  for (var e = [n], o = n; null != o.__o;) e.push(o.__o), o = o.__o;
+
+	  return e.reduce(function (n, e) {
+	    n += "  in " + t(e);
+	    var o = e.__source;
+	    return o ? n += " (at " + o.fileName + ":" + o.lineNumber + ")" : i || (i = !0, console.warn("Add @babel/plugin-transform-react-jsx-source to get a more detailed component stack. Note that you should not add it to production builds of your App for bundle size reasons.")), n + "\n";
+	  }, "");
+	}
+
+	var l = "function" == typeof WeakMap,
+	    u = n.Component.prototype.setState;
+
+	n.Component.prototype.setState = function (n, e) {
+	  return null == this.__v ? null == this.state && console.warn('Calling "this.setState" inside the constructor of a component is a no-op and might be a bug in your application. Instead, set "this.state = {}" directly.\n\n' + c(a())) : null == this.__P && console.warn('Can\'t call "this.setState" on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.\n\n' + c(this.__v)), u.call(this, n, e);
+	};
+
+	var f = n.Component.prototype.forceUpdate;
+
+	function p(n) {
+	  var e = n.props,
+	      o = t(n),
+	      r = "";
+
+	  for (var a in e) if (e.hasOwnProperty(a) && "children" !== a) {
+	    var i = e[a];
+	    "function" == typeof i && (i = "function " + (i.displayName || i.name) + "() {}"), i = Object(i) !== i || i.toString ? i + "" : Object.prototype.toString.call(i), r += " " + a + "=" + JSON.stringify(i);
+	  }
+
+	  var s = e.children;
+	  return "<" + o + r + (s && s.length ? ">..</" + o + ">" : " />");
+	}
+
+	n.Component.prototype.forceUpdate = function (n) {
+	  return null == this.__v ? console.warn('Calling "this.forceUpdate" inside the constructor of a component is a no-op and might be a bug in your application.\n\n' + c(a())) : null == this.__P && console.warn('Can\'t call "this.forceUpdate" on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.\n\n' + c(this.__v)), f.call(this, n);
+	}, function () {
+	  !function () {
+	    var e = n.options.__b,
+	        t = n.options.diffed,
+	        a = n.options.__,
+	        i = n.options.vnode,
+	        c = n.options.__r;
+	    n.options.diffed = function (n) {
+	      s(n) && r.pop(), o.pop(), t && t(n);
+	    }, n.options.__b = function (n) {
+	      s(n) && o.push(n), e && e(n);
+	    }, n.options.__ = function (n, e) {
+	      r = [], a && a(n, e);
+	    }, n.options.vnode = function (n) {
+	      n.__o = r.length > 0 ? r[r.length - 1] : null, i && i(n);
+	    }, n.options.__r = function (n) {
+	      s(n) && r.push(n), c && c(n);
+	    };
+	  }();
+	  var a = !1,
+	      i = n.options.__b,
+	      u = n.options.diffed,
+	      f = n.options.vnode,
+	      d = n.options.__e,
+	      h = n.options.__,
+	      y = n.options.__h,
+	      v = l ? {
+	    useEffect: new WeakMap(),
+	    useLayoutEffect: new WeakMap(),
+	    lazyPropTypes: new WeakMap()
+	  } : null,
+	      m = [];
+	  n.options.__e = function (n, e, o, r) {
+	    if (e && e.__c && "function" == typeof n.then) {
+	      var a = n;
+	      n = new Error("Missing Suspense. The throwing component was: " + t(e));
+
+	      for (var i = e; i; i = i.__) if (i.__c && i.__c.__c) {
+	        n = a;
+	        break;
+	      }
+
+	      if (n instanceof Error) throw n;
+	    }
+
+	    try {
+	      (r = r || {}).componentStack = c(e), d(n, e, o, r), "function" != typeof n.then && setTimeout(function () {
+	        throw n;
+	      });
+	    } catch (n) {
+	      throw n;
+	    }
+	  }, n.options.__ = function (n, e) {
+	    if (!e) throw new Error("Undefined parent passed to render(), this is the second argument.\nCheck if the element is available in the DOM/has the correct id.");
+	    var o;
+
+	    switch (e.nodeType) {
+	      case 1:
+	      case 11:
+	      case 9:
+	        o = !0;
+	        break;
+
+	      default:
+	        o = !1;
+	    }
+
+	    if (!o) {
+	      var r = t(n);
+	      throw new Error("Expected a valid HTML node as a second argument to render.\tReceived " + e + " instead: render(<" + r + " />, " + e + ");");
+	    }
+
+	    h && h(n, e);
+	  }, n.options.__b = function (n) {
+	    var o = n.type,
+	        r = function n(e) {
+	      return e ? "function" == typeof e.type ? n(e.__) : e : {};
+	    }(n.__);
+
+	    if (a = !0, void 0 === o) throw new Error("Undefined component passed to createElement()\n\nYou likely forgot to export your component or might have mixed up default and named imports" + p(n) + "\n\n" + c(n));
+
+	    if (null != o && "object" == typeof o) {
+	      if (void 0 !== o.__k && void 0 !== o.__e) throw new Error("Invalid type passed to createElement(): " + o + "\n\nDid you accidentally pass a JSX literal as JSX twice?\n\n  let My" + t(n) + " = " + p(o) + ";\n  let vnode = <My" + t(n) + " />;\n\nThis usually happens when you export a JSX literal and not the component.\n\n" + c(n));
+	      throw new Error("Invalid type passed to createElement(): " + (Array.isArray(o) ? "array" : o));
+	    }
+
+	    if ("thead" !== o && "tfoot" !== o && "tbody" !== o || "table" === r.type ? "tr" === o && "thead" !== r.type && "tfoot" !== r.type && "tbody" !== r.type && "table" !== r.type ? console.error("Improper nesting of table. Your <tr> should have a <thead/tbody/tfoot/table> parent." + p(n) + "\n\n" + c(n)) : "td" === o && "tr" !== r.type ? console.error("Improper nesting of table. Your <td> should have a <tr> parent." + p(n) + "\n\n" + c(n)) : "th" === o && "tr" !== r.type && console.error("Improper nesting of table. Your <th> should have a <tr>." + p(n) + "\n\n" + c(n)) : console.error("Improper nesting of table. Your <thead/tbody/tfoot> should have a <table> parent." + p(n) + "\n\n" + c(n)), void 0 !== n.ref && "function" != typeof n.ref && "object" != typeof n.ref && !("$$typeof" in n)) throw new Error('Component\'s "ref" property should be a function, or an object created by createRef(), but got [' + typeof n.ref + "] instead\n" + p(n) + "\n\n" + c(n));
+	    if ("string" == typeof n.type) for (var s in n.props) if ("o" === s[0] && "n" === s[1] && "function" != typeof n.props[s] && null != n.props[s]) throw new Error("Component's \"" + s + '" property should be a function, but got [' + typeof n.props[s] + "] instead\n" + p(n) + "\n\n" + c(n));
+
+	    if ("function" == typeof n.type && n.type.propTypes) {
+	      if ("Lazy" === n.type.displayName && v && !v.lazyPropTypes.has(n.type)) {
+	        var l = "PropTypes are not supported on lazy(). Use propTypes on the wrapped component itself. ";
+
+	        try {
+	          var u = n.type();
+	          v.lazyPropTypes.set(n.type, !0), console.warn(l + "Component wrapped in lazy() is " + t(u));
+	        } catch (n) {
+	          console.warn(l + "We will log the wrapped component's name once it is loaded.");
+	        }
+	      }
+
+	      var f = n.props;
+	      n.type.__f && delete (f = function (n, e) {
+	        for (var t in e) n[t] = e[t];
+
+	        return n;
+	      }({}, f)).ref, function (n, t, o, r, a) {
+	        Object.keys(n).forEach(function (o) {
+	          var i;
+
+	          try {
+	            i = n[o](t, o, r, "prop", null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+	          } catch (n) {
+	            i = n;
+	          }
+
+	          !i || i.message in e || (e[i.message] = !0, console.error("Failed prop type: " + i.message + (a && "\n" + a() || "")));
+	        });
+	      }(n.type.propTypes, f, 0, t(n), function () {
+	        return c(n);
+	      });
+	    }
+
+	    i && i(n);
+	  }, n.options.__h = function (n, e, t) {
+	    if (!n || !a) throw new Error("Hook can only be invoked from render methods.");
+	    y && y(n, e, t);
+	  };
+
+	  var b = function (n, e) {
+	    return {
+	      get: function () {
+	        var t = "get" + n + e;
+	        m && m.indexOf(t) < 0 && (m.push(t), console.warn("getting vnode." + n + " is deprecated, " + e));
+	      },
+	      set: function () {
+	        var t = "set" + n + e;
+	        m && m.indexOf(t) < 0 && (m.push(t), console.warn("setting vnode." + n + " is not allowed, " + e));
+	      }
+	    };
+	  },
+	      w = {
+	    nodeName: b("nodeName", "use vnode.type"),
+	    attributes: b("attributes", "use vnode.props"),
+	    children: b("children", "use vnode.props.children")
+	  },
+	      g = Object.create({}, w);
+
+	  n.options.vnode = function (n) {
+	    var e = n.props;
+
+	    if (null !== n.type && null != e && ("__source" in e || "__self" in e)) {
+	      var t = n.props = {};
+
+	      for (var o in e) {
+	        var r = e[o];
+	        "__source" === o ? n.__source = r : "__self" === o ? n.__self = r : t[o] = r;
+	      }
+	    }
+
+	    n.__proto__ = g, f && f(n);
+	  }, n.options.diffed = function (n) {
+	    if (n.__k && n.__k.forEach(function (e) {
+	      if (e && void 0 === e.type) {
+	        delete e.__, delete e.__b;
+	        var t = Object.keys(e).join(",");
+	        throw new Error("Objects are not valid as a child. Encountered an object with the keys {" + t + "}.\n\n" + c(n));
+	      }
+	    }), a = !1, u && u(n), null != n.__k) for (var e = [], t = 0; t < n.__k.length; t++) {
+	      var o = n.__k[t];
+
+	      if (o && null != o.key) {
+	        var r = o.key;
+
+	        if (-1 !== e.indexOf(r)) {
+	          console.error('Following component has two or more children with the same key attribute: "' + r + '". This may cause glitches and misbehavior in rendering process. Component: \n\n' + p(n) + "\n\n" + c(n));
+	          break;
+	        }
+
+	        e.push(r);
+	      }
+	    }
+	  };
+	}();
+
+	"undefined" != typeof window && window.__PREACT_DEVTOOLS__ && window.__PREACT_DEVTOOLS__.attachPreact("10.8.1", l$3, {
+	  Fragment: d$2,
+	  Component: _$2
+	});
+
+	class RootRouterError extends Error {
+	  constructor() {
+	    super(`The root Router object cannot have any path-related operations performed on it, as it is unchangeably /. Consider using the "ref" prop of a child Router object.`);
+	  }
+
+	}
 
 	/**
 	 * Relatively low-level hook that allows you to inspect
@@ -5113,56 +5108,56 @@
 	  return value !== null && value !== void 0 ? value : null;
 	}
 
-	function useLocalPath(level, callback) {
-	  useEnsureStability("useLocalPath", callback);
-	  const [getLocalPath, setLocalPath] = usePassiveState(callback);
-	  useUrl(url => {
-	    var _newHashPath$level;
+	/**
+	 * Returns a function that can be used to retrieve the local path at this level after rendering has completed.
+	 *
+	 * In addition, `onLocalPathChange` can be used to monitor changes (to `setState`, for example).
+	 *
+	 * @param level
+	 * @param onLocalPathChange
+	 * @returns
+	 */
 
-	    const newHashPath = normalizeHashToPath(trimHash(new URL(url).hash));
-	    setLocalPath((_newHashPath$level = newHashPath[level]) !== null && _newHashPath$level !== void 0 ? _newHashPath$level : null);
+	function useGetLocalPath(level, onLocalPathChange) {
+	  useEnsureStability("useGetLocalPath", onLocalPathChange); // We don't actually re-render ourselves necessarily
+	  // whenever the local path changes. We only fire
+	  // a callback, which we *might choose to* re-render on.
+	  // Therefore, we just keep passive state that we never
+	  // actually inspect, and just use for its onChange-like qualities.
+
+	  const [, setLocalCopy] = usePassiveState(onLocalPathChange); // Any time the URL changes, inspect the hash
+	  // at our current level, and change our local copy of our path
+	  // in our passive state. This will trigger our callback if they're different.
+
+	  useUrl(useStableCallback(url => {
+	    const oldHashPath = normalizeHashToPath(trimHash(new URL(url).hash));
+	    setLocalCopy(oldHashPath[level]);
+	  }));
+	  return useStableCallback(function getLocalPath() {
+	    if (level < 0) throw new RootRouterError();
+	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
+	    return oldHashPath[level];
 	  });
-	  return [getLocalPath, setLocalPath];
 	}
 
 	/**
-	 * Removes the directory at the current level, effectively returning
-	 * to the previous level.  You can also switch to a different
-	 * previous level if you would like.
+	 * Inspects the local path at this level and returns wither or not
+	 * it is a match for the given criteria.
+	 *
+	 * @param requestedLocalHash A string to match against exactly, a `RegExp` to `.test` with, or a function that returns true if the comparison should be considered a match.
 	 */
 
-	function usePopLocalPath(level) {
-	  const setEntireHash = useSetEntireHash();
-	  return F(function popLocalHash(dir) {
-	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
-	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
-	    let newHashPath = oldHashPath.slice(0, level).map(s => s !== null && s !== void 0 ? s : "");
+	function useLocalPathMatches(level, requestedLocalHash, siblingsHaveNoMatches) {
+	  const [matches, setMatches] = d$1(false);
+	  useGetLocalPath(level, useStableCallback(localPath => {
+	    var _localPath;
 
-	    if (dir) {
-	      dir = trimHash(dir);
-	      newHashPath[newHashPath.length - 1] = dir;
-	    }
-
-	    setEntireHash(newHashPath.join("/"), action);
-	  }, [level]);
-	}
-
-	/**
-	 * Adds a directory at one level deeper.
-	 */
-
-	function usePushLocalPath(level) {
-	  const setEntireHash = useSetEntireHash(); //const level = useContext(RouterLevelContext);
-
-	  return F(function pushLocalHash(dir) {
-	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
-	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
-	    dir = trimHash(dir);
-	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
-	    let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => s !== null && s !== void 0 ? s : "");
-	    newHashPath.splice(level + 1, 1, dir);
-	    setEntireHash(newHashPath.join("/"), action);
-	  }, [level]);
+	    let matches;
+	    (_localPath = localPath) !== null && _localPath !== void 0 ? _localPath : localPath = "";
+	    if (requestedLocalHash instanceof RegExp) matches = requestedLocalHash.test(localPath);else if (requestedLocalHash instanceof Function) matches = requestedLocalHash(localPath);else if (requestedLocalHash == null) matches = siblingsHaveNoMatches;else matches = requestedLocalHash === localPath;
+	    setMatches(matches);
+	  }));
+	  return matches;
 	}
 
 	const RouterContext = D(null);
@@ -5184,87 +5179,52 @@
 	function useRouterProvider() {
 	  var _useContext;
 
-	  const level = (_useContext = T$1(RouterContext)) === null || _useContext === void 0 ? void 0 : _useContext.level;
 	  const {
-	    useManagedChild: useRouterChild,
+	    level
+	  } = (_useContext = T$2(RouterContext)) !== null && _useContext !== void 0 ? _useContext : {
+	    level: -1
+	  };
+	  console.log(`useRouterProvider: ${level}`);
+	  const {
+	    useManagedChild,
 	    mountedChildren
 	  } = useChildManager(); // Any time the number of matching children changes to or from 0,
 	  // we notify all children so that they can show/hide themselves accordingly
 	  // depending on if they are a "default" router or not.
 
-	  const onChildrenMatchCountChange = F(anyMatches => {
+	  const [noMatchesAmongChildren, setNoMatchesAmongChildren] = usePassiveState(useStableCallback(noMatches => {
+	    console.log(`Level ${level} notifying all ${mountedChildren} children of sibling match status: ${noMatches.toString()}`);
+
 	    for (let child of mountedChildren) {
-	      child === null || child === void 0 ? void 0 : child.notifyOfSiblingsHaveNoMatches(!anyMatches);
+	      child === null || child === void 0 ? void 0 : child.notifyOfSiblingsHaveNoMatches(noMatches);
 	    }
-	  }, []);
-	  const [anyMatchesAmongChildren, setAnyMatchesAmongChildren] = usePassiveState(onChildrenMatchCountChange, returnFalse); // Keep track of the number of children currently matching
+	  }), returnFalse); // Keep track of the number of children currently matching
 
-	  const matchIndices = s(new Set());
-	  const matchChangeHandler = F((index, matches) => {
-	    if (matches) {
-	      matchIndices.current.add(index);
-	    } else {
-	      matchIndices.current.delete(index);
-	    }
+	  const matchIndices = s$2(new Set());
+	  const useRouterChild = F(info => {
+	    const {
+	      index,
+	      matches,
+	      path
+	    } = info;
+	    y$1(() => {
+	      if (path != null) {
+	        if (matches) {
+	          matchIndices.current.add(index);
+	        } else {
+	          matchIndices.current.delete(index);
+	        }
 
-	    setAnyMatchesAmongChildren(matchIndices.current.size != 0);
+	        console.log(`${matchIndices.current.size} matching children: ${Array.from(matchIndices.current).join(",")}`);
+	        setNoMatchesAmongChildren(matchIndices.current.size == 0);
+	      }
+	    }, [matches, index, path]);
+	    return useManagedChild(info);
 	  }, []);
-	  return A$1(() => ({
-	    matchChangeHandler,
+	  return A$2(() => ({
 	    useRouterChild,
 	    level: (level !== null && level !== void 0 ? level : -2) + 1
-	  }), [matchChangeHandler, level, useRouterChild]);
-	}
-
-	/**
-	 * Allows easy access to the controls at the current level.
-	 *
-	 * You can also get this information from a child <Router />
-	 * by passing in a ref (e.g. <Router ref={setControls} />).
-	 */
-
-	function useRouterControls(_ref) {
-	  let {
-	    onPathChange
-	  } = _ref;
-	  const {
-	    level,
-	    matchChangeHandler,
-	    useRouterChild
-	  } = T$1(RouterContext); // This is the hash at this level specifically, 
-	  // so it contains no directory separators.
-
-	  const popLocalPath = usePopLocalPath(level);
-	  const pushLocalPath = usePushLocalPath(level);
-	  useEnsureStability("useRouterControls", onPathChange);
-	  const [getLocalPath, setLocalPath] = useLocalPath(level, onPathChange);
-	  return A$1(() => ({
-	    getLocalPath,
-	    popLocalPath,
-	    pushLocalPath,
-	    setLocalPath,
-	    level
-	  }), [level, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
-	}
-
-	/**
-	 * Inspects the local path at this level and returns wither or not
-	 * it is a match for the given criteria.
-	 *
-	 * @param requestedLocalHash A string to match against exactly, a `RegExp` to `.test` with, or a function that returns true if the comparison should be considered a match.
-	 */
-
-	function useLocalPathMatches(level, requestedLocalHash) {
-	  const [matches, setMatches] = d(false);
-	  useLocalPath(level, useStableCallback(localPath => {
-	    var _localPath;
-
-	    let matches;
-	    (_localPath = localPath) !== null && _localPath !== void 0 ? _localPath : localPath = "";
-	    if (requestedLocalHash instanceof RegExp) matches = requestedLocalHash.test(localPath);else if (requestedLocalHash instanceof Function) matches = requestedLocalHash(localPath);else matches = requestedLocalHash === localPath;
-	    setMatches(matches);
-	  }));
-	  return matches;
+	  }), [level, useRouterChild]);
 	}
 
 	/**
@@ -5277,24 +5237,22 @@
 	 */
 
 	function useRouterConsumer(_ref) {
+	  var _useContext;
+
 	  let {
 	    localPath
 	  } = _ref;
+	  console.log(`useRouterConsumer: ${localPath !== null && localPath !== void 0 ? localPath : "<null>"}`);
 	  const {
 	    level,
-	    matchChangeHandler,
 	    useRouterChild
-	  } = T$1(RouterContext);
+	  } = (_useContext = T$2(RouterContext)) !== null && _useContext !== void 0 ? _useContext : {
+	    level: -1
+	  };
 	  const [siblingsHaveNoMatches, setSiblingsHaveNoMatches] = useState(false);
-	  const index = A$1(() => (localPath !== null && localPath !== void 0 ? localPath : "") + `-${Math.random()}`, [localPath !== null && localPath !== void 0 ? localPath : ""]);
-	  let matches = useLocalPathMatches(level, localPath !== null && localPath !== void 0 ? localPath : "");
-	  const contextFromParent = T$1(RouterContext); // Any time our match status changes, notify the parent.
-	  // This is how siblingsHaveNoMatches changes.
-
-	  useEffect(() => {
-	    matchChangeHandler === null || matchChangeHandler === void 0 ? void 0 : matchChangeHandler(index, matches);
-	    return () => matchChangeHandler === null || matchChangeHandler === void 0 ? void 0 : matchChangeHandler(index, false);
-	  }, [matchChangeHandler, index, matches]); // Handle some special cases related to matching:
+	  const index = A$2(() => (localPath !== null && localPath !== void 0 ? localPath : "<default>") + `-${Math.random()}`, [localPath]);
+	  let matches = useLocalPathMatches(level, localPath, siblingsHaveNoMatches);
+	  const contextFromParent = T$2(RouterContext); // Handle some special cases related to matching:
 
 	  if (contextFromParent == null || contextFromParent.level < 0) {
 	    // The root-most router always displays, because
@@ -5305,13 +5263,19 @@
 	    // If this is a "default" router, then we show only if
 	    // our parent Router has told us that none of our
 	    // sibling routers are currently displaying.
+	    // TODO: This is duplicated in useLocalPathMatches,
+	    // but it doesn't watch for changes in siblingsHaveNoMatches,
+	    // which it should
+	    console.log(`Default router at level ${level} sibling status: ${siblingsHaveNoMatches.toString()}`);
 	    matches = siblingsHaveNoMatches;
 	  } // Collect some things that the <Component /> will need to display itself.
 
 
 	  const infoFromParent = useRouterChild === null || useRouterChild === void 0 ? void 0 : useRouterChild({
 	    index,
-	    notifyOfSiblingsHaveNoMatches: setSiblingsHaveNoMatches
+	    notifyOfSiblingsHaveNoMatches: setSiblingsHaveNoMatches,
+	    matches,
+	    path: localPath
 	  });
 	  const useManagedChildProps2 = infoFromParent === null || infoFromParent === void 0 ? void 0 : infoFromParent.useManagedChildProps;
 	  const getElement2 = infoFromParent === null || infoFromParent === void 0 ? void 0 : infoFromParent.getElement;
@@ -5334,27 +5298,125 @@
 	  };
 	}
 
-	const RouterProvider = x(RouterProviderImpl);
+	/**
+	 * Removes the directory at the current level, effectively returning
+	 * to the previous level.  You can also switch to a different
+	 * previous level if you would like.
+	 */
 
-	function RouterProviderImpl(_ref2) {
+	function usePopLocalPath(level) {
+	  const setEntireHash = useSetEntireHash();
+	  return F(function popLocalHash(dir) {
+	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
+	    if (level < 0) throw new RootRouterError();
+	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
+	    let newHashPath = oldHashPath.slice(0, level).map(s => s !== null && s !== void 0 ? s : "");
+
+	    if (dir) {
+	      dir = trimHash(dir);
+	      newHashPath[newHashPath.length - 1] = dir;
+	    }
+
+	    setEntireHash(newHashPath.join("/"), action);
+	  }, [level]);
+	}
+
+	/**
+	 * Adds a directory at one level deeper.
+	 */
+
+	function usePushLocalPath(level) {
+	  const setEntireHash = useSetEntireHash(); //const level = useContext(RouterLevelContext);
+
+	  return F(function pushLocalHash(dir) {
+	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
+	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
+	    if (level < 0) throw new RootRouterError();
+	    dir = trimHash(dir);
+	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
+	    let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => s !== null && s !== void 0 ? s : "");
+	    newHashPath.splice(level + 1, 1, dir);
+	    setEntireHash(newHashPath.join("/"), action);
+	  }, [level]);
+	}
+
+	/**
+	 * Replaces the directory at the current level with a new one. You can
+	 * choose whether or not any trailing paths are kept -- by default this is false.
+	 * @returns
+	 */
+
+	function useSetLocalPath(level) {
+	  const setEntireHash = useSetEntireHash();
+	  return F(function setLocalHash(dir) {
+	    let action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "push";
+	    let keepTrailing = arguments.length > 2 ? arguments[2] : undefined;
+	    if (level < 0) throw new RootRouterError();
+	    dir = trimHash(dir);
+	    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
+	    let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => s !== null && s !== void 0 ? s : "");
+	    newHashPath.splice(level, 1, dir);
+	    setEntireHash(newHashPath.join("/"), action);
+	  }, [level]);
+	}
+
+	/**
+	 * Allows easy access to the controls at the current level.
+	 *
+	 * You can also get this information from a child <Router />
+	 * by passing in a ref (e.g. <Router ref={setControls} />).
+	 */
+
+	function useRouterControls(_ref) {
+	  var _useContext;
+
 	  let {
-	    children
+	    onPathChange
+	  } = _ref;
+	  const {
+	    level
+	  } = (_useContext = T$2(RouterContext)) !== null && _useContext !== void 0 ? _useContext : {
+	    level: -1
+	  }; // This is the hash at this level specifically, 
+	  // so it contains no directory separators.
+
+	  const popLocalPath = usePopLocalPath(level);
+	  const pushLocalPath = usePushLocalPath(level);
+	  useEnsureStability("useRouterControls", onPathChange);
+	  const getLocalPath = useGetLocalPath(level, onPathChange);
+	  const setLocalPath = useSetLocalPath(level);
+	  return A$2(() => ({
+	    getLocalPath,
+	    popLocalPath,
+	    pushLocalPath,
+	    setLocalPath,
+	    level
+	  }), [level, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
+	}
+
+	const RouterProvider = x$1(RouterProviderImpl);
+
+	function RouterProviderImpl(_ref2, ref) {
+	  let {
+	    children,
+	    ...props
 	  } = _ref2;
 	  const {
 	    level,
-	    matchChangeHandler,
 	    useRouterChild
 	  } = useRouterProvider();
-	  return v$1(RouterContext.Provider, {
-	    value: A$1(() => ({
+	  return v$2(RouterContext.Provider, {
+	    value: A$2(() => ({
 	      level,
-	      matchChangeHandler,
 	      useRouterChild
-	    }), [level, matchChangeHandler, useRouterChild])
-	  }, children);
+	    }), [level, useRouterChild])
+	  }, B(children, useMergedProps()(children.props, {
+	    ref,
+	    ...props
+	  })));
 	}
 
-	const RouterConsumer = x(RouterConsumerImpl);
+	const RouterConsumer = x$1(RouterConsumerImpl);
 
 	function RouterConsumerImpl(_ref3, ref) {
 	  var _ref4;
@@ -5374,9 +5436,9 @@
 	    matches,
 	    siblingsHaveNoMatches
 	  } = useRouterConsumer({
-	    localPath
+	    localPath: localPath !== null && localPath !== void 0 ? localPath : null
 	  });
-	  const backupRef = s(null);
+	  const backupRef = s$2(null);
 	  (_ref4 = ref) !== null && _ref4 !== void 0 ? _ref4 : ref = backupRef;
 	  const {
 	    getLocalPath,
@@ -5385,12 +5447,12 @@
 	    setLocalPath: setLocalPath,
 	    level
 	  } = useRouterControls({
-	    onPathChange: F(newPath => {
+	    onPathChange: useStableCallback(newPath => {
 	      if (matches) onMatchChange === null || onMatchChange === void 0 ? void 0 : onMatchChange(newPath);
 	      onPathChange === null || onPathChange === void 0 ? void 0 : onPathChange(newPath, matches);
-	    }, [onPathChange, matches])
+	    })
 	  });
-	  _(ref, () => ({
+	  _$1(ref, () => ({
 	    level,
 	    getElement,
 	    getLocalPath,
@@ -5399,7 +5461,7 @@
 	    setLocalPath
 	  }), [level, getElement, getLocalPath, popLocalPath, pushLocalPath, setLocalPath]);
 	  let TransitionImpl = Transition;
-	  const DefaultTransition = T$1(RouterTransitionContext);
+	  const DefaultTransition = T$2(RouterTransitionContext);
 
 	  if (!TransitionImpl) {
 	    TransitionImpl = DefaultTransition;
@@ -5412,37 +5474,52 @@
 	    rest["data-level"] = undefined;
 	  }
 
-	  return v$1(TransitionImpl, {
+	  return v$2(TransitionImpl, {
 	    show: matches || optional,
 	    ...useManagedChildProps(useMergedProps()(rest, {
 	      className: "router",
 	      "data-level": `${levelString}`,
-	      'data-path': typeof localPath == "string" ? localPath : undefined,
+	      'data-path': localPath == null ? "<null>" : typeof localPath == "string" ? localPath : undefined,
+	      "data-showing-default": siblingsHaveNoMatches,
 	      children
 	    }))
 	  });
 	}
 
-	const Router = x(RouterImpl);
+	const Router = x$1(RouterImpl);
 
-	function RouterImpl(props, ref) {
-	  return v$1(RouterProvider, null, v$1(RouterConsumer, { ...props,
-	    ref: ref
+	function RouterImpl(_ref5, ref) {
+	  let {
+	    children,
+	    ...props
+	  } = _ref5;
+	  const isRoot = T$2(RouterContext) == null;
+
+	  if (isRoot) {
+	    if (ref != null) throw new RootRouterError();
+	    return v$2(RouterProvider, { ...props,
+	      children: children
+	    });
+	  } else return v$2(RouterConsumer, {
+	    ref: ref,
+	    ...props
+	  }, v$2(RouterProvider, {
+	    children: children
 	  }));
 	} // Extremely simple "transition" that just swaps children in and out without animating them.
 
 
-	const DefaultTransition = x(function DefaultTransition(_ref5, ref) {
+	const DefaultTransition = x$1(function DefaultTransition(_ref6, ref) {
 	  let {
 	    show,
 	    children,
 	    ...rest
-	  } = _ref5;
-	  if (show) return v$1(d$1, null, B(children, useMergedProps()({
+	  } = _ref6;
+	  return v$2(d$2, null, B(children, useMergedProps()({
 	    ref,
-	    ...children.props
+	    ...children.props,
+	    hidden: !show
 	  }, rest)));
-	  return null;
 	});
 	const RouterTransitionContext = D(DefaultTransition);
 
@@ -5528,65 +5605,93 @@
 	}
 
 	const Component = () => {
-	    const [{ popLocalPath: popLocalHash, pushLocalPath: pushLocalHash, setLocalPath: setLocalHash, getLocalPath: getLocalHash }, setRouteControls] = useState({});
-	    return (v$1(Router, { ref: setRouteControls },
-	        v$1(Level0, null)));
+	    return (v$2(Router, null,
+	        v$2("div", null,
+	            v$2("p", null, "This is content in the root router. It is always displayed, no matter what."),
+	            v$2("p", null,
+	                "The ",
+	                v$2("code", null, "Router"),
+	                " that's rendering this content cannot have path-related functions performed on it, since the path is always just implicitly ",
+	                v$2("code", null, "/"),
+	                "."),
+	            v$2(Swappable, null,
+	                v$2("div", null,
+	                    v$2(Level1, null))))));
 	};
-	function Level0() {
-	    useState(null);
-	    return (v$1("div", { class: "level" },
-	        "This is within level 0.",
-	        v$1("div", { class: "level" },
-	            "This is just outside level 1.",
-	            v$1(Swappable, null,
-	                v$1("div", null,
-	                    v$1(Level1, null))))));
-	}
 	function Level1() {
-	    const [{ popLocalPath: popLocalHash, pushLocalPath: pushLocalHash, setLocalPath: setLocalHash, getLocalPath: getLocalHash }, setRouteControls] = useState({});
-	    return (v$1(d$1, null,
-	        v$1(Router, { localPath: "", ref: setRouteControls },
-	            v$1("div", null, "Within level 1, at level 0's default path"),
-	            v$1("button", { onClick: () => setLocalHash?.("test1") }, "test1"),
-	            v$1("button", { onClick: () => setLocalHash?.("test2") }, "test2")),
-	        v$1(Router, { localPath: "test1" },
-	            v$1("div", null, "Within level 1, at level 0's test1 path"),
-	            v$1("div", null,
-	                v$1(Test1, null))),
-	        v$1(Router, { localPath: "test2" },
-	            v$1("div", null, "Within level 1, at level 0's test2 path"),
-	            v$1("div", null,
-	                v$1(Test2, null)))));
+	    const [{ popLocalPath, pushLocalPath, setLocalPath, getLocalPath }, setRouteControls] = useState({});
+	    return (v$2(d$2, null,
+	        v$2(Router, { localPath: null, ref: setRouteControls },
+	            v$2("div", null,
+	                v$2("p", null,
+	                    "This is within the first-level child ",
+	                    v$2("code", null, "Router"),
+	                    " that displays ",
+	                    v$2("em", null, "default content"),
+	                    ". That is, if no other ",
+	                    v$2("code", null, "Router"),
+	                    " at this level matches (which is presumably true if you're reading this), then ",
+	                    v$2("em", null, "this"),
+	                    " ",
+	                    v$2("code", null, "Router"),
+	                    " will display."),
+	                v$2("button", { onClick: () => { debugger; setLocalPath?.(""); } }, "(empty string)"),
+	                v$2("button", { onClick: () => { debugger; setLocalPath?.("test1"); } }, "test1"),
+	                v$2("button", { onClick: () => setLocalPath?.("test2") }, "test2"))),
+	        v$2(Router, { localPath: "" },
+	            v$2("div", null,
+	                v$2("p", null,
+	                    "This is within the first-level child ",
+	                    v$2("code", null, "Router"),
+	                    " that displays when the path is empty (this is different from the default path, taken when there is no match from anyone at this level)."))),
+	        v$2(Router, { localPath: "test1" },
+	            v$2("div", null,
+	                v$2(Test1, null))),
+	        v$2(Router, { localPath: "test2" },
+	            v$2("div", null,
+	                v$2("div", null,
+	                    v$2(Test2, null))))));
 	}
 	function Test1() {
 	    const [{ popLocalPath: popHash1, pushLocalPath: pushHash1, setLocalPath: setHash1 }, setRouteControls] = useState({});
-	    return (v$1("div", { class: "level" },
-	        "Level 1, Test1",
-	        v$1("button", { onClick: () => { debugger; pushHash1?.("testa"); } }, "testA"),
-	        v$1(Router, { ref: setRouteControls, localPath: "testa" }, "A")));
+	    return (v$2(d$2, null,
+	        v$2("p", null,
+	            "This is within the first-level child ",
+	            v$2("code", null, "Router"),
+	            " that displays when the path is ",
+	            v$2("code", null, "test1"),
+	            ".",
+	            v$2(Test1, null)),
+	        v$2("p", null,
+	            "Level 1, Test1",
+	            v$2("button", { onClick: () => { debugger; pushHash1?.("testa"); } }, "testA"),
+	            v$2(Router, { ref: setRouteControls, localPath: "testa" },
+	                v$2("div", null, "A")))));
 	}
 	function Test2() {
 	    useState(null);
 	    const [route1Controls, setRoute1Controls] = useState(null);
 	    const [param, setParam] = useSearchParams("param", "boolean");
 	    console.log(param == null ? "<null>" : param);
-	    return (v$1(d$1, null,
+	    return (v$2(d$2, null,
 	        "Test2: \"",
 	        param == null ? "<null>" : param,
 	        "\".",
-	        v$1(Swappable, null,
-	            v$1("span", null,
-	                v$1(Router, { ref: setRoute1Controls, localPath: "" },
-	                    "Test2",
-	                    v$1("button", { onClick: () => route1Controls?.setLocalPath?.("testa") }, "testA")),
-	                v$1(Router, { ref: setRoute1Controls, localPath: "testa" },
-	                    v$1("div", null, "A"),
-	                    v$1("label", null,
-	                        v$1("input", { checked: param ?? false, type: "checkbox", onInput: e => { e.preventDefault(); setParam(e.currentTarget.checked); } }),
-	                        "Checkbox"))))));
+	        v$2(Swappable, null,
+	            v$2("span", null,
+	                v$2(Router, { ref: setRoute1Controls, localPath: "" },
+	                    v$2("div", null,
+	                        "Test2",
+	                        v$2("button", { onClick: () => route1Controls?.setLocalPath?.("testa") }, "testA"))),
+	                v$2(Router, { ref: setRoute1Controls, localPath: "testa" },
+	                    v$2("div", null,
+	                        v$2("div", null, "A"),
+	                        v$2("label", null,
+	                            v$2("input", { checked: param ?? false, type: "checkbox", onInput: e => { e.preventDefault(); setParam(e.currentTarget.checked); } }),
+	                            "Checkbox")))))));
 	}
 	requestAnimationFrame(() => {
-	    S$1(v$1(Component, null), document.getElementById("root"));
+	    S$1(v$2(Component, null), document.getElementById("root"));
 	});
 
 })();

@@ -164,9 +164,11 @@ export interface RouterContextType {
     useRouterChild: UsedManagedChild<RouterChildren>;
     // A function that the child will call any time its match status changes.
     // This allows the parent to tell "default" children when they should show themselves.
-    matchChangeHandler(index: string, matches: boolean): void;
+    //matchChangeHandler(index: string, path: string | null | RegExp | Function, matches: boolean): void;
 }
 
 export interface RouterChildren extends ManagedChildInfo<string> {
     notifyOfSiblingsHaveNoMatches(noMatches: boolean): void;
+    path: RouterPathType | null;
+    matches: boolean;
 }

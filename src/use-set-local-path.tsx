@@ -1,4 +1,5 @@
 import { useCallback } from "preact/hooks";
+import { RootRouterError } from "./root-router-error";
 import { normalizeHashToPath, trimHash, useSetEntireHash } from "./util";
 
 /**
@@ -10,6 +11,9 @@ export function useSetLocalPath(level: number) {
     const setEntireHash = useSetEntireHash();
 
     return useCallback(function setLocalHash(dir: string, action: "push" | "replace" = "push", keepTrailing?: boolean) {
+        if (level < 0)
+            throw new RootRouterError();
+            
         dir = trimHash(dir);
         const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
         let newHashPath = oldHashPath.slice(0, keepTrailing ? undefined : level + 1).map(s => (s ?? ""));
