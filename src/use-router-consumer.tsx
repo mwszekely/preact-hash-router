@@ -1,12 +1,28 @@
-import { useState } from "preact-prop-helpers";
-import { useCallback, useContext, useMemo } from "preact/hooks";
-import { useLocalPathMatches } from "./use-local-path-matches";
-import { RouterContext } from "./use-router-provider";
-import { RouterPathType } from "./util";
+import { OnPassiveStateChange, useEnsureStability, useManagedChild, UseManagedChildParameters, UseManagedChildrenContext, UseManagedChildReturnType, usePassiveState, useStableCallback, useState } from "preact-prop-helpers";
+import { useCallback, useLayoutEffect } from "preact/hooks";
+import { useUrl } from "./use-url";
+import { normalizeHashToPath, RouterChildInfo, RouterPathType, trimHash } from "./util";
+
+
+export interface UseLocalPathParameters {
+    consumeRouterReturn: Pick<UseConsumeRouterReturn["consumeRouterReturn"], "level">;
+    localRouteParameters: {
+        onLocalPathChange: OnPassiveStateChange<string, never>;
+    }
+}
+
+export interface RouterContextType extends UseManagedChildrenContext<RouterChildInfo> {
+    routerContext: {
+        level: number;
+        notifyParentThatNonDefaultMatchHasChanged(index: string, matches: boolean | null): void;
+    };
+}
+
+
 
 
 export interface UseRouterConsumerArguments {
-    localPath: RouterPathType | null;
+    routerConsumerParameters: { localPath: RouterPathType | null; }
 }
 
 /**
@@ -17,45 +33,124 @@ export interface UseRouterConsumerArguments {
  * if this path and all its siblings are invalid at the same time,
  * the default path is allowed to be shown.
  */
-export function useRouterConsumer({ localPath }: UseRouterConsumerArguments) {
-    console.log(`useRouterConsumer: ${localPath ?? "<null>"}`)
-    const { level, useRouterChild } = useContext(RouterContext) ?? { level: -1 };
-    const [siblingsHaveNoMatches, setSiblingsHaveNoMatches] = useState(false);
-    const index = useMemo(() => ((localPath ?? "<default>") + `-${Math.random()}`), [localPath]);
-    let matches = useLocalPathMatches(level, localPath, siblingsHaveNoMatches);
 
-    const contextFromParent = useContext(RouterContext);
 
-    // Handle some special cases related to matching:
-    if (contextFromParent == null || contextFromParent.level < 0) {
-        // The root-most router always displays, because
-        // it's mostly here as a formality for context management anyway.
-        matches = true;
-        console.assert(!localPath, `The root Router always displays and will ignore the path "${localPath}".`);
+
+
+export interface UseConsumeRouterParameters extends UseManagedChildParameters<RouterChildInfo> {
+    context: RouterContextType;
+    consumeRouterParameters: {
+        onLocalPathChange?: null | undefined | OnPassiveStateChange<string, never>;
+        localPath: RouterPathType;
     }
-    else if (localPath == null) {
-        // If this is a "default" router, then we show only if
-        // our parent Router has told us that none of our
-        // sibling routers are currently displaying.
-        // TODO: This is duplicated in useLocalPathMatches,
-        // but it doesn't watch for changes in siblingsHaveNoMatches,
-        // which it should
-        console.log(`Default router at level ${level} sibling status: ${siblingsHaveNoMatches.toString()}`)
-        matches = siblingsHaveNoMatches;
-    }
+}
 
-    // Collect some things that the <Component /> will need to display itself.
-    const infoFromParent = useRouterChild?.({ index, notifyOfSiblingsHaveNoMatches: setSiblingsHaveNoMatches, matches, path: localPath });
-    const useManagedChildProps2 = infoFromParent?.useManagedChildProps;
-    const getElement2 = infoFromParent?.getElement;
-    const useManagedChildProps = useCallback<NonNullable<typeof useManagedChildProps2>>((props) => { return (useManagedChildProps2?.(props) ?? props); }, []);
-    const getElement = useCallback<NonNullable<typeof getElement2>>(() => { return (getElement2?.() ?? null); }, []);
+export interface UseConsumeRouterReturn extends UseManagedChildReturnType<RouterChildInfo> {
+    consumeRouterReturn: {
+        level: number;
+        matches: boolean | null;
+        getLocalPath: () => string;
+        setLocalPath: (path: string) => void;
+        pathWhenMatching: string | null;
+    }
+}
+
+export function useConsumeRouter({ context, managedChildParameters, managedChildParameters: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }: UseConsumeRouterParameters): UseConsumeRouterReturn {
+    const { routerContext: { level, notifyParentThatNonDefaultMatchHasChanged } } = context;
+    const [anyMatchesAmongNonDefaultSiblings, setAnyMatchesAmongNonDefaultSiblings] = useState(null as null | boolean);
+
+    const [pathWhenMatching, setPathWhenMatching] = useState(null as null | string);
+
+    const { managedChildReturn } = useManagedChild<RouterChildInfo>({
+        context,
+        managedChildParameters
+    }, {
+        index,
+        setAnyMatchesAmongNonDefaultSiblings: useStableCallback((anyMatches) => {
+            setAnyMatchesAmongNonDefaultSiblings(anyMatches);
+            onLocalPathChange2(wantedLocalPath, anyMatches, getLocalPath());
+        })
+    });
+
+    useLayoutEffect(() => {
+        onLocalPathChange2(wantedLocalPath, anyMatchesAmongNonDefaultSiblings, getLocalPath());
+    }, [wantedLocalPath, anyMatchesAmongNonDefaultSiblings])
+
+
+    const onLocalPathChange2 = useStableCallback(function (wantedLocalPath: RouterPathType, anyMatchesAmongNonDefaultSiblings: boolean | null, path: string) {
+        const matches = pathCompare(wantedLocalPath, anyMatchesAmongNonDefaultSiblings, path);
+        setMatches(matches);
+        console.log(`${index}: onLocalPathChange2(wlp: ${(wantedLocalPath ?? "null").toString()}, amands: ${(anyMatchesAmongNonDefaultSiblings ?? "null").toString()}, p: ${path}): ${(matches ?? "null").toString()}`)
+        if (matches)
+            setPathWhenMatching(path);
+
+        if (wantedLocalPath != null) {
+            notifyParentThatNonDefaultMatchHasChanged(index, matches);
+        }
+        else {
+            notifyParentThatNonDefaultMatchHasChanged(index, null);
+        }
+    })
+    const [matches, setMatches] = useState(null as null | boolean);
+    const [getLocalPath, setLocalPath] = useLocalPath({
+        consumeRouterReturn: { level },
+        localRouteParameters: {
+            onLocalPathChange: useStableCallback((path, prev, reason) => {
+                onLocalPathChange2(wantedLocalPath, anyMatchesAmongNonDefaultSiblings, path);
+                onLocalPathChange?.(path, prev, reason);
+            })
+        }
+    });
 
     return {
-        useManagedChildProps,
-        getElement,
-        matches,
-        level,
-        siblingsHaveNoMatches
+        managedChildReturn,
+        consumeRouterReturn: {
+            level,
+            matches,
+            getLocalPath,
+            setLocalPath,
+            pathWhenMatching
+        }
     }
+}
+
+
+function useLocalPath({ consumeRouterReturn: { level }, localRouteParameters: { onLocalPathChange } }: UseLocalPathParameters) {
+
+    useEnsureStability("useLocalPath", level);
+
+    const urlToPath = useCallback((url: string) => {
+        const oldHashPath = normalizeHashToPath(trimHash(new URL(url).hash));
+        return oldHashPath[level];
+    }, [])
+
+    const [getLocalPath, setLocalPath] = usePassiveState<string, never>(useStableCallback(onLocalPathChange), useCallback(() => { 
+        return urlToPath(window.location.href);
+    }, [urlToPath]));
+
+
+    // Any time the URL changes, inspect the hash
+    // at our current level, and change our local copy of our path
+    // in our passive state. This will trigger our callback if they're different.
+    useUrl(url => { setLocalPath(urlToPath(url)); });
+
+    return [getLocalPath, setLocalPath] as const;
+}
+
+
+export function pathCompare(requestedLocalHash: null | string | RegExp | ((localHash: string) => boolean), anyMatchesAmongNonDefaultSiblings: boolean | null, localPath: string | null) {
+    let matches: boolean | null;
+    localPath ??= "";
+
+    if (requestedLocalHash instanceof RegExp)
+        matches = (requestedLocalHash.test(localPath));
+    else if (requestedLocalHash instanceof Function)
+        matches = (requestedLocalHash(localPath));
+
+    else if (requestedLocalHash == null)
+        matches = (anyMatchesAmongNonDefaultSiblings == null? null : !anyMatchesAmongNonDefaultSiblings);
+    else
+        matches = (requestedLocalHash === localPath);
+
+    return matches;
 }

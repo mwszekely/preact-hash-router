@@ -1,6 +1,6 @@
 
 import { usePassiveState, useStableCallback } from "preact-prop-helpers";
-import { useEffect, useState } from "preact/hooks";
+import { useCallback } from "preact/hooks";
 import { useUrl } from "./use-url";
 import { parseParam, TypeMap, unparseParam } from "./util";
 
@@ -22,15 +22,9 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
     // because changing it is actually an asyncronous operation
     // and we can't know when it ends aside from just "did the URL change or not"
     // so we might as well keep this state around locally to compensate.
-   // const [getSavedParamValue, setSavedParamValue] = usePassiveState<TypeMap[T] | null>(onParamValueChanged);
-    const [getPromise, setPromise] = usePassiveState<Promise<TypeMap[T]> | null>(null);
-    const [getResolve, setResolve] = usePassiveState<null | ((value: TypeMap[T]) => void)>(null);
-    const [getReject, setReject] = usePassiveState<null | ((ex: any) => void)>(null);
-    
-    const [getNextParamValue, setNextParamValue] = usePassiveState<TypeMap[T] | null>(null);
-    const [getPreviousParamValue, setPreviousParamValue] = usePassiveState<TypeMap[T] | null>(null);
-    //const savedParamValue = getSavedParamValue();
-
+    const [getSavedParamValue, setSavedParamValue] = usePassiveState<TypeMap[T] | null, never>(onParamValueChanged, useCallback(() => {
+        return parseParam(new URL(window.location.toString()), paramKey, type);
+    }, []));
     const setParamWithHistory = useStableCallback((newParamValue: TypeMap[T] | null, reason?: "push" | "replace") => {
 
         let newParams = new URLSearchParams((new URL(window.location.toString()).searchParams));
@@ -38,20 +32,6 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
         let nextUrl = new URL(window.location.toString());
         nextUrl.search = prettyPrintParams(newParams);
         history[`${reason ?? "replace"}State`]({}, document.title, nextUrl);
-        setPreviousParamValue(getNextParamValue());
-        setNextParamValue(newParamValue);
-
-        // Changing the Search Params won't fire a hashchange event (I mean, obviously I guess, but)
-        // so instead we need to forcibly have a popstate event fire, as the only one we can use here.
-        //
-        // We do that by just pushing another copy of our destination to the history stack
-        // and immediatly returning to it.
-        history.pushState({}, document.title, nextUrl);
-        history.back();
-        
-        let promise = new Promise<TypeMap[T]>((resolve, reject) => { setResolve(() => resolve); setReject(() => reject); });
-        setPromise(promise);
-        return promise.then(() => { return newParamValue; });
     });
 
 
@@ -59,25 +39,10 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
     // Parse it out and save it.
     useUrl(useStableCallback(url => {
         const newParam = parseParam(new URL(url), paramKey, type);
-        const resolve = getResolve();
-        const reject = getReject();
-
-        if (newParam === getNextParamValue()) {
-            resolve!(newParam!);
-            setPreviousParamValue(null);
-            setResolve(null);
-            setReject(null);
-            onParamValueChanged?.(newParam);
-        }
-        else if (newParam !== getPreviousParamValue()){
-            reject!(newParam!);
-            setPreviousParamValue(null);
-            setResolve(null);
-            setReject(null);
-        }
+        setSavedParamValue(newParam);
     }));
 
-    return [getNextParamValue(), setParamWithHistory] as const;
+    return [parseParam(new URL(window.location.toString()), paramKey, type), setParamWithHistory, getSavedParamValue] as const;
 }
 
 function prettyPrintParams(params: URLSearchParams) {

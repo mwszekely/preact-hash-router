@@ -1,4 +1,5 @@
 import { useGlobalHandler, usePassiveState, useStableCallback } from "preact-prop-helpers";
+import { useCallback } from "preact/hooks";
 
 /**
  * Relatively low-level hook that allows you to inspect
@@ -15,7 +16,7 @@ import { useGlobalHandler, usePassiveState, useStableCallback } from "preact-pro
  */
 export function useUrl(onUrlChange: (url: string) => void) {
 
-    const [getUrl, setUrl] = usePassiveState(useStableCallback(onUrlChange), useStableCallback(() => window.location.toString()));
+    const [getUrl, setUrl] = usePassiveState<string, never>(useStableCallback(onUrlChange), useCallback(() => window.location.toString(), []));
 
     useGlobalHandler(window, "hashchange", e => {
         setUrl(window.location.toString());

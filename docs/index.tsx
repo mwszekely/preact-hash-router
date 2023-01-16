@@ -3,42 +3,65 @@ import { useState } from "preact-prop-helpers";
 import { Swappable } from "preact-transition";
 import "preact/debug";
 import "preact/devtools";
-import { Router, useSearchParams } from "../";
-import { RouterRefType } from "../router";
-import { RouterControls } from "../util";
+import { Router, useSearchParams, useUrl } from "../";
 
 const Component = () => {
 
+    const [url, setUrl] = useState("");
+    useUrl(setUrl);
+
+    const [example, setExample] = useSearchParams("example", "number")
+
     return (
-        <Router>
-            <div>
-                <p>This is content in the root router. It is always displayed, no matter what.</p>
-                <p>The <code>Router</code> that's rendering this content cannot have path-related functions performed on it, since the path is always just implicitly <code>/</code>.</p>
-                <Swappable>
-                    <div>
-                        <Level1 />
-                    </div>
-                </Swappable>
-            </div>
+        <Router localPath={null}>
+            {(path, { pushLocalPath, popLocalPath, setLocalPath }) =>
+                path != null && <div>
+                    <p>This is the current URL: <code>{url}</code>.</p>
+                    <p>This is content in the root router. It is always displayed, no matter what.</p>
+                    <p>The <code>Router</code> that's rendering this content cannot have path-related functions performed on it, since the path is always just implicitly <code>/</code>.</p>
+                    <p>Just beneath me is a child component that reads the first path after the root.</p>
+                    <p><button onClick={() => {debugger;pushLocalPath("test1")}}>Push "test1"</button></p>
+                    <p><button onClick={() => popLocalPath()}>Pop</button></p>
+                    <p><button onClick={() => setLocalPath("test1")}>Set "test1"</button></p>
+                    <p><label>Search param example: <input value={example ?? undefined} type="number" onInput={e => setExample(e.currentTarget.valueAsNumber)} /></label></p>
+                    <hr />
+                    <Swappable>
+                        <div>
+                            <Level1 />
+                        </div>
+                    </Swappable>
+                </div>
+            }
         </Router>
     )
 }
 
 function Level1() {
 
-    const [{ popLocalPath, pushLocalPath, setLocalPath, getLocalPath }, setRouteControls] = useState<Partial<RouterControls>>({});
+    //const [{ popLocalPath, pushLocalPath, setLocalPath }, setRouteControls] = useState<Partial<RouterControls>>({});
 
     return (
         <>
-            <Router localPath={null} ref={setRouteControls}>
-                <div>
-                    <p>This is within the first-level child <code>Router</code> that displays <em>default content</em>. That is, if no other <code>Router</code> at this level matches (which is presumably true if you're reading this), then <em>this</em> <code>Router</code> will display.</p>
-                    <button onClick={() => { debugger; setLocalPath?.("") }}>(empty string)</button>
-                    <button onClick={() => { debugger; setLocalPath?.("test1") }}>test1</button>
-                    <button onClick={() => setLocalPath?.("test2")}>test2</button>
-                </div>
+            <Router localPath={null}>
+                {(path, { popLocalPath, pushLocalPath, setLocalPath }) =>
+                    path != null && <div>
+                        <p>This is within the first-level child <code>Router</code> that displays <em>default content</em>. That is, if no other <code>Router</code> at this level matches (which is presumably true if you're reading this), then <em>this</em> <code>Router</code> will display.</p>
+                        <p>The current path is: <code>{path}</code></p>
+                        <p>These buttons are hooked up to this <code>Router</code>'s <code>ref</code>, so they control this level in the path.</p>
+                        <button onClick={() => { debugger; setLocalPath?.("") }}>(empty string)</button>
+                        <button onClick={() => { debugger; setLocalPath?.("test1") }}>test1</button>
+                        <button onClick={() => {debugger; setLocalPath?.("test2")}}>test2</button>
+                    </div>}
             </Router>
             <Router localPath="">
+                {(path) =>
+                    path != null && <div>
+                        <p>This is within the first-level child <code>Router</code> that displays when the path is empty (this is different from the default path, taken when there is no match from anyone at this level).</p>
+                        <p>The current path is: <code>{path}</code></p>
+                    </div>
+                }
+            </Router>
+            {/*<Router localPath="">
                 <div>
                     <p>This is within the first-level child <code>Router</code> that displays when the path is empty (this is different from the default path, taken when there is no match from anyone at this level).</p>
                 </div>
@@ -54,11 +77,11 @@ function Level1() {
                         <Test2 />
                     </div>
                 </div>
-            </Router>
+    </Router>*/}
         </>
     )
 }
-
+/*
 function Test1() {
 
 
@@ -104,7 +127,7 @@ function Test2() {
         </Swappable>
     </>
     )
-}
+}*/
 
 requestAnimationFrame(() => {
     render(<Component />, document.getElementById("root")!);

@@ -1,6 +1,6 @@
 import { useCallback } from "preact/hooks";
 import { RootRouterError } from "./root-router-error";
-import { normalizeHashToPath, trimHash, useSetEntireHash } from "./util";
+import { normalizeHashToPath, trimHash, setEntireHash } from "./util";
 
 /**
  * Removes the directory at the current level, effectively returning
@@ -8,18 +8,21 @@ import { normalizeHashToPath, trimHash, useSetEntireHash } from "./util";
  * previous level if you would like.
  */
 export function usePopLocalPath(level: number) {
-    const setEntireHash = useSetEntireHash();
 
-    return useCallback(function popLocalHash(dir?: string, action: "push" | "replace" = "push") {
-        if (level < 0)
-            throw new RootRouterError();
-        const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
-        let newHashPath = oldHashPath.slice(0, level).map(s => (s ?? ""));
-        if (dir) {
-            dir = trimHash(dir);
-            newHashPath[newHashPath.length - 1] = dir;
-        }
-
-        setEntireHash(newHashPath.join("/"), action);
+    return useCallback(function(dir?: string, action: "push" | "replace" = "push") {
+        setEntireHash(popLocalPath(level, dir), action);
     }, [level]);
+}
+
+export function popLocalPath(level: number, dir?: string): string {
+    if (level < 0)
+        throw new RootRouterError();
+    const oldHashPath = normalizeHashToPath(trimHash(new URL(window.location.toString()).hash));
+    let newHashPath = oldHashPath.slice(0, level).map(s => (s ?? ""));
+    if (dir) {
+        dir = trimHash(dir);
+        newHashPath[newHashPath.length - 1] = dir;
+    }
+
+    return newHashPath.join("/");
 }

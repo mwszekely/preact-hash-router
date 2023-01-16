@@ -1,5 +1,9 @@
+
+/**
+ * Error class used when attemps to modify the root directory occur.
+ */
 export class RootRouterError extends Error {
     constructor() {
-        super(`The root Router object cannot have any path-related operations performed on it, as it is unchangeably /. Consider using the "ref" prop of a child Router object.`);
+        super(`The root Router's path can only be pushed to and cannot be set or popped from.`);
     }
 } 

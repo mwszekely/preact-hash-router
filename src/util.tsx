@@ -1,4 +1,4 @@
-import { ManagedChildInfo, UsedManagedChild } from "preact-prop-helpers/use-child-manager";
+import { ManagedChildInfo, UseManagedChildrenContext } from "preact-prop-helpers";
 import { useCallback } from "preact/hooks";
 
 
@@ -34,19 +34,17 @@ export interface TypeMap {
 
 // Not public -- just contains shared code for history modification.
 // This is what actually changes History and updates the window's URL.
-export function useSetEntireHash() {
-    return useCallback((hash: string, action: "push" | "replace") => {
-        action ??= "push";
-        hash = trimHash(hash);
-        let oldURL = window.location.toString();
-        let nextUrl = new URL(window.location.toString());
-        nextUrl.hash = `#${hash}`;
+export function setEntireHash(hash: string, action: "push" | "replace") {
+    action ??= "push";
+    hash = trimHash(hash);
+    let oldURL = window.location.toString();
+    let nextUrl = new URL(window.location.toString());
+    nextUrl.hash = `#${hash}`;
 
-        history[`${action}State`]({}, document.title, nextUrl);
+    history[`${action}State`]({}, document.title, nextUrl);
 
-        // Modifying history doesn't actually cause a hashchange event.
-        window.dispatchEvent(new HashChangeEvent('hashchange', { oldURL, newURL: nextUrl.toString() }));
-    }, []);
+    // Modifying history doesn't actually cause a hashchange event.
+    window.dispatchEvent(new HashChangeEvent('hashchange', { oldURL, newURL: nextUrl.toString() }));
 }
 
 /**
@@ -111,7 +109,7 @@ export function parseParam<T extends "string" | "boolean" | "number" | "bigint">
 }
 
 
-export type RouterPathType = string | RegExp | ((localPath: string) => boolean);
+export type RouterPathType = null | string | RegExp | ((localPath: string) => boolean);
 
 export interface RouterControls {
 
@@ -145,7 +143,7 @@ export interface RouterControls {
     /**
      * Returns the directory at this level, regardless of if it matches or not.
      */
-    getLocalPath(): string | null;
+    //getLocalPath(): string | null;
 
     /**
      * The current level in the directory tree.
@@ -153,22 +151,34 @@ export interface RouterControls {
      * This is 0 indexed (though the special
      * root Router is -1)
      */
-    level: number;
+    //level: number;
 }
 
-export interface RouterContextType {
-    // The current level; children need this to know what part of the URL to parse
-    // and also to inform their children what level they are
-    level: number;
-    // A hook that the child router will need to call
-    useRouterChild: UsedManagedChild<RouterChildren>;
-    // A function that the child will call any time its match status changes.
-    // This allows the parent to tell "default" children when they should show themselves.
-    //matchChangeHandler(index: string, path: string | null | RegExp | Function, matches: boolean): void;
+
+export interface RouterChildInfo extends ManagedChildInfo<string> {
+    setAnyMatchesAmongNonDefaultSiblings(anyMatches: boolean): void;
 }
 
-export interface RouterChildren extends ManagedChildInfo<string> {
-    notifyOfSiblingsHaveNoMatches(noMatches: boolean): void;
-    path: RouterPathType | null;
-    matches: boolean;
+
+export interface RouterContextType extends UseManagedChildrenContext<RouterChildInfo> {
+    routerContext: {
+        // The current level the child should consider itself as--
+        // children need this to know what part of the URL to parse
+        // and also to inform *their* children what level they are
+        level: number;
+
+        /**
+         * Used in order to facilitate showing the default child when no non-default children are being shown.
+         * 
+         * @param index 
+         * @param matches 
+         */
+        notifyParentThatNonDefaultMatchHasChanged(index: string, matches: boolean | null): void;
+    };
 }
+
+//export interface RouterChildInfo extends ManagedChildInfo<string> {
+//    notifyOfSiblingsHaveNoMatches(noMatches: boolean): void;
+    //path: RouterPathType | null;
+//    matches: boolean | null;
+//}
