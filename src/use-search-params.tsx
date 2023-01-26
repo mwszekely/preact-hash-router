@@ -1,9 +1,11 @@
 
-import { usePassiveState, useStableCallback } from "preact-prop-helpers";
+import { OnPassiveStateChange, usePassiveState, useStableCallback } from "preact-prop-helpers";
 import { useCallback } from "preact/hooks";
 import { useUrl } from "./use-url";
 import { parseParam, TypeMap, unparseParam } from "./util";
 
+export type OnParamValueChanged<T extends "string" | "boolean" | "number" | "bigint"> = OnPassiveStateChange<TypeMap[T] | null, never>; //(value: TypeMap[T] | null, reason?: "push" | "replace") => void;
+export type SetParamWithHistory<T extends "string" | "boolean" | "number" | "bigint"> = (value: TypeMap[T] | null | ((prevValue: TypeMap[T] | null) => (TypeMap[T] | null)), reason?: "push" | "replace") => void;
 
 /**
  * Provides access to the requested Search Param's value
@@ -16,7 +18,7 @@ import { parseParam, TypeMap, unparseParam } from "./util";
  * @param type The type of data encode/decode (`"string"` | `"boolean"` | `"number"` | `"bigint"`)
  * @param onParamValueChanged Will be called any time the requested Search Parameter's value changes.
  */
-export function useSearchParams<T extends "string" | "boolean" | "number" | "bigint">(paramKey: string, type: T, onParamValueChanged?: (value: TypeMap[T] | null) => (void | (() => void))) {
+export function useSearchParams<T extends "string" | "boolean" | "number" | "bigint">(paramKey: string, type: T, onParamValueChanged?: OnParamValueChanged<T>) {
 
     // We keep a local copy of our current Search Param value
     // because changing it is actually an asyncronous operation
@@ -25,10 +27,13 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
     const [getSavedParamValue, setSavedParamValue] = usePassiveState<TypeMap[T] | null, never>(onParamValueChanged, useCallback(() => {
         return parseParam(new URL(window.location.toString()), paramKey, type);
     }, []));
-    const setParamWithHistory = useStableCallback((newParamValue: TypeMap[T] | null, reason?: "push" | "replace") => {
+    const setParamWithHistory = useStableCallback<SetParamWithHistory<T>>((newValueOrUpdater, reason?: "push" | "replace") => {
+
+        let prevValue = parseParam(new URL(window.location.toString()), paramKey, type);
+        let nextValue: TypeMap[T] | null = (typeof newValueOrUpdater == "function"? newValueOrUpdater(prevValue) : newValueOrUpdater);
 
         let newParams = new URLSearchParams((new URL(window.location.toString()).searchParams));
-        unparseParam(newParams, paramKey, newParamValue as TypeMap[T], type);
+        unparseParam(newParams, paramKey, nextValue as TypeMap[T], type);
         let nextUrl = new URL(window.location.toString());
         nextUrl.search = prettyPrintParams(newParams);
         history[`${reason ?? "replace"}State`]({}, document.title, nextUrl);

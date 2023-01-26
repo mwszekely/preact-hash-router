@@ -603,9 +603,6 @@
     function returnNull() {
       return null;
     }
-    function returnZero() {
-      return 0;
-    }
     /**
      * An alternative to use for `customDebounceRendering` that causes `usePassiveState` to run changes without waiting a tick.
      */
@@ -1247,7 +1244,7 @@
         ...rest
       } = parentParameters;
       useEnsureStability("useManagedChildren", onAfterChildLayoutEffect, onChildrenMountChange, onChildCountChange);
-      usePassiveState(onChildCountChange, returnZero, runImmediately);
+      //const [getMountCount, setMountCount] = usePassiveState(onChildCountChange, returnZero, runImmediately);
       const getHighestIndex = T$1(() => {
         return managedChildrenArray.current.highestIndex;
       }, []);
@@ -1298,7 +1295,7 @@
       const remoteULEChildChangedCausers = _(new Set());
       const remoteULEChildChanged = T$1(index => {
         if (remoteULEChildChangedCausers.current.size == 0) {
-          if (!!onAfterChildLayoutEffect) {
+          if (onAfterChildLayoutEffect != null) {
             debounceRendering(() => {
               onAfterChildLayoutEffect?.(remoteULEChildChangedCausers.current);
               remoteULEChildChangedCausers.current.clear();
@@ -2589,8 +2586,6 @@
       return [state, setState, getState];
     }
 
-    B$2(null);
-
     function g(n, t) {
       for (var e in t) n[e] = t[e];
       return n;
@@ -2790,6 +2785,8 @@
     l$2.__r = function (n) {
       en && en(n), n.__c;
     };
+
+    B$2(null);
 
     /**
      * Shortcut for preact/compat's `forwardRef` that auto-assumes some things that are useful for forwarding refs to `HTMLElements` specifically.
@@ -4455,9 +4452,11 @@
       const [getSavedParamValue, setSavedParamValue] = usePassiveState(onParamValueChanged, T$1(() => {
         return parseParam(new URL(window.location.toString()), paramKey, type);
       }, []));
-      const setParamWithHistory = useStableCallback((newParamValue, reason) => {
+      const setParamWithHistory = useStableCallback((newValueOrUpdater, reason) => {
+        let prevValue = parseParam(new URL(window.location.toString()), paramKey, type);
+        let nextValue = typeof newValueOrUpdater == "function" ? newValueOrUpdater(prevValue) : newValueOrUpdater;
         let newParams = new URLSearchParams(new URL(window.location.toString()).searchParams);
-        unparseParam(newParams, paramKey, newParamValue, type);
+        unparseParam(newParams, paramKey, nextValue, type);
         let nextUrl = new URL(window.location.toString());
         nextUrl.search = prettyPrintParams(newParams);
         history[`${reason ?? "replace"}State`]({}, document.title, nextUrl);
