@@ -4460,6 +4460,7 @@
         let nextUrl = new URL(window.location.toString());
         nextUrl.search = prettyPrintParams(newParams);
         history[`${reason ?? "replace"}State`]({}, document.title, nextUrl);
+        setSavedParamValue(nextValue);
       });
       // Any time the URL changes, it means the Search Param we care about might have changed.
       // Parse it out and save it.
@@ -4467,7 +4468,7 @@
         const newParam = parseParam(new URL(url), paramKey, type);
         setSavedParamValue(newParam);
       }));
-      return [parseParam(new URL(window.location.toString()), paramKey, type), setParamWithHistory, getSavedParamValue];
+      return [setParamWithHistory, getSavedParamValue];
     }
     function prettyPrintParams(params) {
       const paramArray = [...params.entries()].filter((key, value) => value != null);
