@@ -10,7 +10,8 @@ const Component = () => {
     const [url, setUrl] = useState("");
     useUrl(setUrl);
 
-    const [example, setExample] = useSearchParams("example", "number")
+    const [example, setExampleLocal] = useState<string | null>(null);
+    const [getExample, setExample] = useSearchParams("example", "number");
 
     return (
         <Router localPath={null}>

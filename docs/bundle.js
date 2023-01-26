@@ -4460,6 +4460,7 @@
         let nextUrl = new URL(window.location.toString());
         nextUrl.search = prettyPrintParams(newParams);
         history[`${reason ?? "replace"}State`]({}, document.title, nextUrl);
+        setSavedParamValue(nextValue);
       });
       // Any time the URL changes, it means the Search Param we care about might have changed.
       // Parse it out and save it.
@@ -4467,7 +4468,7 @@
         const newParam = parseParam(new URL(url), paramKey, type);
         setSavedParamValue(newParam);
       }));
-      return [parseParam(new URL(window.location.toString()), paramKey, type), setParamWithHistory, getSavedParamValue];
+      return [getSavedParamValue, setParamWithHistory];
     }
     function prettyPrintParams(params) {
       const paramArray = [...params.entries()].filter((key, value) => value != null);
@@ -4481,7 +4482,8 @@
     const Component = () => {
         const [url, setUrl] = useState("");
         useUrl(setUrl);
-        const [example, setExample] = useSearchParams("example", "number");
+        const [example, setExampleLocal] = useState(null);
+        const [getExample, setExample] = useSearchParams("example", "number");
         return (h$2(Router, { localPath: null }, (path, { pushLocalPath, popLocalPath, setLocalPath }) => path != null && h$2("div", null,
             h$2("p", null,
                 "This is the current URL: ",

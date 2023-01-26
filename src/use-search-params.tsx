@@ -37,6 +37,7 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
         let nextUrl = new URL(window.location.toString());
         nextUrl.search = prettyPrintParams(newParams);
         history[`${reason ?? "replace"}State`]({}, document.title, nextUrl);
+        setSavedParamValue(nextValue);
     });
 
 
@@ -47,7 +48,7 @@ export function useSearchParams<T extends "string" | "boolean" | "number" | "big
         setSavedParamValue(newParam);
     }));
 
-    return [parseParam(new URL(window.location.toString()), paramKey, type), setParamWithHistory, getSavedParamValue] as const;
+    return [getSavedParamValue, setParamWithHistory] as const;
 }
 
 function prettyPrintParams(params: URLSearchParams) {
