@@ -1,13 +1,15 @@
 {
     "name": "preact-prop-helpers-demo",
     "version": "0.0.1",
+    "type": "module",
     "description": "A small set of hooks and other functions related to modifying Preact props.",
     "main": "index.tsx",
+    "packageManager": "pnpm@7.28.0",
+    "browserslist": "defaults, iOS >= 12",
     "scripts": {
         "watch": "rollup --config rollup.config.mjs --watch --no-watch.clearScreen",
         "build": "rollup --config rollup.config.mjs",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "install": "npm run build"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
     "license": "ISC",
@@ -20,22 +22,18 @@
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-typescript": "^11.0.0",
         "autoprefixer": "^10.4.13",
-        "browserslist": "^4.21.4",
+        "browserslist": "^4.21.5",
         "clsx": "^1.2.1",
         "postcss": "^8.4.21",
         "postcss-cli": "^10.1.0",
-        "preact": "^10.11.3",
-        "rollup": "^3.10.1",
+        "preact": "^10.13.0",
+        "rollup": "^3.17.3",
         "rollup-plugin-sourcemaps": "^0.6.3",
-        "sass": "^1.57.1",
+        "sass": "^1.58.3",
         "serve": "^14.2.0",
-        "typescript": "^4.9.4"
+        "typescript": "^4.9.5"
     },
-    "browserslist": [
-        "defaults",
-        "iOS >= 10"
-    ],
     "dependencies": {
-        "preact-transition": "github:mwszekely/preact-transition"
+        "preact-transition": "github:mwszekely/preact-transition#nodenext"
     }
 }

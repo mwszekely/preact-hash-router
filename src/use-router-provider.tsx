@@ -1,8 +1,7 @@
 import { createContext } from "preact";
-import { returnNull, useManagedChild, UseManagedChildParameters, useManagedChildren, UseManagedChildrenParameters, UseManagedChildrenReturnType, UseManagedChildReturnType, usePassiveState, useStableCallback, useStableObject } from "preact-prop-helpers";
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "preact/hooks";
-import {  } from "./use-router-consumer";
-import { RouterChildInfo, RouterContextType } from "./util";
+import { returnNull, useManagedChildren, UseManagedChildrenParameters, UseManagedChildrenReturnType, usePassiveState, useStableCallback, useStableObject } from "preact-prop-helpers";
+import { useContext, useRef } from "preact/hooks";
+import { RouterChildInfo, RouterContextType } from "./util.js";
 
 
 export const RouterContext = createContext<RouterContextType | null>(null);

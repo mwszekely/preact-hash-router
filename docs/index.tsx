@@ -3,7 +3,7 @@ import { useState } from "preact-prop-helpers";
 import { Swappable } from "preact-transition";
 import "preact/debug";
 import "preact/devtools";
-import { Router, useSearchParams, useUrl } from "../";
+import { Router, useSearchParams, useUrl } from "../dist/index.js";
 
 const Component = () => {
 
@@ -22,7 +22,7 @@ const Component = () => {
                     <p>The <code>Router</code> that's rendering this content cannot have path-related functions performed on it, since the path is always just implicitly <code>/</code>.</p>
                     <p>Just beneath me is a child component that reads the first path after the root.</p>
                     <p><button onClick={() => {debugger;pushLocalPath("test1")}}>Push "test1"</button></p>
-                    <p><button onClick={() => popLocalPath()}>Pop</button></p>
+                    <p><button disabled={true} onClick={() => popLocalPath()}>Pop</button></p>
                     <p><button onClick={() => setLocalPath("test1")}>Set "test1"</button></p>
                     <p><label>Search param example: <input value={example ?? undefined} type="number" onInput={e => setExample(e.currentTarget.valueAsNumber)} /></label></p>
                     <hr />
