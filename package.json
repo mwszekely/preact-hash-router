@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "description": "",  
   "source": "src/index.tsx",
-  "module": "/dist/index.js",
-  "types": "/dist/index.d.ts",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "packageManager": "pnpm@7.28.0",
   "exports": {
     ".": {
@@ -43,7 +43,6 @@
   "dependencies": {
     "preact-prop-helpers": "github:mwszekely/preact-prop-helpers#nodenext"
   },
-  "main": "index.js",
   "directories": {
     "test": "tests"
   }
