@@ -1,5 +1,4 @@
 import { ManagedChildInfo, UseManagedChildrenContext } from "preact-prop-helpers";
-import { useCallback } from "preact/hooks";
 
 
 //export const RouterLevelContext = createContext(0);
@@ -139,19 +138,6 @@ export interface RouterControls {
      * * Directories on the side closer to the root are not affected
      */
     popLocalPath(dir?: string, action?: "push" | "replace"): void;
-
-    /**
-     * Returns the directory at this level, regardless of if it matches or not.
-     */
-    //getLocalPath(): string | null;
-
-    /**
-     * The current level in the directory tree.
-     * 
-     * This is 0 indexed (though the special
-     * root Router is -1)
-     */
-    //level: number;
 }
 
 

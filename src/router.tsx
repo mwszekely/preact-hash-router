@@ -1,13 +1,10 @@
-import { cloneElement, ComponentChildren, createContext, Fragment, h, JSX, Ref, RenderableProps, VNode } from "preact";
-import { OnPassiveStateChange, useEnsureStability, useMergedProps, useStableCallback } from "preact-prop-helpers";
-import { forwardRef } from "preact/compat";
-import { useContext, useImperativeHandle, useMemo, useRef } from "preact/hooks";
-import { useConsumeRouter, UseConsumeRouterReturn } from "./use-router-consumer";
-import { RootRouterError } from "./root-router-error";
-//import { useRouterConsumer } from "./use-router-consumer";
-import { useRouterControls } from "./use-router-controls";
-import { RouterContext, useProvideRouter } from "./use-router-provider";
-import { RouterControls, RouterPathType } from "./util";
+import { ComponentChildren, Ref } from "preact";
+import { OnPassiveStateChange, useEnsureStability } from "preact-prop-helpers";
+import { useContext, useImperativeHandle, useMemo } from "preact/hooks";
+import { useConsumeRouter, UseConsumeRouterReturn } from "./use-router-consumer.js";
+import { useRouterControls } from "./use-router-controls.js";
+import { RouterContext, useProvideRouter } from "./use-router-provider.js";
+import { RouterControls, RouterPathType } from "./util.js";
 
 export interface RouterProps {
     /**

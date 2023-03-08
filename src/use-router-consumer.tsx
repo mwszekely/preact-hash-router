@@ -1,7 +1,7 @@
 import { OnPassiveStateChange, useEnsureStability, useManagedChild, UseManagedChildParameters, UseManagedChildrenContext, UseManagedChildReturnType, usePassiveState, useStableCallback, useState } from "preact-prop-helpers";
 import { useCallback, useLayoutEffect } from "preact/hooks";
-import { useUrl } from "./use-url";
-import { normalizeHashToPath, RouterChildInfo, RouterPathType, trimHash } from "./util";
+import { useUrl } from "./use-url.js";
+import { normalizeHashToPath, RouterChildInfo, RouterPathType, trimHash } from "./util.js";
 
 
 export interface UseLocalPathParameters {
