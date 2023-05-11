@@ -18,7 +18,7 @@ export function Router({ localPath, onLocalPathChange, children }, ref) {
     let consumeRouterReturn = null;
     useEnsureStability("Router", !!context);
     if (context) {
-        consumeRouterReturn = useConsumeRouter({ consumeRouterParameters: { localPath, onLocalPathChange }, context, managedChildParameters: { index } });
+        consumeRouterReturn = useConsumeRouter({ consumeRouterParameters: { localPath, onLocalPathChange }, context, info: { index } });
     }
     const { consumeRouterReturn: { level, matches, pathWhenMatching } } = consumeRouterReturn ?? { consumeRouterReturn: { level: -1, matches: null, pathWhenMatching: null } };
     const controls = useRouterControls(level);

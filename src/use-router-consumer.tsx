@@ -37,12 +37,13 @@ export interface UseRouterConsumerArguments {
 
 
 
-export interface UseConsumeRouterParameters extends UseManagedChildParameters<RouterChildInfo> {
+export interface UseConsumeRouterParameters extends Omit<UseManagedChildParameters<RouterChildInfo>, "info"> {
     context: RouterContextType;
     consumeRouterParameters: {
         onLocalPathChange?: null | undefined | OnPassiveStateChange<string, never>;
         localPath: RouterPathType;
     }
+    info: Omit<RouterChildInfo, "setAnyMatchesAmongNonDefaultSiblings">
 }
 
 export interface UseConsumeRouterReturn extends UseManagedChildReturnType<RouterChildInfo> {
@@ -55,7 +56,7 @@ export interface UseConsumeRouterReturn extends UseManagedChildReturnType<Router
     }
 }
 
-export function useConsumeRouter({ context, managedChildParameters, managedChildParameters: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }: UseConsumeRouterParameters): UseConsumeRouterReturn {
+export function useConsumeRouter({ context, info: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }: UseConsumeRouterParameters): UseConsumeRouterReturn {
     const { routerContext: { level, notifyParentThatNonDefaultMatchHasChanged } } = context;
     const [anyMatchesAmongNonDefaultSiblings, setAnyMatchesAmongNonDefaultSiblings] = useState(null as null | boolean);
 
@@ -63,13 +64,13 @@ export function useConsumeRouter({ context, managedChildParameters, managedChild
 
     const { managedChildReturn } = useManagedChild<RouterChildInfo>({
         context,
-        managedChildParameters
-    }, {
-        index,
-        setAnyMatchesAmongNonDefaultSiblings: useStableCallback((anyMatches) => {
-            setAnyMatchesAmongNonDefaultSiblings(anyMatches);
-            onLocalPathChange2(wantedLocalPath, anyMatches, getLocalPath());
-        })
+        info: {
+            index,
+            setAnyMatchesAmongNonDefaultSiblings: useStableCallback((anyMatches) => {
+                setAnyMatchesAmongNonDefaultSiblings(anyMatches);
+                onLocalPathChange2(wantedLocalPath, anyMatches, getLocalPath());
+            })
+        }
     });
 
     useLayoutEffect(() => {
@@ -124,7 +125,7 @@ function useLocalPath({ consumeRouterReturn: { level }, localRouteParameters: { 
         return oldHashPath[level];
     }, [])
 
-    const [getLocalPath, setLocalPath] = usePassiveState<string, never>(useStableCallback(onLocalPathChange), useCallback(() => { 
+    const [getLocalPath, setLocalPath] = usePassiveState<string, never>(useStableCallback(onLocalPathChange), useCallback(() => {
         return urlToPath(window.location.href);
     }, [urlToPath]));
 
@@ -148,7 +149,7 @@ export function pathCompare(requestedLocalHash: null | string | RegExp | ((local
         matches = (requestedLocalHash(localPath));
 
     else if (requestedLocalHash == null)
-        matches = (anyMatchesAmongNonDefaultSiblings == null? null : !anyMatchesAmongNonDefaultSiblings);
+        matches = (anyMatchesAmongNonDefaultSiblings == null ? null : !anyMatchesAmongNonDefaultSiblings);
     else
         matches = (requestedLocalHash === localPath);
 

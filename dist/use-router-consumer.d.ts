@@ -25,12 +25,13 @@ export interface UseRouterConsumerArguments {
  * if this path and all its siblings are invalid at the same time,
  * the default path is allowed to be shown.
  */
-export interface UseConsumeRouterParameters extends UseManagedChildParameters<RouterChildInfo> {
+export interface UseConsumeRouterParameters extends Omit<UseManagedChildParameters<RouterChildInfo>, "info"> {
     context: RouterContextType;
     consumeRouterParameters: {
         onLocalPathChange?: null | undefined | OnPassiveStateChange<string, never>;
         localPath: RouterPathType;
     };
+    info: Omit<RouterChildInfo, "setAnyMatchesAmongNonDefaultSiblings">;
 }
 export interface UseConsumeRouterReturn extends UseManagedChildReturnType<RouterChildInfo> {
     consumeRouterReturn: {
@@ -41,6 +42,6 @@ export interface UseConsumeRouterReturn extends UseManagedChildReturnType<Router
         pathWhenMatching: string | null;
     };
 }
-export declare function useConsumeRouter({ context, managedChildParameters, managedChildParameters: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }: UseConsumeRouterParameters): UseConsumeRouterReturn;
+export declare function useConsumeRouter({ context, info: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }: UseConsumeRouterParameters): UseConsumeRouterReturn;
 export declare function pathCompare(requestedLocalHash: null | string | RegExp | ((localHash: string) => boolean), anyMatchesAmongNonDefaultSiblings: boolean | null, localPath: string | null): boolean | null;
 //# sourceMappingURL=use-router-consumer.d.ts.map

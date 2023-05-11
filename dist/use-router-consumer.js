@@ -2,19 +2,19 @@ import { useEnsureStability, useManagedChild, usePassiveState, useStableCallback
 import { useCallback, useLayoutEffect } from "preact/hooks";
 import { useUrl } from "./use-url.js";
 import { normalizeHashToPath, trimHash } from "./util.js";
-export function useConsumeRouter({ context, managedChildParameters, managedChildParameters: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }) {
+export function useConsumeRouter({ context, info: { index }, consumeRouterParameters: { onLocalPathChange, localPath: wantedLocalPath } }) {
     const { routerContext: { level, notifyParentThatNonDefaultMatchHasChanged } } = context;
     const [anyMatchesAmongNonDefaultSiblings, setAnyMatchesAmongNonDefaultSiblings] = useState(null);
     const [pathWhenMatching, setPathWhenMatching] = useState(null);
     const { managedChildReturn } = useManagedChild({
         context,
-        managedChildParameters
-    }, {
-        index,
-        setAnyMatchesAmongNonDefaultSiblings: useStableCallback((anyMatches) => {
-            setAnyMatchesAmongNonDefaultSiblings(anyMatches);
-            onLocalPathChange2(wantedLocalPath, anyMatches, getLocalPath());
-        })
+        info: {
+            index,
+            setAnyMatchesAmongNonDefaultSiblings: useStableCallback((anyMatches) => {
+                setAnyMatchesAmongNonDefaultSiblings(anyMatches);
+                onLocalPathChange2(wantedLocalPath, anyMatches, getLocalPath());
+            })
+        }
     });
     useLayoutEffect(() => {
         onLocalPathChange2(wantedLocalPath, anyMatchesAmongNonDefaultSiblings, getLocalPath());
